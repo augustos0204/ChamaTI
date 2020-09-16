@@ -19,21 +19,178 @@ A tecnologia NODE, para poder fazer diversas funções do backend.<br>
 
 A biblioteca NODEMON, para agilizar o processo de subir a aplicação.<br>
 - Pode ser instalado a partir do comando:<br>
-> npm install nodemon -D
+> 
+```
+npm install nodemon -D
+```
 
 O ORM SEQUELIZE
 - Pode ser instalado a partir do comando:<br>
-> npm install sequelize
+> 
+```
+npm install sequelize
+```
 
 O framework EXPRESS
 - Pode ser instalado a partir do comando:<br>
-> npm install express
+>
+```
+npm install express
+```
 
 O framework para utilização do MYSQL
 - Pode ser instalado a partir do comando:<br>
-> npm install mysql2
+>
+```
+npm install mysql2
+```
 
 O cliente do ORM SEQUELIZE, para interação com o banco de dados MYSQL.<br>
 - Pode ser instalado a partir do comando:<br>
-> npm install sequelize-cli -D
+>
+```
+npm install sequelize-cli -D
+```
 
+## Iniciando o projeto
+Primeiro é necessário criar um "esqueleto" para que o projeto possa ao menos executar, e para tal criamos o "app" por meio do EXPRESS.
+Nós implementamos da seguinte maneira:
+>
+```javascript
+const express = require('express');
+
+// Iniciando a aplicação
+const app = express();
+
+// Exportar a aplicação configurada
+module.exports = app;
+```
+
+Porém até então ele não faz nada além de começar a executar, então criamos um "server" para poder subir a aplicação.
+```javascript
+const app = require('./app.js');
+
+const porta = 3333;
+
+// Sobe a aplicação em um servidor(conteiner)
+app.listen(porta, () => {
+    console.log(`Servidor rodando na porta ${porta}.`);
+});
+```
+E com isso a aplicação já está subindo.
+
+## Criando o banco de dados
+
+Por meio do SEQUELIZE é possível criar o banco de dados e também manipular.
+
+Primeiro é necessário conectar ao database, para poder prosseguir foi consultada a documentação oficial do SEQUELIZE em <https://sequelize.org/master/manual/getting-started.html>.
+
+Para conectar ao database foi usado o seguinte trecho de código como base:
+> 
+```javascript
+const { Sequelize } = require('sequelize');
+
+// Option 1: Passing a connection URI
+const sequelize = new Sequelize('sqlite::memory:') // Example for sqlite
+const sequelize = new Sequelize('postgres://user:pass@example.com:5432/dbname') // Example for postgres
+
+// Option 2: Passing parameters separately (sqlite)
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: 'path/to/database.sqlite'
+});
+
+// Option 2: Passing parameters separately (other dialects)
+const sequelize = new Sequelize('database', 'username', 'password', {
+  host: 'localhost',
+  dialect: /* one of 'mysql' | 'mariadb' | 'postgres' | 'mssql' */
+});
+```
+
+Optamos pela última opção, e o trecho de código ficou assim:
+> 
+```javascript
+const { Sequelize } = require('sequelize');
+
+const dialeto = 'mysql';
+const host = 'localhost';
+const database = 'chama_ti';
+const username = 'root';
+const password = 'bcd127';
+
+// Passando parâmetros separadamente
+const sequelize = new Sequelize( database, username, password, {
+  host: host,
+  dialect: dialeto,
+  logging: console.log,
+  define: {
+    timestamp: true,
+    underscored: true
+  }
+});
+
+try {
+    sequelize.authenticate();
+    console.log('Conexão estabelecida com sucesso.')
+} catch (error) {
+    console.log('Incapaz de conectar, erro ', error )
+}
+
+export default sequelize;
+```
+Logo já podemos criar o banco de dados, conforme as configurações, com o comando:
+>
+```
+npx sequelize db:create
+```
+
+### Migrations
+Primeiro criamos um projeto vazio com o comando:
+>
+```
+    npx sequelize-cli init
+```
+Obs: Este comando deve ser executado dentro do diretório onde estas pastas vão ficar (ex: src)
+
+Este comando cria as sequintes pastas:
+- config, contêm um arquivo config que fala para o CLI como conectar com o banco de dados
+- models, contêm todos os modelos do projeto (que serão criados posteriormente)
+- migrations, contêm todos os arquivos de migrations
+- seeders, contêm todos os arquivos seed
+
+### Configuração
+Antes prossseguir é necessário informar ao CLI como conectar ao banco de dados. Para tal editamos o arquivo config/config.json.
+Lá substituímos os valores com as informações do nosso banco de dados. Ficou assim:
+> 
+```json
+{
+  "development": {
+    "username": "root",
+    "password": "bcd127",
+    "database": "chama_ti",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "bcd127",
+    "database": "chama_ti",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "bcd127",
+    "database": "chama_ti",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
+```
+
+### Criando modelo (e migrations)
+Para criar um novo modelo por meio de migrations é necessário executar o seguinte comando:
+>
+```
+npx sequelize migration:create --name nomeAqui
+```

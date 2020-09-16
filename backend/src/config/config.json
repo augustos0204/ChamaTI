@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "bcd127",
+    "database": "db_chama_ti",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "bcd127",
+    "database": "db_chama_ti",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "bcd127",
+    "database": "db_chama_ti",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
