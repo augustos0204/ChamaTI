@@ -4,49 +4,48 @@ const { query } = require("express");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("tbl_cliente", {
-      id_cliente: {
+    return queryInterface.createTable("tbl_mensagem", {
+      id_mensagem: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      nome:  {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      email:  {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-      },
-      senha:  {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      data_nascimento: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
-      },
-      rg: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-      },
-      cpf: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-      },
-      foto: {
+      mensagem:  {
         type: Sequelize.STRING,
         allowNull: true
       },
-      id_sexo_cliente : {
+      data_hora_envio:  {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      arquivo:  {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      remetente:  {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      destinatario:  {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      id_cliente : {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "tbl_sexo_cliente",
-          key: "id_sexo_cliente"
+          model: "tbl_cliente",
+          key: "id_cliente"
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
+      },
+      id_prestador_servicos : {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "tbl_prestador_servicos",
+          key: "id_prestador_servicos"
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
@@ -63,6 +62,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("tbl_cliente");
+    return queryInterface.dropTable("tbl_prestador_servicos");
   }
 };

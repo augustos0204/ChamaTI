@@ -4,49 +4,53 @@ const { query } = require("express");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("tbl_cliente", {
-      id_cliente: {
+    return queryInterface.createTable("tbl_servico", {
+      id_servico: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      nome:  {
+      problema:  {
         type: Sequelize.STRING,
         allowNull: false
       },
-      email:  {
+      descricao:  {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
       },
-      senha:  {
-        type: Sequelize.STRING,
+      data_hora_abertura:  {
+        type: Sequelize.DATE,
         allowNull: false
       },
-      data_nascimento: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
-      },
-      rg: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-      },
-      cpf: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-      },
-      foto: {
-        type: Sequelize.STRING,
+      data_hora_encerramento: {
+        type: Sequelize.DATE,
         allowNull: true
       },
-      id_sexo_cliente : {
+      em_aberto: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      resolvido_por: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: true
+      },
+      id_cliente : {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "tbl_sexo_cliente",
-          key: "id_sexo_cliente"
+          model: "tbl_cliente",
+          key: "id_cliente"
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
+      },
+      id_prestador_servicos : {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "tbl_prestador_servicos",
+          key: "id_prestador_servicos"
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
@@ -63,6 +67,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("tbl_cliente");
+    return queryInterface.dropTable("tbl_servico");
   }
 };
