@@ -273,3 +273,13 @@ E para, efetivamente, criar o banco de dados executamos o comando:
 ```
 npx sequelize db:migrate
 ```
+
+### Criando as controllers das tabelas para manipulação pelo backend
+Antes de criarmos uma controller precisamos criar sua respectiva model.
+Criamos uma model e uma controller para cada tabela do BD, como no exemplo:
+
+Model:
+>
+```
+
+```
