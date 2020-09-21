@@ -268,3 +268,8 @@ module.exports = {
 };
 ```
 
+E para, efetivamente, criar o banco de dados executamos o comando:
+>
+```
+npx sequelize db:migrate
+```
