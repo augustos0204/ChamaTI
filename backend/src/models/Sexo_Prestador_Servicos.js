@@ -1,24 +1,24 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Sexo_Cliente extends Model {
+class Sexo_Prestador_Servicos extends Model {
     static init (sequelize){
         super.init(
             {
-            id_sexo_cliente: DataTypes.INTEGER,
+            id_sexo_prestador_servicos: DataTypes.INTEGER,
             sexo: DataTypes.STRING,
             created_at: DataTypes.DATE,
             updated_at: DataTypes.DATE,
         },
         {
             sequelize,
-            tableName:"tbl_sexo_cliente"
+            tableName:"tbl_sexo_prestador_servicos"
         }
         );
     }
 
     static associate(models){
-        this.hasMany(models.Cliente);
+        this.hasMany(models.Prestador_Servicos);
     }
 }
 
-module.exports = Sexo_Cliente;
+module.exports = Sexo_Prestador_Servicos;
