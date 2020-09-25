@@ -29,6 +29,8 @@ class Cliente extends Model {
         this.hasMany(models.Telefone_Cliente);
         this.hasOne(models.Localizacao_Cliente);
         this.hasOne(models.Endereco_Cliente);
+        this.hasMany(models.Servico);
+        this.hasMany(models.Mensagem);
     }
 }
 

@@ -29,6 +29,8 @@ class Prestador_Servicos extends Model {
         this.hasMany(models.Telefone_Prestador_Servicos);
         this.hasOne(models.Localizacao_Prestador_Servicos);
         this.hasOne(models.Endereco_Prestador_Servicos);
+        this.hasMany(models.Servico);
+        this.hasMany(models.Mensagem);
     }
 }
 
