@@ -114,29 +114,25 @@ const { Sequelize } = require('sequelize');
 
 const dialeto = 'mysql';
 const host = 'localhost';
-const database = 'chama_ti';
+const database = 'db_chama_ti';
 const username = 'root';
 const password = 'bcd127';
 
-// Passando parâmetros separadamente
-const sequelize = new Sequelize( database, username, password, {
-  host: host,
-  dialect: dialeto,
+// timestamp - Coloca created_at e updated_at nas tabelas
+// underscored - Coloca os nomes de tabelas e atributos em snake_case
+
+module.exports = {
+  dialect : dialeto,
+  host : host,
+  username : username,
+  password : password,
+  database : database,
   logging: console.log,
-  define: {
-    timestamp: true,
-    underscored: true
+  define : {
+      timestamp : true,
+      underscored : true
   }
-});
-
-try {
-    sequelize.authenticate();
-    console.log('Conexão estabelecida com sucesso.')
-} catch (error) {
-    console.log('Incapaz de conectar, erro ', error )
 }
-
-export default sequelize;
 ```
 Logo já podemos criar o banco de dados, conforme as configurações, com o comando:
 >
@@ -197,15 +193,15 @@ npx sequelize migration:create --name nomeAqui
 
 Logo depois o editamos a fim de modelar, efetivamente, a tabela, como neste exemplo:
 >
-```
+```javascript
 'use strict';
 
 const { query } = require("express");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("tbl_prestador_servicos", {
-      id_prestador_servicos: {
+    return queryInterface.createTable("tbl_cliente", {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -241,12 +237,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      id_sexo_prestador_servicos : {
+      id_sexo_cliente : {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "tbl_sexo_prestador_servicos",
-          key: "id_sexo_prestador_servicos"
+          model: "tbl_sexo_cliente",
+          key: "id_sexo_cliente"
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
@@ -263,7 +259,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("tbl_prestador_servicos");
+    return queryInterface.dropTable("tbl_cliente");
   }
 };
 ```
@@ -280,6 +276,114 @@ Criamos uma model e uma controller para cada tabela do BD, como no exemplo:
 
 Model:
 >
+```javascript
+const { Model, DataTypes } = require("sequelize");
+
+class Cliente extends Model {
+    static init (sequelize){
+        super.init(
+            {
+            id_cliente: DataTypes.INTEGER,
+            nome: DataTypes.STRING,
+            email: DataTypes.STRING,
+            senha: DataTypes.STRING,
+            data_nascimento: DataTypes.DATEONLY,
+            rg: DataTypes.STRING,
+            cpf: DataTypes.STRING,
+            foto: DataTypes.STRING,
+            created_at: DataTypes.DATE,
+            updated_at: DataTypes.DATE,
+        },
+        {
+            sequelize,
+            tableName:"tbl_cliente"
+        }
+        );
+    }
+
+    static associate(models){
+        this.hasOne(models.Sexo_Prestador_Servicos, {
+            foreignKey: "id_sexo_prestador_servicos"
+        });
+        this.hasMany(models.Telefone_Cliente);
+        this.hasOne(models.Localizacao_Cliente);
+        this.hasOne(models.Endereco_Cliente);
+        this.hasMany(models.Servico);
+        this.hasMany(models.Mensagem);
+    }
+}
+
+module.exports = Cliente;
 ```
+
+Após criar as models é necessário configurar o arquivo "index.js" dentro da pasta database:
+>
+```javascript
+const Sequelize = require("sequelize");
+const dbConfig = require("../config/database");
+
+const Bairro = require("../models/Bairro");
+const Cidade = require("../models/Cidade");
+const Cliente = require("../models/Cliente");
+const EnderecoCliente = require("../models/EnderecoClienteCliente");
+const EnderecoPrestadorServicos = require("../models/EnderecoPrestadorServicos");
+const Estado = require("../models/Estado");
+const ImagemServico = require("../models/ImagemServico");
+const LocalizacaoCliente = require("../models/LocalizacaoCliente");
+const LocalizacaoPrestadorServicos = require("../models/LocalizacaoPrestadorServicos");
+const Mensagem = require("../models/Mensagem");
+const PrestadorServicos = require("../models/PrestadorServicos");
+const Servico = require("../models/Servico");
+const SexoCliente = require("../models/SexoCliente");
+const SexoPrestadorServicos = require("../models/SexoPrestadorServicos");
+const TelefoneCliente = require("../models/TelefoneCliente");
+const TelefonePrestadorServicos = require("../models/TelefonePrestadorServicos");
+
+// Criamo a conexão com os dados da configuração
+const conexao = new Sequelize(dbConfig);
+
+// Inicializando as models
+Bairro.init(conexao);
+Cidade.init(conexao);
+Cliente.init(conexao);
+EnderecoCliente.init(conexao);
+EnderecoPrestadorServicos.init(conexao);
+Estado.init(conexao);
+ImagemServico.init(conexao);
+LocalizacaoCliente.init(conexao);
+LocalizacaoPrestadorServicos.init(conexao);
+Mensagem.init(conexao);
+PrestadorServicos.init(conexao);
+Servico.init(conexao);
+SexoCliente.init(conexao);
+SexoPrestadorServicos.init(conexao);
+TelefoneCliente.init(conexao);
+TelefonePrestadorServicos.init(conexao);
+
+// Inicializando as associações
+Bairro.associate( conexao.models );
+Cidade.associate( conexao.models );
+Cliente.associate( conexao.models );
+EnderecoCliente.associate( conexao.models );
+EnderecoPrestadorServicos.associate( conexao.models );
+Estado.associate( conexao.models );
+ImagemServico.associate( conexao.models );
+LocalizacaoCliente.associate( conexao.models );
+LocalizacaoPrestadorServicos.associate( conexao.models );
+Mensagem.associate( conexao.models );
+PrestadorServicos.associate( conexao.models );
+Servico.associate( conexao.models );
+SexoCliente.associate( conexao.models );
+SexoPrestadorServicos.associate( conexao.models );
+TelefoneCliente.associate( conexao.models );
+TelefonePrestadorServicos.associate( conexao.models );
+
+// Exportamos a conexão
+module.exports = conexao;
+```
+
+Controller:
+>
+```javascript
 
 ```

@@ -5,7 +5,7 @@ const { query } = require("express");
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.createTable("tbl_imagem_servico", {
-      id_imagem_servico: {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -19,7 +19,7 @@ module.exports = {
         allowNull: false,
         references: {
           model: "tbl_servico",
-          key: "id_servico"
+          key: "id"
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE"

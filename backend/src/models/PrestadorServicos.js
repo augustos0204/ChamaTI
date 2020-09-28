@@ -1,10 +1,13 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Prestador_Servicos extends Model {
+class PrestadorServicos extends Model {
     static init (sequelize){
         super.init(
             {
-            id_prestador_servicos: DataTypes.INTEGER,
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            },
             nome: DataTypes.STRING,
             email: DataTypes.STRING,
             senha: DataTypes.STRING,
@@ -23,15 +26,15 @@ class Prestador_Servicos extends Model {
     }
 
     static associate(models){
-        this.hasOne(models.Sexo_Prestador_Servicos, {
+        this.hasOne(models.SexoPrestadorServicos, {
             foreignKey: "id_sexo_prestador_servicos"
         });
-        this.hasMany(models.Telefone_Prestador_Servicos);
-        this.hasOne(models.Localizacao_Prestador_Servicos);
-        this.hasOne(models.Endereco_Prestador_Servicos);
+        this.hasMany(models.TelefonePrestadorServicos);
+        this.hasOne(models.LocalizacaoPrestadorServicos);
+        this.hasOne(models.EnderecoPrestadorServicos);
         this.hasMany(models.Servico);
         this.hasMany(models.Mensagem);
     }
 }
 
-module.exports = Prestador_Servicos;
+module.exports = PrestadorServicos;

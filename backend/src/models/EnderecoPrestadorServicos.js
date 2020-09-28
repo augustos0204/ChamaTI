@@ -1,10 +1,13 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Endereco_Prestador_Servicos extends Model {
+class EnderecoPrestadorServicos extends Model {
     static init (sequelize){
         super.init(
             {
-            id_endereco_prestador_servicos: DataTypes.INTEGER,
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            },
             cep: DataTypes.STRING,
             logradouro: DataTypes.STRING,
             numero: DataTypes.INTEGER,
@@ -29,10 +32,10 @@ class Endereco_Prestador_Servicos extends Model {
         this.hasOne(models.Estado, {
             foreignKey: "id_estado"
         });
-        this.hasOne(models.Prestador_Servicos, {
+        this.hasOne(models.PrestadorServicos, {
             foreignKey: "id_prestador_servicos"
         });
     }
 }
 
-module.exports = Endereco_Prestador_Servicos;
+module.exports = EnderecoPrestadorServicos;

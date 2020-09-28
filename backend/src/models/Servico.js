@@ -4,7 +4,10 @@ class Servico extends Model {
     static init (sequelize){
         super.init(
             {
-            id_servico: DataTypes.INTEGER,
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            },
             problema: DataTypes.STRING,
             descricao: DataTypes.TEXT,
             data_hora_abertura: DataTypes.DATE,
@@ -25,10 +28,10 @@ class Servico extends Model {
         this.hasOne(models.Cliente, {
             foreignKey: "id_cliente"
         });
-        this.hasOne(models.Prestador_Servicos, {
+        this.hasOne(models.PrestadorServicos, {
             foreignKey: "id_prestador_servicos"
         });
-        this.hasMany(models.Imagem_Servico);
+        this.hasMany(models.ImagemServico);
     }
 }
 

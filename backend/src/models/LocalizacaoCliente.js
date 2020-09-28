@@ -1,10 +1,13 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Localizacao_Cliente extends Model {
+class LocalizacaoCliente extends Model {
     static init (sequelize){
         super.init(
             {
-            id_localizacao_cliente: DataTypes.INTEGER,
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            },
             latitude: DataTypes.STRING,
             longitude: DataTypes.STRING,
             data_hora: DataTypes.DATE,
@@ -25,4 +28,4 @@ class Localizacao_Cliente extends Model {
     }
 }
 
-module.exports = Localizacao_Cliente;
+module.exports = LocalizacaoCliente;

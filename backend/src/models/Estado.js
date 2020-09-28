@@ -4,7 +4,10 @@ class Estado extends Model {
     static init (sequelize){
         super.init(
             {
-            id_estado: DataTypes.INTEGER,
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            },
             nome_estado: DataTypes.STRING,
             created_at: DataTypes.DATE,
             updated_at: DataTypes.DATE,
@@ -17,8 +20,8 @@ class Estado extends Model {
     }
 
     static associate(models){
-        this.hasMany(models.Endereco_Cliente);
-        this.hasMany(models.Endereco_Prestador_Servicos);
+        this.hasMany(models.EnderecoCliente);
+        this.hasMany(models.EnderecoPrestadorServicos);
     }
 }
 

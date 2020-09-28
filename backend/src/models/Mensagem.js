@@ -4,7 +4,10 @@ class Mensagem extends Model {
     static init (sequelize){
         super.init(
             {
-            id_mensagem: DataTypes.INTEGER,
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            },
             mensagem: DataTypes.STRING,
             data_hora_envio: DataTypes.DATE,
             arquivo: DataTypes.STRING,
@@ -24,7 +27,7 @@ class Mensagem extends Model {
         this.hasOne(models.Cliente, {
             foreignKey: "id_cliente"
         });
-        this.hasOne(models.Prestador_Servicos, {
+        this.hasOne(models.PrestadorServicos, {
             foreignKey: "id_prestador_servicos"
         });
     }

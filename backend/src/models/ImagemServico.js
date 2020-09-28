@@ -1,10 +1,13 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Imagem_Servico extends Model {
+class ImagemServico extends Model {
     static init (sequelize){
         super.init(
             {
-            id_imagem_servico: DataTypes.INTEGER,
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            },
             imagem: DataTypes.STRING,
             created_at: DataTypes.DATE,
             updated_at: DataTypes.DATE,
@@ -23,4 +26,4 @@ class Imagem_Servico extends Model {
     }
 }
 
-module.exports = Imagem_Servico;
+module.exports = ImagemServico;
