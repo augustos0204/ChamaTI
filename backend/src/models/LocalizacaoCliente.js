@@ -22,7 +22,7 @@ class LocalizacaoCliente extends Model {
     }
 
     static associate(models){
-        this.hasOne(models.Cliente, {
+        this.belongsTo(models.Cliente, {
             foreignKey: "id_cliente"
         });
     }

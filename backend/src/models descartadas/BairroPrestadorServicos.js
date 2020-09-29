@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 
-class TelefoneCliente extends Model {
+class BairroPrestadorServicos extends Model {
     static init (sequelize){
         super.init(
             {
@@ -8,22 +8,20 @@ class TelefoneCliente extends Model {
                 type: DataTypes.INTEGER,
                 primaryKey: true
             },
-            numero_telefone: DataTypes.STRING,
+            nome_bairro: DataTypes.STRING,
             created_at: DataTypes.DATE,
             updated_at: DataTypes.DATE,
         },
         {
             sequelize,
-            tableName:"tbl_telefone_cliente"
+            tableName:"tbl_bairro_prestador_servicos"
         }
         );
     }
 
     static associate(models){
-        this.hasOne(models.Cliente, {
-            foreignKey: "id_cliente"
-        });
+        this.hasMany(models.EnderecoPrestadorServicos);
     }
 }
 
-module.exports = TelefoneCliente;
+module.exports = BairroPrestadorServicos;

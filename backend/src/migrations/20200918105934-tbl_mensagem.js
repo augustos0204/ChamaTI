@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      id_cliente : {
+      cliente_id : {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -40,7 +40,7 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
       },
-      id_prestador_servicos : {
+      prestador_servicos_id : {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

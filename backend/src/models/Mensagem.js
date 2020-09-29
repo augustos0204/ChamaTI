@@ -24,10 +24,10 @@ class Mensagem extends Model {
     }
 
     static associate(models){
-        this.hasOne(models.Cliente, {
+        this.belongsTo(models.Cliente, {
             foreignKey: "id_cliente"
         });
-        this.hasOne(models.PrestadorServicos, {
+        this.belongsTo(models.PrestadorServicos, {
             foreignKey: "id_prestador_servicos"
         });
     }

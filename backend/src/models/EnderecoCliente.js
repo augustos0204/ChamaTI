@@ -10,6 +10,9 @@ class EnderecoCliente extends Model {
             },
             cep: DataTypes.STRING,
             logradouro: DataTypes.STRING,
+            bairro: DataTypes.STRING,
+            cidade: DataTypes.STRING,
+            estado: DataTypes.STRING,
             numero: DataTypes.INTEGER,
             complemento: DataTypes.STRING,
             created_at: DataTypes.DATE,
@@ -23,16 +26,7 @@ class EnderecoCliente extends Model {
     }
 
     static associate(models){
-        this.hasOne(models.Bairro, {
-            foreignKey: "id_bairro"
-        });
-        this.hasOne(models.Cidade, {
-            foreignKey: "id_cidade"
-        });
-        this.hasOne(models.Estado, {
-            foreignKey: "id_estado"
-        });
-        this.hasOne(models.Cliente, {
+        this.belongsTo(models.Cliente, {
             foreignKey: "id_cliente"
         });
     }

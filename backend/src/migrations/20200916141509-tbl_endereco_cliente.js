@@ -22,41 +22,23 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      id_bairro : {
-        type: Sequelize.INTEGER,
+      bairro: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "tbl_bairro",
-          key: "id"
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
       },
-      id_cidade : {
-        type: Sequelize.INTEGER,
+      cidade: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "tbl_cidade",
-          key: "id"
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
       },
-      id_estado : {
-        type: Sequelize.INTEGER,
+      estado: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "tbl_estado",
-          key: "id"
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
       },
       complemento:  {
         type: Sequelize.STRING,
         allowNull: true
       },
-      id_cliente : {
+      cliente_id : {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

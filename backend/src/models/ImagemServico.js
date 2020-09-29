@@ -20,7 +20,7 @@ class ImagemServico extends Model {
     }
 
     static associate(models){
-        this.hasOne(models.Servico, {
+        this.belongsTo(models.Servico, {
             foreignKey: "id_servico"
         });
     }

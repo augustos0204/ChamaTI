@@ -14,6 +14,7 @@ class Cliente extends Model {
                 data_nascimento: DataTypes.DATEONLY,
                 rg: DataTypes.STRING,
                 cpf: DataTypes.STRING,
+                telefone: DataTypes.STRING,
                 foto: DataTypes.STRING,
                 created_at: DataTypes.DATE,
                 updated_at: DataTypes.DATE,
@@ -26,10 +27,9 @@ class Cliente extends Model {
     }
 
     static associate(models) {
-        this.hasOne(models.SexoCliente, {
-            foreignKey: "id_sexo_cliente"
+        this.belongsTo(models.SexoCliente, {
+            foreignKey: "sexo_cliente_id"
         });
-        this.hasMany(models.TelefoneCliente);
         this.hasOne(models.LocalizacaoCliente);
         this.hasOne(models.EnderecoCliente);
         this.hasMany(models.Servico);

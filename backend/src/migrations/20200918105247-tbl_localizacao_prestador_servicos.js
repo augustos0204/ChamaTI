@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
-      id_prestador_servicos : {
+      prestador_servicos_id : {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

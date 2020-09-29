@@ -14,6 +14,7 @@ class PrestadorServicos extends Model {
             data_nascimento: DataTypes.DATEONLY,
             rg: DataTypes.STRING,
             cpf: DataTypes.STRING,
+            telefone: DataTypes.STRING,
             foto: DataTypes.STRING,
             created_at: DataTypes.DATE,
             updated_at: DataTypes.DATE,
@@ -26,10 +27,9 @@ class PrestadorServicos extends Model {
     }
 
     static associate(models){
-        this.hasOne(models.SexoPrestadorServicos, {
+        this.belongsTo(models.SexoPrestadorServicos, {
             foreignKey: "id_sexo_prestador_servicos"
         });
-        this.hasMany(models.TelefonePrestadorServicos);
         this.hasOne(models.LocalizacaoPrestadorServicos);
         this.hasOne(models.EnderecoPrestadorServicos);
         this.hasMany(models.Servico);

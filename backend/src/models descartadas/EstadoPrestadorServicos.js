@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Estado extends Model {
+class EstadoPrestadorServicos extends Model {
     static init (sequelize){
         super.init(
             {
@@ -14,15 +14,14 @@ class Estado extends Model {
         },
         {
             sequelize,
-            tableName:"tbl_estado"
+            tableName:"tbl_estado_prestador_servicos"
         }
         );
     }
 
     static associate(models){
-        this.hasMany(models.EnderecoCliente);
         this.hasMany(models.EnderecoPrestadorServicos);
     }
 }
 
-module.exports = Estado;
+module.exports = EstadoPrestadorServicos;

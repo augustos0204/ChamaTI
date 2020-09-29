@@ -1,16 +1,17 @@
 const { Op } = require("sequelize");
 const Cliente = require("../models/Cliente");
 const bcrypt = require("bcryptjs");
+const PrestadorServicos = require("../models/PrestadorServicos");
 // const { update } = require("../models/Cliente");
 // const jwt = require("jsonwebtoken");
 // const authConfig = require('../config/auth.json');
 
 module.exports = {
-    // Listar todos os clientes
+    // Listar todos os Prestadores de Serviços
     async list( request, response ) {
         console.log("Chegou uma solicitação.");
         
-        const clientes = await Cliente.findAll();
+        const clientes = await PrestadorServicos.findAll();
 
         console.log(clientes);
 

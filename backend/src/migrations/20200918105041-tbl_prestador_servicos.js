@@ -37,11 +37,16 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      telefone: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
       foto: {
         type: Sequelize.STRING,
         allowNull: true
       },
-      id_sexo_prestador_servicos : {
+      sexo_prestador_servicos_id : {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
