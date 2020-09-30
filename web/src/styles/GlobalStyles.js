@@ -13,6 +13,7 @@ export const GlobalStyles = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        outline: none;
     }
     body{
         font-family: Arial, Helvetica, sans-serif;
@@ -25,7 +26,16 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     input[type="text"]{
-        
+        width: 250px;
+        height: 40px;
+        border: none;
+        border-bottom: 3px solid black;
+        border-radius: 2px;
+        padding: 10px;
+        font-size: 1.1em;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .container{

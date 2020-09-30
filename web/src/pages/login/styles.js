@@ -30,17 +30,31 @@ export const FormLogin = styled.form`
     height: inherit;
     display: flex;
     flex-direction: row;
-    background-color: green;
 `;
 
 export const ContainerTexts = styled.form`
     width: 70%;
     height: 100%;
-    background-color: crimson;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
 `;
 
 export const ContainerButtons = styled.form`
     width: 30%;
     height: 100%;
-    background-color: red;
+    background-color: crimson;
+`;
+
+export const TextEntry = styled.div`
+    width: inherit;
+    height: inherit;
+`;
+
+export const TitleTextEntry = styled.div`
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+    padding-left: 10px;
+    opacity: 1;
 `;

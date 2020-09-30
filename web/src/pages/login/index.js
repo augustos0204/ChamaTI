@@ -42,7 +42,8 @@ const Login = () => {
                     <ContainerFormLogin>
                         <FormLogin>
                             <ContainerTexts>
-                                <input type="text"></input>
+                                    <input type="text" placeholder="Login"></input>
+                                    <input type="text" placeholder="Senha"></input>
                             </ContainerTexts>
                             <ContainerButtons>
 
