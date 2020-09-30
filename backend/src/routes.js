@@ -17,32 +17,33 @@ const routes = express.Router();
 // const uploadImage = require("./services/firebase");
 
 const clienteController = require("./controller/cliente");
-// const postagemController = require("./controllers/postagem");
-// const comentarioController = require("./controllers/comentario");
-// const sessaoController = require("./controllers/sessao");
+const sexoClienteController = require("./controller/sexo_cliente");
 
 // Rotas públicas
+
 // Rotas de sessão
 // routes.post("/sessao", sessaoController.store);
 
-// Rota de cadastro de aluno
+// Rota de cadastro de sexo_cliente
+routes.post("/sexo_cliente", sexoClienteController.store);
+
+// Rota de cadastro de cliente
 routes.post("/cliente", clienteController.store);
 
 // Middleware de proteção das rotas
 // routes.use(autorizacaoMid);
 
 // Rotas privadas
-// Rotas de aluno
+
+// Rotas de cliente
 routes.get("/clientes", clienteController.list);
 routes.get("/cliente/:id", clienteController.searchById);
+routes.post("/cliente/update/:id", clienteController.update);
 
-// Rotas de postagem
-// routes.get("/postagens", postagemController.index);
-// routes.post("/postagens", Multer.single("imagem"), uploadImage, postagemController.store);
-// routes.delete("/postagens/:id", postagemController.delete);
-
-// Rotas de comentário
-// routes.get("/postagens/:postId/comentarios", comentarioController.index);
-// routes.post("/postagens/:postId/comentarios", comentarioController.store);
+// Rotas de sexo_cliente
+routes.get("/sexos_clientes", sexoClienteController.list);
+routes.get("/sexo_cliente/:id", sexoClienteController.searchById);
+routes.post("/sexo_cliente/update/:id", sexoClienteController.update);
+routes.post("/sexo_cliente/delete/:id", sexoClienteController.delete);
 
 module.exports = routes;

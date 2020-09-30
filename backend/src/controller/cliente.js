@@ -1,6 +1,8 @@
-const { Op } = require("sequelize");
-const Cliente = require("../models/Cliente");
 const bcrypt = require("bcryptjs");
+
+const Cliente = require("../models/Cliente");
+const EnderecoCliente = require("../models/EnderecoCliente");
+
 // const { update } = require("../models/Cliente");
 // const jwt = require("jsonwebtoken");
 // const authConfig = require('../config/auth.json');
@@ -8,13 +10,9 @@ const bcrypt = require("bcryptjs");
 module.exports = {
     // Listar todos os clientes
     async list( request, response ) {
-        console.log("Chegou uma solicitação.");
-        
         const clientes = await Cliente.findAll();
 
-        console.log(clientes);
-
-        response.send( clientes );
+        return response.send( clientes );
     },
 
     // Buscar clientes pelo ID
@@ -32,18 +30,28 @@ module.exports = {
         delete cliente.senha;
 
         // Retorna o cliente encontrado
-        response.send( cliente );
+        return response.send( cliente );
     },
 
     // Inserções
     async store(request, response){
         const {
+            sexo_id,
+
+            cep,
+            logradouro,
+            bairro,
+            cidade,
+            estado,
+            numero,
+            complemento,
+
             nome,
             email,
             senha,
             data_nascimento,
-            rg,
             cpf,
+            telefone,
             foto
         } = request.body;
 
@@ -52,11 +60,7 @@ module.exports = {
         let cliente = await Cliente.findOne(
             {
                  where: {
-                    [ Op.or ] : [
-                        { email : email },
-                        { rg : rg },
-                        { cpf : cpf },
-                    ]
+                    email : email
                  }
             }
         );
@@ -69,22 +73,46 @@ module.exports = {
 
         if( foto ){
             cliente = await Cliente.create({
-                nome, email, senha: senhaCripto, data_nascimento, rg, cpf, foto
+                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, foto, sexo_cliente_id : sexo_id
             });
         }
         else {
             cliente = await Cliente.create({
-                nome, email, senha: senhaCripto, data_nascimento, rg, cpf
+                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, sexo_cliente_id : sexo_id
             });
+        }
+
+        let cliente_id = cliente.id;
+        let endereco_cliente;
+
+        if(cliente){
+            endereco_cliente = await EnderecoCliente.create({
+                cep, logradouro, bairro, cidade, estado, numero, complemento, cliente_id
+            });
+        }
+        else {
+            return response.status( 400 ).send( { erro : "Erro ao cadastrar o cliente. Tente novamente." } )
+        }
+
+        if( !endereco_cliente ){
+            return response.status( 400 ).send( { erro : "Erro ao cadastrar o endereco. Tente novamente." } )
         }
 
         // const token = jwt.sign({ alunoId : aluno.id }, authConfig.secret );
 
-        response.status(201).send({
+        return response.status(201).send({
             cliente: {
                 cliente_id: cliente.id_cliente,
                 nome: cliente.nome,
-                cpf: cliente.cpf
+                cpf: cliente.cpf,
+                endereco: {
+                    logradouro : endereco_cliente.logradouro,
+                    bairro : endereco_cliente.bairro,
+                    cidade : endereco_cliente.cidade,
+                    estado : endereco_cliente.estado,
+                    numero : endereco_cliente.numero,
+                    complemento : endereco_cliente.complemento,
+                }
             },
             // token
         });

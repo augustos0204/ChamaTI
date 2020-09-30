@@ -4,17 +4,11 @@ class Mensagem extends Model {
     static init (sequelize){
         super.init(
             {
-            id: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
             mensagem: DataTypes.STRING,
             data_hora_envio: DataTypes.DATE,
             arquivo: DataTypes.STRING,
             remetente: DataTypes.INTEGER,
             destinatario: DataTypes.INTEGER,
-            created_at: DataTypes.DATE,
-            updated_at: DataTypes.DATE,
         },
         {
             sequelize,

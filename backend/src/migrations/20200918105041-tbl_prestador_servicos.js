@@ -27,11 +27,6 @@ module.exports = {
         type: Sequelize.DATEONLY,
         allowNull: false
       },
-      rg: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
-      },
       cpf: {
         type: Sequelize.STRING,
         allowNull: false,

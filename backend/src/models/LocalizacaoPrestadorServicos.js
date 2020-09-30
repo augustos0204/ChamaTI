@@ -4,15 +4,9 @@ class LocalizacaoPrestadorServicos extends Model {
     static init (sequelize){
         super.init(
             {
-            id: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
             latitude: DataTypes.STRING,
             longitude: DataTypes.STRING,
             data_hora: DataTypes.DATE,
-            created_at: DataTypes.DATE,
-            updated_at: DataTypes.DATE,
         },
         {
             sequelize,

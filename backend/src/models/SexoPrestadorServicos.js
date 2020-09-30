@@ -4,13 +4,7 @@ class SexoPrestadorServicos extends Model {
     static init (sequelize){
         super.init(
             {
-            id: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
             sexo: DataTypes.STRING,
-            created_at: DataTypes.DATE,
-            updated_at: DataTypes.DATE,
         },
         {
             sequelize,

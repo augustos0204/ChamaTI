@@ -4,10 +4,6 @@ class EnderecoPrestadorServicos extends Model {
     static init (sequelize){
         super.init(
             {
-            id: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
             cep: DataTypes.STRING,
             logradouro: DataTypes.STRING,
             bairro: DataTypes.STRING,
@@ -15,8 +11,6 @@ class EnderecoPrestadorServicos extends Model {
             estado: DataTypes.STRING,
             numero: DataTypes.INTEGER,
             complemento: DataTypes.STRING,
-            created_at: DataTypes.DATE,
-            updated_at: DataTypes.DATE,
         },
         {
             sequelize,
