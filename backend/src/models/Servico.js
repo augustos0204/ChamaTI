@@ -22,7 +22,7 @@ class Servico extends Model {
         this.belongsTo(models.Cliente, {
             foreignKey: "id_cliente"
         });
-        this.belongsTo(models.PrestadorServicos, {
+        this.hasOne(models.PrestadorServicos, {
             foreignKey: "id_prestador_servicos"
         });
         this.hasMany(models.ImagemServico);

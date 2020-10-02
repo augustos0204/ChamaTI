@@ -4,51 +4,35 @@ const { query } = require("express");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("tbl_servico", {
+    return queryInterface.createTable("tbl_atendimento_servico", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      problema:  {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      descricao:  {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      data_hora_abertura:  {
+      data_hora_inicio:  {
         type: Sequelize.DATE,
         allowNull: false
       },
-      data_hora_encerramento: {
+      data_hora_termino: {
         type: Sequelize.DATE,
         allowNull: true
       },
-      em_aberto: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-      },
-      em_atendimento: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-      },
-      resolvido_por: {
+      servico_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: "tbl_prestador_servicos",
+          model: "tbl_servico",
           key: "id"
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
       },
-      cliente_id : {
+      prestador_servicos_id : {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "tbl_cliente",
+          model: "tbl_prestador_servicos",
           key: "id"
         },
         onUpdate: "CASCADE",
@@ -66,6 +50,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("tbl_servico");
+    return queryInterface.dropTable("tbl_atendimento_servico");
   }
 };

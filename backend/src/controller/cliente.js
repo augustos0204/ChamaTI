@@ -82,12 +82,17 @@ module.exports = {
             });
         }
 
-        let cliente_id = cliente.id;
         let endereco_cliente;
 
         if(cliente){
-            endereco_cliente = await EnderecoCliente.create({
-                cep, logradouro, bairro, cidade, estado, numero, complemento, cliente_id
+            endereco_cliente = await cliente.createEnderecoCliente({
+                cep,
+                logradouro,
+                bairro,
+                cidade,
+                estado,
+                numero,
+                complemento,
             });
         }
         else {
@@ -118,6 +123,7 @@ module.exports = {
         });
     },
 
+    //Terminar de implementar
     async update( request, response ){
         const { id } = request.params;
 
@@ -129,24 +135,37 @@ module.exports = {
         }
 
         const {
+            sexo_id,
+
+            cep,
+            logradouro,
+            bairro,
+            cidade,
+            estado,
+            numero,
+            complemento,
+
             nome,
             email,
             senha,
+            data_nascimento,
+            cpf,
+            telefone,
             foto
         } = request.body;
 
         const senhaCripto = await bcrypt.hash(senha, 10);
 
-        let update;
+        let cliente_update;
 
         if( foto ){
-            update = cliente.update({
-                nome, email, senha: senhaCripto, foto
+            cliente_update = cliente.update({
+                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, foto, sexo_cliente_id : sexo_id
             });
         }
         else {
-            update = cliente.update({
-                nome, email, senha: senhaCripto
+            cliente_update = cliente.update.update({
+                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, sexo_cliente_id : sexo_id
             });
         }
 
@@ -155,15 +174,32 @@ module.exports = {
         // Apaga o campo senha da resposta para não mostrá-la a quem solicitou a busca
         delete cliente.senha;
 
-        if(update){
-            // Retorna o cliente encontrado
-            response.send( cliente );
+        let endereco_cliente_update;
+
+        if(cliente_update){
+            endereco_cliente_update = await cliente.updateEnderecoCliente({
+                cep,
+                logradouro,
+                bairro,
+                cidade,
+                estado,
+                numero,
+                complemento,
+            });
         }
         else{
             return response.status( 404 ).send( { erro : "Atualização mal sucedida, tente novamente." } )
         }
+
+        if(endereco_cliente_update){
+            return response.status(201).send({
+                cliente_update, endereco_cliente_update
+                // token
+            });
+        }
     },
 
+    //Terminar de implementar
     async delete( request, response ){
         const { id } = request.params;
 
