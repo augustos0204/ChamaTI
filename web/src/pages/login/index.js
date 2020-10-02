@@ -3,7 +3,7 @@ import React from "react";
 import foto from "../../assets/menu.png";
 import chamaTiLogo from "../../assets/chama.png";
 
-import {ContainerLogoImage, LogoImage, ContainerFormLogin, FormLogin, ContainerTexts, ContainerButtons} from "./styles"
+import {ContainerLogo, LogoChamaTI, LogoImage, LinkCliqueRecuperarSenha, ContainerFormLogin, FormLogin, ContainerTexts, ContainerButtons, ContainerTextoEsqueceuASenha, BotãoFormularioLogin} from "./styles"
 
 const Login = () => {
     return (
@@ -34,22 +34,36 @@ const Login = () => {
             </header>
             <containerConteudoPage className="containerConteudoPage">
 
-                <ContainerLogoImage>
-                    <LogoImage>
-                        <img src={chamaTiLogo} alt="Logo ChamaTI" title="Logo ChamaTI"/>
-                    </LogoImage>
-                </ContainerLogoImage>
+                <ContainerLogo>
+                    <LogoChamaTI>
+                        ChamaTI
+                        <LogoImage>
+                            <img src={chamaTiLogo} alt="Logo ChamaTI" title="Logo ChamaTI"/>
+                        </LogoImage>
+                    </LogoChamaTI>
+                </ContainerLogo>
                     <ContainerFormLogin>
                         <FormLogin>
                             <ContainerTexts>
-                                    <input type="text" placeholder="Login"></input>
-                                    <input type="text" placeholder="Senha"></input>
+                                <input type="text" placeholder="Login"></input>
+                                <input type="text" placeholder="Senha"></input>
                             </ContainerTexts>
                             <ContainerButtons>
-
+                                <BotãoFormularioLogin>
+                                    Login
+                                </BotãoFormularioLogin>
+                                <BotãoFormularioLogin>
+                                    Criar Conta
+                                </BotãoFormularioLogin>
                             </ContainerButtons>
                         </FormLogin>
                     </ContainerFormLogin>
+                    <ContainerTextoEsqueceuASenha>
+                        Esqueceu sua senha? 
+                        <LinkCliqueRecuperarSenha href="#">
+                            Clique Aqui!
+                        </LinkCliqueRecuperarSenha>
+                    </ContainerTextoEsqueceuASenha>
             </containerConteudoPage>
         </container>
     )

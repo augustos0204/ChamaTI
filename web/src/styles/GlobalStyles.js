@@ -26,7 +26,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     input[type="text"]{
-        width: 250px;
+        width: 280px;
         height: 40px;
         border: none;
         border-bottom: 3px solid black;
