@@ -9,6 +9,7 @@ class Servico extends Model {
             data_hora_abertura: DataTypes.DATE,
             data_hora_encerramento: DataTypes.DATE,
             em_aberto: DataTypes.BOOLEAN,
+            em_atendimento: DataTypes.BOOLEAN,
             resolvido_por: DataTypes.INTEGER,
         },
         {
@@ -19,12 +20,11 @@ class Servico extends Model {
     }
 
     static associate(models){
-        this.belongsTo(models.Cliente, {
-            foreignKey: "id_cliente"
-        });
+        this.belongsTo(models.Cliente);
         this.hasOne(models.PrestadorServicos, {
             foreignKey: "id_prestador_servicos"
         });
+        // this.belongsToMany(models.PrestadorServicos);
         this.hasMany(models.ImagemServico);
     }
 }

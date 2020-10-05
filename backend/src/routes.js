@@ -18,6 +18,7 @@ const routes = express.Router();
 
 const clienteController = require("./controller/cliente");
 const sexoClienteController = require("./controller/sexo_cliente");
+const servicoController = require("./controller/servico");
 
 // Rotas públicas
 
@@ -30,6 +31,9 @@ routes.post("/sexo_cliente", sexoClienteController.store);
 // Rota de cadastro de cliente
 routes.post("/cliente", clienteController.store);
 
+// Rota de cadastro de serviço
+routes.post("/servico", servicoController.store);
+
 // Middleware de proteção das rotas
 // routes.use(autorizacaoMid);
 
@@ -38,12 +42,17 @@ routes.post("/cliente", clienteController.store);
 // Rotas de cliente
 routes.get("/clientes", clienteController.list);
 routes.get("/cliente/:id", clienteController.searchById);
-routes.post("/cliente/update/:id", clienteController.update);
+// routes.post("/cliente/update/:id", clienteController.update);
 
 // Rotas de sexo_cliente
 routes.get("/sexos_clientes", sexoClienteController.list);
 routes.get("/sexo_cliente/:id", sexoClienteController.searchById);
 routes.post("/sexo_cliente/update/:id", sexoClienteController.update);
 routes.post("/sexo_cliente/delete/:id", sexoClienteController.delete);
+
+// Rotas de servico
+routes.get("/servicos", servicoController.list);
+routes.get("/servico/:id", servicoController.searchById);
+// routes.post("/servico/update/:id", servicoController.update);
 
 module.exports = routes;

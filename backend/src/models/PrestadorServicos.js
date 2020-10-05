@@ -25,7 +25,9 @@ class PrestadorServicos extends Model {
         });
         this.hasOne(models.LocalizacaoPrestadorServicos);
         this.hasOne(models.EnderecoPrestadorServicos);
-        this.hasMany(models.Servico);
+        this.hasMany(models.Servico, {
+            foreignKey: "resolvido_por"
+        });
         this.hasMany(models.Mensagem);
     }
 }

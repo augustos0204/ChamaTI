@@ -1,7 +1,6 @@
 const bcrypt = require("bcryptjs");
 
 const Cliente = require("../models/Cliente");
-const EnderecoCliente = require("../models/EnderecoCliente");
 
 // const { update } = require("../models/Cliente");
 // const jwt = require("jsonwebtoken");

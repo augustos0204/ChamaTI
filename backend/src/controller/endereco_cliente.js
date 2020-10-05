@@ -1,5 +1,3 @@
-const { Op } = require("sequelize");
-
 const EnderecoCliente = require("../models/EnderecoCliente");
 
 module.exports = {
