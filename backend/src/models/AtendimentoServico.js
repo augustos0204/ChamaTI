@@ -4,10 +4,10 @@ class Mensagem extends Model {
     static init (sequelize){
         super.init(
             {
-            mensagem: DataTypes.STRING,
-            data_hora_envio: DataTypes.DATE,
-            arquivo: DataTypes.STRING,
-            remetente: DataTypes.INTEGER,
+            data_hora_inicio: DataTypes.DATE,
+            data_hora_termino: DataTypes.DATE,
+            servico_id: DataTypes.INTEGER,
+            prestador_servicos_id: DataTypes.INTEGER,
             destinatario: DataTypes.INTEGER,
         },
         {
@@ -18,12 +18,12 @@ class Mensagem extends Model {
     }
 
     static associate(models){
-        this.belongsTo(models.Cliente, {
-            foreignKey: "id_cliente"
+        this.hasOne(models.Servico, {
+            foreignKey: "servico_id"
         });
-        // this.belongsTo(models.PrestadorServicos, {
-        //     foreignKey: "id_prestador_servicos"
-        // });
+        this.hasOne(models.PrestadorServicos, {
+            foreignKey: "prestador_servicos_id"
+        });
     }
 }
 

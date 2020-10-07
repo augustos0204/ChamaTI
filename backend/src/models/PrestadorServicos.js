@@ -11,6 +11,7 @@ class PrestadorServicos extends Model {
             cpf: DataTypes.STRING,
             telefone: DataTypes.STRING,
             foto: DataTypes.STRING,
+            sexo_prestador_servicos_id: DataTypes.INTEGER
         },
         {
             sequelize,
@@ -21,14 +22,14 @@ class PrestadorServicos extends Model {
 
     static associate(models){
         this.belongsTo(models.SexoPrestadorServicos, {
-            foreignKey: "id_sexo_prestador_servicos"
+            foreignKey: "sexo_prestador_servicos_id"
         });
-        this.hasOne(models.LocalizacaoPrestadorServicos);
-        this.hasOne(models.EnderecoPrestadorServicos);
-        this.hasMany(models.Servico, {
-            foreignKey: "resolvido_por"
+        // this.hasOne(models.LocalizacaoPrestadorServicos);
+        this.hasOne(models.EnderecoPrestadorServicos, {
+            foreignKey: "prestador_servicos_id"
         });
-        this.hasMany(models.Mensagem);
+        this.belongsToMany(models.Servico, { through: models.AtendimentoServico });
+        // this.hasMany(models.Mensagem);
     }
 }
 
