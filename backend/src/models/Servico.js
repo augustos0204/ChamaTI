@@ -24,9 +24,9 @@ class Servico extends Model {
         // this.hasMany(models.PrestadorServicos, {
         //     foreignKey: "resolvido_por"
         // });
-        this.belongsToMany(models.PrestadorServicos, { through: models.AtendimentoServico }, {
-                foreignKey: "resolvido_por"
-        });
+        this.belongsToMany(models.PrestadorServicos,
+            { through: models.AtendimentoServico }
+        );
         this.hasMany(models.ImagemServico);
     }
 }

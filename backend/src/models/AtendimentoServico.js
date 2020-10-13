@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Mensagem extends Model {
+class AtendimentoServico extends Model {
     static init (sequelize){
         super.init(
             {
@@ -8,23 +8,22 @@ class Mensagem extends Model {
             data_hora_termino: DataTypes.DATE,
             servico_id: DataTypes.INTEGER,
             prestador_servicos_id: DataTypes.INTEGER,
-            destinatario: DataTypes.INTEGER,
         },
         {
             sequelize,
-            tableName:"tbl_servico"
+            tableName:"tbl_atendimento_servico"
         }
         );
     }
 
     static associate(models){
-        this.hasOne(models.Servico, {
-            foreignKey: "servico_id"
-        });
-        this.hasOne(models.PrestadorServicos, {
-            foreignKey: "prestador_servicos_id"
-        });
+        // this.hasOne(models.Servico, {
+        //     foreignKey: "resolvido_por"
+        // });
+        // this.hasOne(models.PrestadorServicos, {
+        //     foreignKey: "prestador_servicos_id"
+        // });
     }
 }
 
-module.exports = Mensagem;
+module.exports = AtendimentoServico;
