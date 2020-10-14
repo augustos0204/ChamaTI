@@ -1,7 +1,7 @@
 const express = require('express');
 // const cors = require("cors");
 const rotas = require('./routes');
-require('./database');
+require('./models');
 
 // Iniciando a aplicação
 const app = express();

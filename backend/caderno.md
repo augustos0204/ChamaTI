@@ -324,7 +324,7 @@ class Cliente extends Model {
 module.exports = Cliente;
 ```
 
-Após criar as models é necessário configurar o arquivo "index.js" dentro da pasta database:
+Após criar as models é necessário configurar o arquivo "index.js" dentro da pasta database(no caso de definir manualmente):
 >
 ```javascript
 const Sequelize = require("sequelize");

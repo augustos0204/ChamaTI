@@ -16,6 +16,7 @@ const routes = express.Router();
 // const autorizacaoMid = require("./middlewares/autorizacao");
 // const uploadImage = require("./services/firebase");
 
+const atendimentoServicoController = require("./controller/atendimento_servico");
 const clienteController = require("./controller/cliente");
 const prestadorServicosController = require("./controller/prestador_servicos");
 const sexoClienteController = require("./controller/sexo_cliente");
@@ -27,6 +28,9 @@ const sexo_prestador_servicos = require("./controller/sexo_prestador_servicos");
 
 // Rotas de sessão
 // routes.post("/sessao", sessaoController.store);
+
+// Rota de cadastro de atendimento de serviço
+routes.post("/atendimento_servico", atendimentoServicoController.store);
 
 // Rota de cadastro de cliente
 routes.post("/cliente", clienteController.store);
@@ -47,6 +51,10 @@ routes.post("/sexo_prestador_servicos", sexoPrestadorServicosController.store);
 // routes.use(autorizacaoMid);
 
 // Rotas privadas
+
+// Rotas de atendimento servico
+routes.get("/atendimentos_servicos", atendimentoServicoController.list);
+routes.get("/atendimento_servico/:id", atendimentoServicoController.searchById);
 
 // Rotas de cliente
 routes.get("/clientes", clienteController.list);

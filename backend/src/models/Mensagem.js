@@ -21,9 +21,9 @@ class Mensagem extends Model {
         this.belongsTo(models.Cliente, {
             foreignKey: "id_cliente"
         });
-        // this.belongsTo(models.PrestadorServicos, {
-        //     foreignKey: "id_prestador_servicos"
-        // });
+        this.belongsTo(models.PrestadorServicos, {
+            foreignKey: "id_prestador_servicos"
+        });
     }
 }
 

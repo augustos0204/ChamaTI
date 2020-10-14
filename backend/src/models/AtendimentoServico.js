@@ -16,14 +16,14 @@ class AtendimentoServico extends Model {
         );
     }
 
-    static associate(models){
-        // this.hasOne(models.Servico, {
-        //     foreignKey: "resolvido_por"
-        // });
-        // this.hasOne(models.PrestadorServicos, {
-        //     foreignKey: "prestador_servicos_id"
-        // });
-    }
+    // static associate(models){
+    //     this.hasOne(models.Servico, {
+    //         foreignKey: "resolvido_por"
+    //     });
+    //     this.hasOne(models.PrestadorServicos, {
+    //         foreignKey: "prestador_servicos_id"
+    //     });
+    // }
 }
 
 module.exports = AtendimentoServico;

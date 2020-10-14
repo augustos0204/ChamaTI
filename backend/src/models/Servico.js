@@ -20,6 +20,7 @@ class Servico extends Model {
     }
 
     static associate(models) {
+        // console.log(models)
         this.belongsTo(models.Cliente);
         // this.hasMany(models.PrestadorServicos, {
         //     foreignKey: "resolvido_por"
@@ -27,6 +28,9 @@ class Servico extends Model {
         this.belongsToMany(models.PrestadorServicos,
             { through: models.AtendimentoServico }
         );
+        // this.belongsToMany(models.PrestadorServicos,
+        //     { through: "tbl_atendimento_servico" }
+        // );
         this.hasMany(models.ImagemServico);
     }
 }

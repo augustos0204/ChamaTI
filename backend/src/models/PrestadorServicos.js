@@ -21,6 +21,7 @@ class PrestadorServicos extends Model {
     }
 
     static associate(models){
+        // console.log(models)
         this.belongsTo(models.SexoPrestadorServicos, {
             foreignKey: "sexo_prestador_servicos_id"
         });
@@ -31,7 +32,10 @@ class PrestadorServicos extends Model {
         this.belongsToMany(models.Servico,
             { through: models.AtendimentoServico }
         );
-        // this.hasMany(models.Mensagem);
+        // this.belongsToMany(models.Servico,
+        //     { through: "tbl_atendimento_servico" }
+        // );
+        this.hasMany(models.Mensagem);
     }
 }
 
