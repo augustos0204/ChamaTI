@@ -30,7 +30,8 @@ class PrestadorServicos extends Model {
             foreignKey: "prestador_servicos_id"
         });
         this.belongsToMany(models.Servico,
-            { through: models.AtendimentoServico }
+            { through: models.AtendimentoServico },
+            { foreignKey: "prestador_servicos_id" }
         );
         // this.belongsToMany(models.Servico,
         //     { through: "tbl_atendimento_servico" }
