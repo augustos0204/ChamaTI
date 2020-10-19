@@ -4,7 +4,11 @@
     "password": "bcd127",
     "database": "db_chama_ti",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "define" : {
+      "timestamp" : true,
+      "underscored" : true
+    }
   },
   "test": {
     "username": "root",

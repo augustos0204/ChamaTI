@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "mysql2": "^2.1.0",
     "react": "^16.13.1",
@@ -36,6 +37,7 @@
     ]
   },
   "devDependencies": {
+    "@types/sequelize": "^4.28.9",
     "nodemon": "^2.0.4",
     "sequelize-cli": "^6.2.0"
   }

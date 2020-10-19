@@ -1,11 +1,7 @@
-'use strict';
-
-const { query } = require("express");
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.createTable("tbl_cliente", {
-      id_cliente: {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -27,12 +23,12 @@ module.exports = {
         type: Sequelize.DATEONLY,
         allowNull: false
       },
-      rg: {
+      cpf: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
       },
-      cpf: {
+      telefone: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true
@@ -41,12 +37,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true
       },
-      id_sexo_cliente : {
+      sexo_cliente_id : {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "tbl_sexo_cliente",
-          key: "id_sexo_cliente"
+          key: "id"
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE"

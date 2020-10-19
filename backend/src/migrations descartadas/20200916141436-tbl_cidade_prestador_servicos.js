@@ -1,16 +1,14 @@
 'use strict';
 
-const { query } = require("express");
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("tbl_sexo_cliente", {
+    return queryInterface.createTable("tbl_cidade_prestador_servicos", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      sexo:  {
+      nome_cidade:  {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -26,6 +24,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("tbl_sexo_cliente");
+    return queryInterface.dropTable("tbl_cidade_prestador_servicos");
   }
 };

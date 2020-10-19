@@ -1,34 +1,38 @@
 const { Model, DataTypes } = require("sequelize");
 
 class Servico extends Model {
-    static init (sequelize){
+    static init(sequelize) {
         super.init(
             {
-            id_servico: DataTypes.INTEGER,
-            problema: DataTypes.STRING,
-            descricao: DataTypes.TEXT,
-            data_hora_abertura: DataTypes.DATE,
-            data_hora_encerramento: DataTypes.DATE,
-            em_aberto: DataTypes.BOOLEAN,
-            resolvido_por: DataTypes.INTEGER,
-            created_at: DataTypes.DATE,
-            updated_at: DataTypes.DATE,
-        },
-        {
-            sequelize,
-            tableName:"tbl_servico"
-        }
+                problema: DataTypes.STRING,
+                descricao: DataTypes.TEXT,
+                data_hora_abertura: DataTypes.DATE,
+                data_hora_encerramento: DataTypes.DATE,
+                em_aberto: DataTypes.BOOLEAN,
+                em_atendimento: DataTypes.BOOLEAN,
+                resolvido_por: DataTypes.INTEGER,
+            },
+            {
+                sequelize,
+                tableName: "tbl_servico"
+            }
         );
     }
 
-    static associate(models){
-        this.hasOne(models.Cliente, {
-            foreignKey: "id_cliente"
-        });
-        this.hasOne(models.Prestador_Servicos, {
-            foreignKey: "id_prestador_servicos"
-        });
-        this.hasMany(models.Imagem_Servico);
+    static associate(models) {
+        // console.log(models)
+        this.belongsTo(models.Cliente);
+        // this.hasMany(models.PrestadorServicos, {
+        //     foreignKey: "resolvido_por"
+        // });
+        this.belongsToMany(models.PrestadorServicos,
+            { through: models.AtendimentoServico },
+            { foreignKey : "servico_id" }
+        );
+        // this.belongsToMany(models.PrestadorServicos,
+        //     { through: "tbl_atendimento_servico" }
+        // );
+        this.hasMany(models.ImagemServico);
     }
 }
 
