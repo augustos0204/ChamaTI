@@ -30,7 +30,6 @@ module.exports = {
             data_hora_inicio,
             data_hora_termino,
             servico_id,
-            prestador_servicos_id
         } = request.body;
 
         let prestador_servicos = await PrestadorServicos.findByPk( token );
@@ -48,7 +47,7 @@ module.exports = {
             data_hora_inicio,
             data_hora_termino,
             servico_id,
-            token
+            prestador_servicos_id : token
         })
 
         if( !atendimento_servico ){
