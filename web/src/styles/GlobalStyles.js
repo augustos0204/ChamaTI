@@ -7,6 +7,7 @@ export const GlobalStyles = createGlobalStyle`
         --color-light: #ff7543;
         --color-dark: #ae0000;
         --color-accent: #000000;
+        --color-white: #fafafa;
     }
 
     *{
@@ -25,7 +26,7 @@ export const GlobalStyles = createGlobalStyle`
         height: inherit;
     }
 
-    input[type="text"]{
+    input[type="text"], input[type="email"], input[type="password"]{
         width: 280px;
         height: 40px;
         border: none;
@@ -65,7 +66,7 @@ export const GlobalStyles = createGlobalStyle`
         display: block;
         flex-direction: row;
         position: relative;
-        background-color: white;
+        background-color: var(--color-white);
         /* box-shadow: 0 4px 2px -2px gray; */
     }
 
@@ -102,7 +103,7 @@ export const GlobalStyles = createGlobalStyle`
         min-height: 100px;
         height: auto;
         display: block;
-        background-color: white;
+        background-color: var(--color-white);
         padding: 60px;
         padding-left: 10px;
         padding-right: 10px;

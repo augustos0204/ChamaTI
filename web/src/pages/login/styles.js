@@ -2,24 +2,36 @@ import styled from 'styled-components';
 
 export const ContainerLogo = styled.div`
     width: 100%;
-    height: 200px;
+    min-height: 0px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     align-content: center;
     margin-bottom: 30px;
+    margin-bottom: 100px;
 `;
 
 export const LogoChamaTI = styled.div`
     width: 100%;
-    height: 200px;
+    height: inherit;
     display: block;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     font-size: 3.0em;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: sans-serif;
+    font-weight: bold;
+    cursor: default;
+    user-select: none;
+    transition: 0.5s;
+    
+    &:hover{
+        transition: 0.5s;
+        color: var(--color-primary);
+        text-shadow: 0px 0px 10px var(--color-light);
+    }
 `;
 
 export const LogoImage = styled.figure`
@@ -77,7 +89,7 @@ export const TitleTextEntry = styled.div`
     opacity: 1;
 `;
 
-export const BotãoFormularioLogin = styled.div`
+export const BotãoFormularioLogin = styled.button`
     width: 100%;
     min-height: 1px;
     height: auto;
@@ -86,7 +98,7 @@ export const BotãoFormularioLogin = styled.div`
     border-radius: 38.5px;
     font-size: 1.1em;
     margin: 5px 0;
-    background-color: #fff;
+    background-color: var(--color-white);
     border: 2px solid var(--color-primary);
     color: var(--color-primary);
     cursor: pointer;
@@ -95,12 +107,12 @@ export const BotãoFormularioLogin = styled.div`
     :hover&{
         transition: 0.5s;
         background-color: var(--color-primary);
-        color: #fff;
+        color: white;
     }
 `;
 
-export const ContainerTextoEsqueceuASenha = styled.div`
-    width: 300px;
+export const ContainerMensagemLink = styled.div`
+    width: 100%;
     min-height: 10px;
     height: auto;
     text-align: center;
@@ -111,7 +123,7 @@ export const ContainerTextoEsqueceuASenha = styled.div`
     font-size: 1.1em;
 `;
 
-export const LinkCliqueRecuperarSenha = styled.a`
+export const LinkCliqueMensagem = styled.a`
     font-family: inherit;
     font-size: inherit;
     text-decoration: none;
