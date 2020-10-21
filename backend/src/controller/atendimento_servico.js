@@ -22,17 +22,14 @@ module.exports = {
     },
 
     async store(request, response){
-        let authorization = request.headers.authorization;
-
-        const [ Bearer, token ] = authorization.split(" ");
-
         const {
             data_hora_inicio,
             data_hora_termino,
             servico_id,
+            prestador_servicos_id
         } = request.body;
 
-        let prestador_servicos = await PrestadorServicos.findByPk( token );
+        let prestador_servicos = await PrestadorServicos.findByPk( prestador_servicos_id );
         let servico = await Servico.findByPk( servico_id );
 
         if(!prestador_servicos){
@@ -47,7 +44,7 @@ module.exports = {
             data_hora_inicio,
             data_hora_termino,
             servico_id,
-            prestador_servicos_id : token
+            prestador_servicos_id
         })
 
         if( !atendimento_servico ){
