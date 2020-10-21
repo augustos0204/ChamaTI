@@ -17,12 +17,12 @@ class AtendimentoServico extends Model {
     }
 
     static associate(models){
-        this.hasOne(models.Servico, {
-            foreignKey: "servico_id"
-        });
-        this.hasOne(models.PrestadorServicos, {
-            foreignKey: "prestador_servicos_id"
-        });
+        // this.hasOne(models.Servico, {
+        //     foreignKey: "servico_id"
+        // });
+        // this.hasOne(models.PrestadorServicos, {
+        //     foreignKey: "prestador_servicos_id"
+        // });
     }
 }
 
