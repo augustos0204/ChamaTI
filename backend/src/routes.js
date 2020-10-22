@@ -13,21 +13,18 @@ const express = require("express");
 // Criando o roteirizador
 const routes = express.Router();
 
-// const autorizacaoMid = require("./middlewares/autorizacao");
+const autorizacaoMid = require("./middlewares/autorizacao");
 // const uploadImage = require("./services/firebase");
 
 const atendimentoServicoController = require("./controller/atendimento_servico");
 const clienteController = require("./controller/cliente");
 const prestadorServicosController = require("./controller/prestador_servicos");
+const sessaoController = require("./controller/sessao");
 const sexoClienteController = require("./controller/sexo_cliente");
 const sexoPrestadorServicosController = require("./controller/sexo_prestador_servicos");
 const servicoController = require("./controller/servico");
-const sexo_prestador_servicos = require("./controller/sexo_prestador_servicos");
 
 // Rotas públicas
-
-// Rotas de sessão
-// routes.post("/sessao", sessaoController.store);
 
 // Rota de cadastro de atendimento de serviço
 routes.post("/atendimento_servico", atendimentoServicoController.store);
@@ -47,8 +44,12 @@ routes.post("/sexo_cliente", sexoClienteController.store);
 // Rota de cadastro de sexo_prestador_servicos
 routes.post("/sexo_prestador_servicos", sexoPrestadorServicosController.store);
 
+// Rotas de autenticação sessão
+routes.post("/sessao/cliente", sessaoController.clienteAutenticate);
+routes.post("/sessao/prestador_servicos", sessaoController.prestadorServicoAutenticate);
+
 // Middleware de proteção das rotas
-// routes.use(autorizacaoMid);
+routes.use(autorizacaoMid);
 
 // Rotas privadas
 
@@ -77,9 +78,9 @@ routes.post("/sexo_cliente/update/:id", sexoClienteController.update);
 routes.post("/sexo_cliente/delete/:id", sexoClienteController.delete);
 
 // Rotas de sexo_prestador_servicos
-routes.get("/sexos_prestadores_servicos", sexo_prestador_servicos.list);
-routes.get("/sexo_prestador_servicos/:id", sexo_prestador_servicos.searchById);
-routes.post("/sexo_prestador_servicos/update/:id", sexo_prestador_servicos.update);
-routes.post("/sexo_prestador_servicos/delete/:id", sexo_prestador_servicos.delete);
+routes.get("/sexos_prestadores_servicos", sexoPrestadorServicosController.list);
+routes.get("/sexo_prestador_servicos/:id", sexoPrestadorServicosController.searchById);
+routes.post("/sexo_prestador_servicos/update/:id", sexoPrestadorServicosController.update);
+routes.post("/sexo_prestador_servicos/delete/:id", sexoPrestadorServicosController.delete);
 
 module.exports = routes;
