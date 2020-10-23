@@ -21,6 +21,7 @@ export const GlobalStyles = createGlobalStyle`
         background-color: #e8e8e8;
     }
 
+
     img{
         width: inherit;
         height: inherit;
@@ -37,6 +38,15 @@ export const GlobalStyles = createGlobalStyle`
         margin-bottom: 10px;
         margin-left: auto;
         margin-right: auto;
+    }
+
+    select{
+        width: 130px;
+        height: 30px;
+        font-size: 1.0em;
+        border-radius: 10px;
+        text-align: center;
+        border-color: var(--color-light);
     }
 
     .container{
@@ -104,10 +114,6 @@ export const GlobalStyles = createGlobalStyle`
         height: auto;
         display: block;
         background-color: var(--color-white);
-        padding: 60px;
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-bottom: 10px;
         line-height: 1.5;
         letter-spacing: 0.5px;
     }
