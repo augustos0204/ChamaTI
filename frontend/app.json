@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Tela-Login",
-    "slug": "Tela-Login",
+    "name": "ChamaTI",
+    "slug": "ChamaTI",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
