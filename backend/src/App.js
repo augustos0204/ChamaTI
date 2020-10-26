@@ -1,10 +1,13 @@
 const express = require('express');
-// const cors = require("cors");
+const cors = require("cors");
 const rotas = require('./routes');
 require('./models');
 
 // Iniciando a aplicação
 const app = express();
+
+// Habilitando o CORS para qualquer origem
+app.use(cors());
 
 // Nas requisições podem ter dados tipo Json
 app.use(express.json());

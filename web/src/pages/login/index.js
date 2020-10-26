@@ -18,6 +18,7 @@ const ContentFormLogin = (props) => {
     }
 
     const entrar = async (e) => {
+
         e.preventDefault();
 
         try {
@@ -185,8 +186,8 @@ const ContentFormRegistro = (props) => {
                         <BotaoFormularioLogin type="button" style={{marginRight: "10px"}} onClick={() => {props.mostrarForm("login")}}>
                             Voltar
                         </BotaoFormularioLogin>
-                        <BotaoFormularioLogin type="submit">
-                            Registrar
+                        <BotaoFormularioLogin type="button">
+                            Proximo
                         </BotaoFormularioLogin>
                         
                     </ContainerButtons>
