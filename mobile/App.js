@@ -1,10 +1,39 @@
-import React from 'react';
-import { AsyncStorage, View, KeyboardAvoidingView, Image, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, KeyboardAvoidingView, Image, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
+
+import { api } from './src/services/api';
 
 export default function Login() {
+  const [usuarioLogin, setUsuarioLogin] = useState({
+      email: "",
+      senha: ""
+  });
 
-  const conectar = () => {
+  const handlerInput = (e) => {
+    setUsuarioLogin({...usuarioLogin, [e.target.id]: e.target.value});
 
+    console.log(e.target.id);
+
+    // console.log({...usuarioLogin, [e.target.id]: e.target.value});
+  }
+
+  const login = async () => {
+    try {
+      const response = await api.post("/sessao/cliente", usuarioLogin);
+
+      if(response.status === 201){
+          console.log("Logado!");
+      }
+    } 
+    catch (error) {
+      console.log(error);
+      if(error.response){
+          return console.log(error.response.data.erro);
+      }
+      else{
+          return console.log("Ops, erro de conexão...");
+      }
+    }
   }
 
   return (
@@ -17,32 +46,42 @@ export default function Login() {
         />
 
       </View>
-
         <View style={styles.container}>
-
           <TextInput
             style={styles.input}
-            placeholder="Email"
+            id='email'
+            placeholder={"Email"}
             autoCorrect={false}
-            onChangeText={()=> {}}
+            value={usuarioLogin.email}
+            // onChange={handlerInput}
+            // onChangeText={handlerInput}
           />
 
         <TextInput
             style={styles.input}
             placeholder="Senha"
             autoCorrect={false}
-            onChangeText={()=> {}}
+            value={usuarioLogin.senha}
+            onChangeText={handlerInput}
+          />
+
+          <TextInput
+            style={styles.input}
+
+            placeholder={"Email"}
+            // style={styles.textInput}
+            // placeholderTextColor= {colors.white}
+            value={usuarioLogin.email}
+            // onChangeText={(text:string) => setEmail(text)}
           />
         
-
-        <TouchableOpacity style={styles.btnSubmit}>
+        <TouchableOpacity style={styles.btnSubmit} onPressOut={login}>
           <Text style={styles.btnSubmitText}>Entrar</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.btnSubmit}>
           <Text style={styles.btnSubmitText}>Criar Conta</Text>
         </TouchableOpacity>
-
       </View>
     </KeyboardAvoidingView>
   );
