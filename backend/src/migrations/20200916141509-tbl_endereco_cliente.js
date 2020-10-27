@@ -5,7 +5,7 @@ const { query } = require("express");
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.createTable("tbl_endereco_cliente", {
-      id_endereco_cliente: {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -22,46 +22,28 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      id_bairro : {
-        type: Sequelize.INTEGER,
+      bairro: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "tbl_bairro",
-          key: "id_bairro"
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
       },
-      id_cidade : {
-        type: Sequelize.INTEGER,
+      cidade: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "tbl_cidade",
-          key: "id_cidade"
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
       },
-      id_estado : {
-        type: Sequelize.INTEGER,
+      estado: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "tbl_estado",
-          key: "id_estado"
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
       },
       complemento:  {
         type: Sequelize.STRING,
         allowNull: true
       },
-      id_cliente : {
+      cliente_id : {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: "tbl_cliente",
-          key: "id_cliente"
+          key: "id"
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE"

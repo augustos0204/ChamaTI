@@ -4,8 +4,8 @@ const { query } = require("express");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("tbl_bairro", {
-      id_bairro: {
+    return queryInterface.createTable("tbl_bairro_cliente", {
+      id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -26,6 +26,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("tbl_bairro");
+    return queryInterface.dropTable("tbl_bairro_cliente");
   }
 };
