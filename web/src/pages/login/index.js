@@ -6,6 +6,8 @@ import chamaTiLogo from "../../assets/chama.png";
 import {ContainerLogo, LogoChamaTI, LogoImage, ContainerFormLogin, FormLogin, ContainerTexts, ContainerButtons, BotaoFormularioLogin, LinkCliqueMensagem, ContainerMensagemLink, ContainerFormularioRegistro} from "./styles"
 import { api } from "../../services/api";
 
+import { buscarViaCep } from "../../services/viaCep";
+
 const ContentFormLogin = (props) => {
     const [usuarioLogin, setUsuarioLogin] = useState({
         email: "",
@@ -114,7 +116,7 @@ const ContentFormRegistro = (props) => {
 
     const handlerInput = (e) => {
         setUsuarioRegistro({...usuarioRegistro, [e.target.id]: e.target.value});
-
+        console.log(usuarioRegistro);
     }
 
     const registrar = async (e) => {
@@ -138,11 +140,26 @@ const ContentFormRegistro = (props) => {
         }
     }
 
-    return (
-        <container>
-            <ContainerLogo>
-                <LogoChamaTI id="logoChamaTIName">
-                    ChamaTI
+        const responseCep = async (e) => {
+            const cep = await (e.target.value);
+            const response = await(await buscarViaCep(cep)).data;
+
+            await console.log(response);
+        }
+
+        campos = {
+            cep: "cep"
+        }
+
+        const prencherCampos = () => {
+            
+        }
+
+        return (
+            <container>
+                <ContainerLogo>
+                    <LogoChamaTI id="logoChamaTIName">
+                        ChamaTI
                     <LogoImage>
                         <img src={chamaTiLogo} alt="Logo ChamaTI" title="Logo ChamaTI"/>
                     </LogoImage>
@@ -156,27 +173,27 @@ const ContentFormRegistro = (props) => {
                             justifyContent: "center",
                             alignItems: "center",
                         }}>
-                            <input type="text" value={usuarioRegistro.nome} onChange={{handlerInput}} required placeholder="Nome:"/>
-                            <input type="text" required placeholder="Email:" onChange={{handlerInput}} value={usuarioRegistro.email}/>
-                            <input type="text" required placeholder="Senha:" onChange={{handlerInput}} value={usuarioRegistro.senha}/>
-                            <input type="text" required placeholder="Data de Nascimento:" onChange={{handlerInput}} value={usuarioRegistro.data_nascimento}/>
-                            <input type="text" required placeholder="RG:" onChange={{handlerInput}} value={usuarioRegistro.rg}/>
-                            <input type="text" required placeholder="CPF:" onChange={{handlerInput}} value={usuarioRegistro.cpf}/>
-                            <input type="text" required placeholder="Telefone:" onChange={{handlerInput}} value={usuarioRegistro.telefone}/>
+                            <input type="text" required placeholder="Nome:" id="nome" value={usuarioRegistro.nome} onChange={handlerInput}/>
+                            <input type="text" required placeholder="Email:" id="email" value={usuarioRegistro.email} onChange={handlerInput}/>
+                            <input type="text" required placeholder="Senha:" id="senha" value={usuarioRegistro.senha} onChange={handlerInput}/>
+                            <input type="text" required placeholder="Data de Nascimento:" id="data_nascimento" value={usuarioRegistro.data_nascimento} onChange={handlerInput}/>
+                            <input type="text" required placeholder="RG:" id="rg" value={usuarioRegistro.rg} onChange={handlerInput}/>
+                            <input type="text" required placeholder="CPF:" id="cpf" value={usuarioRegistro.cpf} onChange={handlerInput}/>
+                            <input type="text" required placeholder="Telefone:" id="telefone" value={usuarioRegistro.telefone} onChange={handlerInput}/>
                             Sexo:
-                            <select required>
-                                <option value="masc">Masculino</option>
-                                <option value="Feminino">Feminino</option>
+                            <select required onChange={handlerInput} id="sexo_id">
+                                <option value="1">Masculino</option>
+                                <option value="2">Feminino</option>
                             </select>
                         </ContainerTexts>
                         <ContainerTexts>
-                            <input type="text" required placeholder="Cep:" value={usuarioRegistro.cep}/>
-                            <input type="text" required placeholder="Logradouro:" value={usuarioRegistro.logradouro}/>
-                            <input type="text" required placeholder="Bairro:" value={usuarioRegistro.bairro}/>
-                            <input type="text" required placeholder="Cidade:" value={usuarioRegistro.cidade}/>
-                            <input type="text" required placeholder="Estado:" value={usuarioRegistro.estado}/>
-                            <input type="text" required placeholder="Numero:" value={usuarioRegistro.numero}/>
-                            <input type="text" required placeholder="Complemento:" value={usuarioRegistro.complemento}/>
+                            <input type="text" required placeholder="cep:" id="cep" onBlur={responseCep}/>
+                            <input type="text" required placeholder="logradouro:" id="logradouro" value={usuarioRegistro.logradouro} onChange={handlerInput}/>
+                            <input type="text" required placeholder="bairro:" id="bairro" value={usuarioRegistro.bairro} onChange={handlerInput}/>
+                            <input type="text" required placeholder="cidade:" id="localidade" value={usuarioRegistro.cidade} onChange={handlerInput}/>
+                            <input type="text" required placeholder="estado:" id="uf" value={usuarioRegistro.estado} onChange={handlerInput}/>
+                            <input type="text" required placeholder="numero:" id="numero" value={usuarioRegistro.numero} onChange={handlerInput}/>
+                            <input type="text" required placeholder="complemento:" id="complemento" value={usuarioRegistro.complemento} onChange={handlerInput}/>
                         </ContainerTexts>
                     </ContainerFormularioRegistro>
                     <ContainerButtons style={{
