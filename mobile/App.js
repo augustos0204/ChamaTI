@@ -6,32 +6,59 @@ import { api } from './src/services/api';
 export default function Login() {
   const [usuarioLogin, setUsuarioLogin] = useState({
       email: "",
-      senha: ""
+      senha: "",
+      teste: ""
   });
 
   const handlerInput = (e) => {
-    setUsuarioLogin({...usuarioLogin, [e.target.id]: e.target.value});
+      // setUsuarioLogin({})
+      // setUsuarioLogin({...usuarioLogin, [e.target.name]: e.target.value});
 
-    console.log(e.target.id);
+      // this.setUsuarioLogin({
+      //   [ e.target.name ] : e.target.value
+      // })
+  
+      // console.log([e.target.name]);
+  
+      // console.log({...usuarioLogin, [e.target.id]: e.target.value});
 
-    // console.log({...usuarioLogin, [e.target.id]: e.target.value});
+      // console.log([e.target.name]);
+
+      console.log(e);
+
+      console.log(e.parent);
+
+      setUsuarioLogin({
+        ...usuarioLogin,
+        email : "Sim"
+      })
+
+      console.log(usuarioLogin);
   }
 
   const login = async () => {
-    try {
-      const response = await api.post("/sessao/cliente", usuarioLogin);
+    if(!usuarioLogin.email){
+      alert('Campo email vazio')
+    }
+    else if(!usuarioLogin.senha){
+        alert('Campo senha vazio')
+    }
+    else{
+      try {
+        const response = await api.post("/sessao/cliente", usuarioLogin);
 
-      if(response.status === 201){
-          console.log("Logado!");
-      }
-    } 
-    catch (error) {
-      console.log(error);
-      if(error.response){
-          return console.log(error.response.data.erro);
-      }
-      else{
-          return console.log("Ops, erro de conexão...");
+        if(response.status === 201){
+            console.log("Logado!");
+        }
+      } 
+      catch (error) {
+        console.log(error);
+        if(error.response){
+            return console.log(error.response.data.erro);
+        }
+        else{
+            return console.log("Ops, erro de conexão...");
+        }
       }
     }
   }
@@ -49,10 +76,10 @@ export default function Login() {
         <View style={styles.container}>
           <TextInput
             style={styles.input}
-            id='email'
+            // id='email'
             placeholder={"Email"}
             autoCorrect={false}
-            value={usuarioLogin.email}
+            // value={usuarioLogin.email}
             // onChange={handlerInput}
             // onChangeText={handlerInput}
           />
@@ -61,18 +88,22 @@ export default function Login() {
             style={styles.input}
             placeholder="Senha"
             autoCorrect={false}
-            value={usuarioLogin.senha}
-            onChangeText={handlerInput}
+            // value={usuarioLogin.senha}
+            // onChangeText={handlerInput}
           />
 
           <TextInput
             style={styles.input}
-
-            placeholder={"Email"}
+            name={"teste"}
+            placeholder={"Teste"}
             // style={styles.textInput}
             // placeholderTextColor= {colors.white}
-            value={usuarioLogin.email}
-            // onChangeText={(text:string) => setEmail(text)}
+            // value={usuarioLogin.email}
+            onChangeText={handlerInput}
+            // onChange={handlerInput}
+            // onChange={( coisa ) => {
+            //   console.log(coisa.target.name);
+            // }}
           />
         
         <TouchableOpacity style={styles.btnSubmit} onPressOut={login}>
