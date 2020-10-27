@@ -140,19 +140,23 @@ const ContentFormRegistro = (props) => {
         }
     }
 
+        const campoLogradouro = document.getElementById('logradouro');
+        const campoBairro = document.getElementById('bairro');
+        const campoLocalidade = document.getElementById('localidade');
+        const campoEstado = document.getElementById('uf');
+        const campoNumero = document.getElementById('numero');
+
         const responseCep = async (e) => {
             const cep = await (e.target.value);
             const response = await(await buscarViaCep(cep)).data;
 
-            await console.log(response);
+            await prencherCampos(response);
         }
 
-        campos = {
-            cep: "cep"
-        }
-
-        const prencherCampos = () => {
-            
+        const prencherCampos = (dados) => {
+            campoLogradouro.value = dados.logradouro;
+            campoBairro.value = dados.bairro;
+            campoLocalidade.value = dados.localidade;
         }
 
         return (
