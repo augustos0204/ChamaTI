@@ -1,9 +1,13 @@
 import React from 'react';
-import { View, KeyboardAvoidingView, Image, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { AsyncStorage, View, KeyboardAvoidingView, Image, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function Login() {
-  return (
 
+  const conectar = () => {
+
+  }
+
+  return (
     <KeyboardAvoidingView style={styles.background}>
       <View style={styles.containerLogo}>
         <Image
