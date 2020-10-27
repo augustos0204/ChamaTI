@@ -157,6 +157,8 @@ const ContentFormRegistro = (props) => {
             campoLogradouro.value = dados.logradouro;
             campoBairro.value = dados.bairro;
             campoLocalidade.value = dados.localidade;
+            campoEstado.value = dados.estado;
+            campoNumero.value = dados.numero;
         }
 
         return (
