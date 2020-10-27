@@ -6,11 +6,6 @@ require('./models');
 // Iniciando a aplicação
 const app = express();
 
-<<<<<<< HEAD
-// Habilitando o CORS para qualquer origem
-=======
-// Desbloqueando o CORS
->>>>>>> origin/controller-joao
 app.use(cors());
 
 // Nas requisições podem ter dados tipo Json
