@@ -140,25 +140,28 @@ const ContentFormRegistro = (props) => {
         }
     }
 
-        const campoLogradouro = document.getElementById('logradouro');
-        const campoBairro = document.getElementById('bairro');
-        const campoLocalidade = document.getElementById('localidade');
-        const campoEstado = document.getElementById('uf');
-        const campoNumero = document.getElementById('numero');
-
         const responseCep = async (e) => {
             const cep = await (e.target.value);
             const response = await(await buscarViaCep(cep)).data;
+            await console.log(response);
 
             await prencherCampos(response);
         }
 
         const prencherCampos = (dados) => {
+
+            const campoLogradouro = document.getElementById('logradouro');
+            const campoBairro = document.getElementById('bairro');
+            const campoLocalidade = document.getElementById('localidade');
+            const campoEstado = document.getElementById('uf');
+            const campoCep = document.getElementById('cep');
+
             campoLogradouro.value = dados.logradouro;
             campoBairro.value = dados.bairro;
             campoLocalidade.value = dados.localidade;
             campoEstado.value = dados.estado;
-            campoNumero.value = dados.numero;
+            campoCep.value = dados.cep;
+            
         }
 
         return (
@@ -194,10 +197,10 @@ const ContentFormRegistro = (props) => {
                         </ContainerTexts>
                         <ContainerTexts>
                             <input type="text" required placeholder="cep:" id="cep" onBlur={responseCep}/>
-                            <input type="text" required placeholder="logradouro:" id="logradouro" value={usuarioRegistro.logradouro} onChange={handlerInput}/>
-                            <input type="text" required placeholder="bairro:" id="bairro" value={usuarioRegistro.bairro} onChange={handlerInput}/>
-                            <input type="text" required placeholder="cidade:" id="localidade" value={usuarioRegistro.cidade} onChange={handlerInput}/>
-                            <input type="text" required placeholder="estado:" id="uf" value={usuarioRegistro.estado} onChange={handlerInput}/>
+                            <input type="text" required disabled placeholder="logradouro:" id="logradouro" value={usuarioRegistro.logradouro} onChange={handlerInput}/>
+                            <input type="text" required disabled placeholder="bairro:" id="bairro" value={usuarioRegistro.bairro} onChange={handlerInput}/>
+                            <input type="text" required disabled placeholder="cidade:" id="localidade" value={usuarioRegistro.cidade} onChange={handlerInput}/>
+                            <input type="text" required disabled placeholder="estado:" id="uf" value={usuarioRegistro.estado} onChange={handlerInput}/>
                             <input type="text" required placeholder="numero:" id="numero" value={usuarioRegistro.numero} onChange={handlerInput}/>
                             <input type="text" required placeholder="complemento:" id="complemento" value={usuarioRegistro.complemento} onChange={handlerInput}/>
                         </ContainerTexts>
