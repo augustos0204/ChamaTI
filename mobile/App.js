@@ -1,65 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, KeyboardAvoidingView, Image, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { api } from './src/services/api';
 
 export default function Login() {
   const [usuarioLogin, setUsuarioLogin] = useState({
-      email: "",
-      senha: "",
-      teste: ""
+    email: "",
+    senha: "",
   });
 
-  const handlerInput = (e) => {
-      // setUsuarioLogin({})
-      // setUsuarioLogin({...usuarioLogin, [e.target.name]: e.target.value});
-
-      // this.setUsuarioLogin({
-      //   [ e.target.name ] : e.target.value
-      // })
-  
-      // console.log([e.target.name]);
-  
-      // console.log({...usuarioLogin, [e.target.id]: e.target.value});
-
-      // console.log([e.target.name]);
-
-      console.log(e);
-
-      console.log(e.parent);
-
-      setUsuarioLogin({
-        ...usuarioLogin,
-        email : "Sim"
-      })
-
-      console.log(usuarioLogin);
+  const handlerInput = (e, name) => {
+    setUsuarioLogin({
+      ...usuarioLogin,
+      [name]: e
+    })
   }
 
+  useEffect(() => { console.log(usuarioLogin) }, [usuarioLogin])
+
   const login = async () => {
-    if(!usuarioLogin.email){
+    if(usuarioLogin.email == ""){
       alert('Campo email vazio')
     }
-    else if(!usuarioLogin.senha){
+    else if(usuarioLogin.senha == ""){
         alert('Campo senha vazio')
     }
     else{
-      try {
+      // try {
         const response = await api.post("/sessao/cliente", usuarioLogin);
 
-        if(response.status === 201){
-            console.log("Logado!");
+        console.log( response.data );
+
+        if (response.status === 201) {
+          console.log("Logado!");
         }
-      } 
-      catch (error) {
-        console.log(error);
-        if(error.response){
-            return console.log(error.response.data.erro);
+      // }
+      // catch (error) {
+        // console.log(error);
+        // if (error.response) {
+        //   return console.log(error.response.data.erro);
+        // }
+        else {
+          return console.log("Ops, erro de conexão...");
         }
-        else{
-            return console.log("Ops, erro de conexão...");
-        }
-      }
+      // }
     }
   }
 
@@ -68,44 +52,27 @@ export default function Login() {
       <View style={styles.containerLogo}>
         <Image
           style={styles.imagem}
-          resizeMode= 'center'
+          resizeMode='center'
           source={require('./src/Image/fire.png')}
         />
-
       </View>
-        <View style={styles.container}>
-          <TextInput
-            style={styles.input}
-            // id='email'
-            placeholder={"Email"}
-            autoCorrect={false}
-            // value={usuarioLogin.email}
-            // onChange={handlerInput}
-            // onChangeText={handlerInput}
-          />
+
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder={"Email"}
+          autoCorrect={false}
+          value={usuarioLogin.email}
+          onChangeText={e => handlerInput(e, 'email')}
+        />
 
         <TextInput
-            style={styles.input}
-            placeholder="Senha"
-            autoCorrect={false}
-            // value={usuarioLogin.senha}
-            // onChangeText={handlerInput}
-          />
+          style={styles.input}
+          placeholder="Senha"
+          autoCorrect={false}
+          onChangeText={e => handlerInput(e, 'senha')}
+        />
 
-          <TextInput
-            style={styles.input}
-            name={"teste"}
-            placeholder={"Teste"}
-            // style={styles.textInput}
-            // placeholderTextColor= {colors.white}
-            // value={usuarioLogin.email}
-            onChangeText={handlerInput}
-            // onChange={handlerInput}
-            // onChange={( coisa ) => {
-            //   console.log(coisa.target.name);
-            // }}
-          />
-        
         <TouchableOpacity style={styles.btnSubmit} onPressOut={login}>
           <Text style={styles.btnSubmitText}>Entrar</Text>
         </TouchableOpacity>
@@ -123,12 +90,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    
+
     // backgroundColor: '#181818',
-  }, 
+  },
   containerLogo: {
     flex: 1,
-    justifyContent:'center',
+    justifyContent: 'center',
     // backgroundColor: '#181818',
   },
 
@@ -143,8 +110,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '90%',
     // height: '80%',
-  }, 
-  
+  },
+
   input: {
     backgroundColor: '#FFF',
     width: '90%',
@@ -153,8 +120,8 @@ const styles = StyleSheet.create({
     fontSize: 17,
     borderRadius: 7,
     padding: 10,
-  }, 
-  
+  },
+
   btnSubmit: {
     backgroundColor: '#F87700',
     width: '90%',
