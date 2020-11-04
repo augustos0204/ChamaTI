@@ -52,9 +52,8 @@ module.exports = {
             return response.status( 404 ).send( { erro : "Cadastro mal sucedido." } );
         };
 
-        const atualizarStatusAtendimentoServico = await atendimento_servico.updateServico({
-            em_atendimento: true,
-        });
+        servico.em_atendimento = true;
+        const atualizarStatusAtendimentoServico =  await servico.save();
 
         if( !atualizarStatusAtendimentoServico ){
             return response.status( 404 ).send( { erro : "Atualização para em atendimento mal sucedida." } );
