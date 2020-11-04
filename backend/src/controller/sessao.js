@@ -22,7 +22,7 @@ module.exports = {
         }
 
         // Gera um token que valida a autenticação do cliente
-        const token = jwt.sign({ alunoId: cliente.id }, authConfig.secret);
+        const token = jwt.sign({ user_id: cliente.id }, authConfig.secret);
 
         return response.status(201).send({
             cliente: {
@@ -49,7 +49,7 @@ module.exports = {
         }
 
         // Gera um token que valida a autenticação do prestador serviço
-        const token = jwt.sign({ alunoId: prestador_servicos.id }, authConfig.secret);
+        const token = jwt.sign({ user_id: prestador_servicos.id }, authConfig.secret);
 
         return response.status(201).send({
             prestador_servicos: {

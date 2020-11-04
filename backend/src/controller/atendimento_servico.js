@@ -22,11 +22,12 @@ module.exports = {
     },
 
     async store(request, response){
+        const prestador_servicos_id = request.user_id;
+
         const {
             data_hora_inicio,
             data_hora_termino,
             servico_id,
-            prestador_servicos_id
         } = request.body;
 
         let prestador_servicos = await PrestadorServicos.findByPk( prestador_servicos_id );
@@ -45,11 +46,19 @@ module.exports = {
             data_hora_termino,
             servico_id,
             prestador_servicos_id
-        })
+        });
 
         if( !atendimento_servico ){
             return response.status( 404 ).send( { erro : "Cadastro mal sucedido." } );
-        }
+        };
+
+        const atualizarStatusAtendimentoServico = await atendimento_servico.updateServico({
+            em_atendimento: true,
+        });
+
+        if( !atualizarStatusAtendimentoServico ){
+            return response.status( 404 ).send( { erro : "Atualização para em atendimento mal sucedida." } );
+        };
 
         return response.status(201).send({
             atendimento_servico

@@ -17,8 +17,8 @@ module.exports = ( req, res, next ) => {
     try {
         const retorno = jwt.verify(token, authConfig.secret);
 
-        req.id = retorno.id;
-
+        req.user_id = retorno.user_id;
+        
         return next();
     } catch (error) {
         res.status(401).send({ erro : "Token inválido." })
