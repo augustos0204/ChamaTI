@@ -61,6 +61,8 @@ routes.get("/cliente/:id", clienteController.searchById);
 // Rotas de prestador de serviços
 routes.get("/servicos", servicoController.list);
 routes.get("/prestador_servicos/servicos", servicoController.listByAtendimento);
+routes.get("/prestador_servicos/servicos/em_atendimento", atendimentoServicoController.searchEmAtendimento);
+routes.post("/prestador_servicos/servicos/finalizar_atendimento", atendimentoServicoController.finalizarAtendimento);
 routes.get("/prestadores_servicos", prestadorServicosController.list);
 routes.get("/prestador_servicos/:id", prestadorServicosController.searchById);
 
