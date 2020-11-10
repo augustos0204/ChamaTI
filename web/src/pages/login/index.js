@@ -3,12 +3,31 @@ import React, { useState } from "react";
 import foto from "../../assets/menu.png";
 import chamaTiLogo from "../../assets/chama.png";
 
-import {ContainerLogo, LogoChamaTI, LogoImage, ContainerFormLogin, FormLogin, ContainerTexts, ContainerButtons, BotaoFormularioLogin, LinkCliqueMensagem, ContainerMensagemLink, ContainerFormularioRegistro} from "./styles"
+import {
+    ContainerLogo, 
+    LogoChamaTI, 
+    LogoImage, 
+    ContainerFormLogin, 
+    FormLogin, 
+    ContainerTexts, 
+    ContainerButtons, 
+    BotaoFormularioLogin, 
+    LinkCliqueMensagem, 
+    ContainerMensagemLink, 
+    ContainerFormularioRegistro
+} 
+from "./styles";
+
 import { api } from "../../services/api";
 
 import { buscarViaCep } from "../../services/viaCep";
 
+import { useHistory } from "react-router-dom";
+import { signIn } from "../../services/security";
+
 const ContentFormLogin = (props) => {
+    const history = useHistory();
+
     const [usuarioLogin, setUsuarioLogin] = useState({
         email: "",
         senha: ""
@@ -27,7 +46,10 @@ const ContentFormLogin = (props) => {
             const response = await api.post("/sessao/cliente", usuarioLogin);
 
             if(response.status === 201){
-                window.alert("Logado!");
+                
+                signIn(response.data);
+
+                return history.push("/home");
             }
 
         } catch (error) {
@@ -139,13 +161,23 @@ const ContentFormRegistro = (props) => {
             }
         }
     }
+        const validaCep = (element) => {
+            return true;
+        }
 
         const responseCep = async (e) => {
-            const cep = await (e.target.value);
-            const response = await(await buscarViaCep(cep)).data;
-            await console.log(response);
-
-            await prencherCampos(response);
+            if (validaCep(e)){
+                try {
+                    const cep = await (e.target.value);
+                    const response = await(await buscarViaCep(cep)).data;
+                    await console.log(response);
+    
+                    await prencherCampos(response);
+    
+                } catch (error) {
+                    window.alert('Não foi possível localizar seu CEP, por favor, digite manualmente:');
+                }
+            }
         }
 
         const prencherCampos = (dados) => {
@@ -159,9 +191,18 @@ const ContentFormRegistro = (props) => {
             campoLogradouro.value = dados.logradouro;
             campoBairro.value = dados.bairro;
             campoLocalidade.value = dados.localidade;
-            campoEstado.value = dados.estado;
+            campoEstado.value = dados.uf;
             campoCep.value = dados.cep;
-            
+
+            usuarioRegistro.logradouro = dados.logradouro;
+            usuarioRegistro.bairro = dados.bairro;
+            usuarioRegistro.cidade = dados.localidade;
+            usuarioRegistro.estado = dados.uf;
+            usuarioRegistro.cep = dados.cep;
+        }
+
+        const selectSexoValue = (e) => {
+            console.log("ae");
         }
 
         return (
@@ -183,14 +224,14 @@ const ContentFormRegistro = (props) => {
                             alignItems: "center",
                         }}>
                             <input type="text" required placeholder="Nome:" id="nome" value={usuarioRegistro.nome} onChange={handlerInput}/>
-                            <input type="text" required placeholder="Email:" id="email" value={usuarioRegistro.email} onChange={handlerInput}/>
-                            <input type="text" required placeholder="Senha:" id="senha" value={usuarioRegistro.senha} onChange={handlerInput}/>
+                            <input type="email" required placeholder="Email:" id="email" value={usuarioRegistro.email} onChange={handlerInput}/>
+                            <input type="password" required placeholder="Senha:" id="senha" value={usuarioRegistro.senha} onChange={handlerInput}/>
                             <input type="text" required placeholder="Data de Nascimento:" id="data_nascimento" value={usuarioRegistro.data_nascimento} onChange={handlerInput}/>
                             <input type="text" required placeholder="RG:" id="rg" value={usuarioRegistro.rg} onChange={handlerInput}/>
                             <input type="text" required placeholder="CPF:" id="cpf" value={usuarioRegistro.cpf} onChange={handlerInput}/>
                             <input type="text" required placeholder="Telefone:" id="telefone" value={usuarioRegistro.telefone} onChange={handlerInput}/>
                             Sexo:
-                            <select required onChange={handlerInput} id="sexo_id">
+                            <select required onChange={selectSexoValue} id="sexo_id">
                                 <option value="1">Masculino</option>
                                 <option value="2">Feminino</option>
                             </select>
@@ -198,9 +239,9 @@ const ContentFormRegistro = (props) => {
                         <ContainerTexts>
                             <input type="text" required placeholder="cep:" id="cep" onBlur={responseCep}/>
                             <input type="text" required disabled placeholder="logradouro:" id="logradouro" value={usuarioRegistro.logradouro} onChange={handlerInput}/>
-                            <input type="text" required disabled placeholder="bairro:" id="bairro" value={usuarioRegistro.bairro} onChange={handlerInput}/>
-                            <input type="text" required disabled placeholder="cidade:" id="localidade" value={usuarioRegistro.cidade} onChange={handlerInput}/>
-                            <input type="text" required disabled placeholder="estado:" id="uf" value={usuarioRegistro.estado} onChange={handlerInput}/>
+                            <input type="text" required disabled placeholder="bairro:" id="bairro" value={usuarioRegistro.bairro}/>
+                            <input type="text" required disabled placeholder="cidade:" id="localidade" value={usuarioRegistro.cidade}/>
+                            <input type="text" required disabled placeholder="estado:" id="uf" value={usuarioRegistro.estado}/>
                             <input type="text" required placeholder="numero:" id="numero" value={usuarioRegistro.numero} onChange={handlerInput}/>
                             <input type="text" required placeholder="complemento:" id="complemento" value={usuarioRegistro.complemento} onChange={handlerInput}/>
                         </ContainerTexts>
@@ -212,8 +253,8 @@ const ContentFormRegistro = (props) => {
                         <BotaoFormularioLogin type="button" style={{marginRight: "10px"}} onClick={() => {props.mostrarForm("login")}}>
                             Voltar
                         </BotaoFormularioLogin>
-                        <BotaoFormularioLogin type="button">
-                            Proximo
+                        <BotaoFormularioLogin type="submit">
+                            Registrar
                         </BotaoFormularioLogin>
                         
                     </ContainerButtons>

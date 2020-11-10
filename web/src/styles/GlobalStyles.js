@@ -8,6 +8,7 @@ export const GlobalStyles = createGlobalStyle`
         --color-dark: #ae0000;
         --color-accent: #000000;
         --color-white: #fafafa;
+        --color-gray: #c4c4c4;
     }
 
     *{
