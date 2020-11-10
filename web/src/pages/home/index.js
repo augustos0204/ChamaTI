@@ -1,5 +1,7 @@
 import React from "react";
-import foto from "../../assets/menu.png";
+
+import Header from "../../components/menu/header";
+
 import {ContainerIntroductionServices, DetalhesButton, ContainerInfoPessoa, ContainerGeralPedido, DescricaoProblema, TituloProblema, ImagePessoaIcon, TextoInformativoPessoa, TextoInformativoStatus} from "./style";
 import chamaTiLogo from "../../assets/chama.png";
 // import { api } from "../../services/api";
@@ -7,32 +9,7 @@ import chamaTiLogo from "../../assets/chama.png";
 const HomeServices = () => {
     return (
         <container>
-            <header style={{
-                position: "fixed",
-            }}>
-                <container
-                className="container">
-
-                    <containerMenuPage
-                    className="containerMenuPage">
-                        
-                        <containerMenu
-                        className="containerMenu">
-                            <img src={foto} alt="Ícone Menu" title="Ícone Menu"/>
-                        </containerMenu>
-                        <containerPageName
-                        className="containerPageName">
-
-                            Home
-                            <pageNameBarra
-                            className="pageNameBarra">
-                            </pageNameBarra>
-
-                        </containerPageName>
-
-                    </containerMenuPage>
-                </container>
-            </header>
+            <Header/>
             <container style={{
                 display: "block",
                 width: "1000px",

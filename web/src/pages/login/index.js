@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-import foto from "../../assets/menu.png";
 import chamaTiLogo from "../../assets/chama.png";
+
+import Header from "../../components/menu/header";
 
 import {
     ContainerLogo, 
@@ -269,32 +270,7 @@ const Login = () => {
 
     return (
         <container>
-            <header style={{
-                position: "fixed",
-            }}>
-                <container
-                className="container">
-
-                    <containerMenuPage
-                    className="containerMenuPage">
-                        
-                        <containerMenu
-                        className="containerMenu">
-                            <img src={foto} alt="Ícone Menu" title="Ícone Menu"/>
-                        </containerMenu>
-                        <containerPageName
-                        className="containerPageName">
-
-                            Login
-                            <pageNameBarra
-                            className="pageNameBarra">
-                            </pageNameBarra>
-
-                        </containerPageName>
-
-                    </containerMenuPage>
-                </container>
-            </header>
+            <Header/>
             <container style={{
                 display: "block",
                 width: "1000px",

@@ -2,12 +2,24 @@ import {createGlobalStyle} from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
 
+/* CSS GLOBAL */
+
     :root{
+
+        /* Cores Primárias */
         --color-primary: #E94014;
         --color-light: #ff7543;
         --color-dark: #ae0000;
+
         --color-accent: #000000;
         --color-white: #fafafa;
+
+        /* Cores Secundárias */
+        --color-secondary: #1f1f1f;
+        --color-sLight: #464646;
+        --color-sDark: #000000;
+
+        /* Cores Padronizadas */
         --color-gray: #c4c4c4;
     }
 
@@ -24,8 +36,8 @@ export const GlobalStyles = createGlobalStyle`
 
 
     img{
-        width: inherit;
-        height: inherit;
+        width: 100%;
+        height: 100%;
     }
 
     input[type="text"], input[type="email"], input[type="password"]{
@@ -59,6 +71,8 @@ export const GlobalStyles = createGlobalStyle`
         box-shadow: 0px 0px 20px black;
     }
 
+/* Header da Página */
+
     header{
         width: 100%;
         min-height: 5px;
@@ -77,16 +91,45 @@ export const GlobalStyles = createGlobalStyle`
         display: block;
         flex-direction: row;
         position: relative;
-        background-color: var(--color-white);
-        /* box-shadow: 0 4px 2px -2px gray; */
+        background-color: var(--color-secondary);
     }
 
+/* Menu */
+
     .containerMenu{
-        width: 40px;
-        height: 40px;
+        width: 45px;
+        height: 45px;
         float: left;
         margin-top: 10px;
+        border-radius: 100%;
+        margin-left: 10px;
+        overflow: hidden;
+        display: block;
     }
+
+    .containerMenu img{
+        background-color: var(--color-primary);
+        padding: 2px;
+        cursor: pointer;
+
+        ${'.containerMenuItens'}:hover &{
+            left: 0;
+            opacity: 1;
+        }
+    }
+
+    .containerMenuItens{
+        width: 200px;
+        min-height: 100px;
+        height: auto;
+        background-color: var(--color-sLight);
+        position: absolute;
+        left: -200px;
+        margin-top: 45px;
+        opacity: 0;
+    }
+
+/* Nome da página */
 
     .containerPageName{
         width: 200px;

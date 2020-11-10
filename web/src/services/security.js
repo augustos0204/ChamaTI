@@ -21,7 +21,7 @@ export const getCliente = () => {
 };
 
 export const isSignedIn = () => {
-    const cliente = JSON.parse(localStorage.getItem());
+    const cliente = JSON.parse(localStorage.getItem(CHAVE_CLIENTE));
 
     if (cliente) {
         api.defaults.headers.common['Authorization'] = `Bearer ${cliente.token}`;
