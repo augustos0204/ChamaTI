@@ -18,6 +18,8 @@ module.exports = ( req, res, next ) => {
         const retorno = jwt.verify(token, authConfig.secret);
 
         req.user_id = retorno.user_id;
+        req.user_name = retorno.user_name;
+        req.user_access = retorno.user_access;
         
         return next();
     } catch (error) {

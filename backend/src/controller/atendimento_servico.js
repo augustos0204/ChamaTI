@@ -1,3 +1,4 @@
+const Cliente = require("../models/Cliente");
 const PrestadorServicos = require("../models/PrestadorServicos");
 const AtendimentoServico = require("../models/AtendimentoServico");
 const Servico = require("../models/Servico");
@@ -110,7 +111,70 @@ module.exports = {
         });
     },
 
-    async finalizarAtendimento( request, response ){
+    async finalizarAtendimentoCliente( request, response ){
+        const user_access = request.user_access;
+
+        if( user_access != "cliente" ){
+            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        }
+
+        const cliente_id = request.user_id;
+
+        const {
+            aceite_fechamento,
+            atendimento_servico_id,
+        } = request.body;
+
+        let cliente = await Cliente.findByPk( cliente_id );
+        let atendimento_servico = await AtendimentoServico.findByPk( atendimento_servico_id );
+        let servico = await Servico.findByPk( atendimento_servico.servico_id );
+
+        if(!cliente){
+            return response.status( 404 ).send( { erro : "Cliente não encontrado." } );
+        }
+
+        if(!servico){
+            return response.status( 404 ).send( { erro : "Servico não encontrado." } );
+        }
+
+        if(!atendimento_servico){
+            return response.status( 404 ).send( { erro : "Atendimento de servico não encontrado." } );
+        }
+
+        if( !aceite_fechamento ){
+            atendimento_servico = await atendimento_servico.save({
+                data_hora_termino: null,
+            });
+            
+            if( !atendimento_servico ){
+                return response.status( 404 ).send( { erro : "Atualização de atendimento mal sucedida." } );
+            };
+            
+            servico.data_hora_encerramento = null;
+            servico.em_aberto = true;
+            servico.em_atendimento = false;
+            servico.resolvido_por = null;
+            const atualizarStatusAtendimentoServico =  await servico.save();
+            
+            if( !atualizarStatusAtendimentoServico ){
+                return response.status( 404 ).send( { erro : "Atualização de status do serviço para atendido mal sucedida." } );
+            };
+
+            return response.status(201).send({
+                atendimento_servico,
+                servico
+            });
+        }
+
+        else {
+            return response.status(201).send({
+                atendimento_servico,
+                servico
+            });
+        }
+    },
+
+    async finalizarAtendimentoPrestadorServico( request, response ){
         const prestador_servicos_id = request.user_id;
 
         const {
@@ -156,6 +220,14 @@ module.exports = {
             atendimento_servico,
             servico
         });
+    },
+
+    async cancelarAtendimentoCliente () {
+        
+    },
+
+    async cancelarAtendimentoPrestadorServicos () {
+
     },
 
     // async update( request, response ){

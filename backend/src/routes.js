@@ -39,8 +39,8 @@ routes.post("/sexo_cliente", sexoClienteController.store);
 routes.post("/sexo_prestador_servicos", sexoPrestadorServicosController.store);
 
 // Rotas de autenticação sessão
-routes.post("/sessao/cliente", sessaoController.clienteAutenticate);
-routes.post("/sessao/prestador_servicos", sessaoController.prestadorServicoAutenticate);
+routes.post("/sessao/cliente", sessaoController.clienteAuthenticate);
+routes.post("/sessao/prestador_servicos", sessaoController.prestadorServicoAuthenticate);
 
 // Middleware de proteção das rotas
 routes.use(autorizacaoMid);
@@ -56,13 +56,16 @@ routes.get("/atendimento_servico/:id", atendimentoServicoController.searchById);
 // Rotas de cliente
 routes.get("/clientes", clienteController.list);
 routes.get("/cliente/:id", clienteController.searchById);
+routes.post("/cliente/servicos/finalizar_atendimento", atendimentoServicoController.finalizarAtendimentoCliente);
+routes.post("/cliente/servicos/cancelar_atendimento", atendimentoServicoController.cancelarAtendimentoCliente);
 // routes.post("/cliente/update/:id", clienteController.update);
 
 // Rotas de prestador de serviços
 routes.get("/servicos", servicoController.list);
 routes.get("/prestador_servicos/servicos", servicoController.listByAtendimento);
 routes.get("/prestador_servicos/servicos/em_atendimento", atendimentoServicoController.searchEmAtendimento);
-routes.post("/prestador_servicos/servicos/finalizar_atendimento", atendimentoServicoController.finalizarAtendimento);
+routes.post("/prestador_servicos/servicos/finalizar_atendimento", atendimentoServicoController.finalizarAtendimentoPrestadorServico);
+routes.post("/prestador_servicos/servicos/cancelar_atendimento", atendimentoServicoController.cancelarAtendimentoPrestadorServicos);
 routes.get("/prestadores_servicos", prestadorServicosController.list);
 routes.get("/prestador_servicos/:id", prestadorServicosController.searchById);
 

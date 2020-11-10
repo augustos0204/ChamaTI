@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const authConfig = require('../config/auth.json');
 
 module.exports = {
-    async clienteAutenticate ( request, response ) {
+    async clienteAuthenticate ( request, response ) {
         const { email, senha } = request.body;
 
         // Busca um cliente com o email informado
@@ -22,7 +22,7 @@ module.exports = {
         }
 
         // Gera um token que valida a autenticação do cliente
-        const token = jwt.sign({ user_id: cliente.id }, authConfig.secret);
+        const token = jwt.sign({ user_id: cliente.id, user_name: cliente.nome, user_access: "cliente" }, authConfig.secret);
 
         return response.status(201).send({
             cliente: {
@@ -33,7 +33,7 @@ module.exports = {
         });
     },
 
-    async prestadorServicoAutenticate ( request, response ) {
+    async prestadorServicoAuthenticate ( request, response ) {
         const { email, senha } = request.body;
 
         // Busca um cliente com o email informado
@@ -49,7 +49,7 @@ module.exports = {
         }
 
         // Gera um token que valida a autenticação do prestador serviço
-        const token = jwt.sign({ user_id: prestador_servicos.id }, authConfig.secret);
+        const token = jwt.sign({ user_id: prestador_servicos.id, user_name: prestador_servicos.nome, user_access: "prestador_servicos" }, authConfig.secret);
 
         return response.status(201).send({
             prestador_servicos: {
@@ -58,5 +58,10 @@ module.exports = {
             },
             token
         });
+    },
+
+    // Implementar um autenticador genérico
+    async userAutenticate () {
+
     }
 }
