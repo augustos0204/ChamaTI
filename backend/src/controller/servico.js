@@ -3,7 +3,19 @@ const Cliente = require("../models/Cliente");
 
 module.exports = {
     async list( request, response ) {
+        console.log("Entrou");
+        
         const servicos = await Servico.findAll();
+
+        response.send( servicos );
+    },
+
+    async listByAtendimento( request, response  ){
+        const servicos = await Servico.findAll({
+            where: {
+                em_atendimento: false
+            }
+        });
 
         response.send( servicos );
     },
@@ -20,10 +32,22 @@ module.exports = {
         response.send( servico );
     },
 
+    async listByClient( request, response ){
+        const cliente_id = request.user_id;
+
+        let servicos = await Servico.findAll({
+            where: {
+                ClienteId : cliente_id
+            }
+        })
+
+        return response.send(servicos);
+    },
+
     async store(request, response){
         let authorization = request.headers.authorization;
 
-        const [ Bearer, token ] = authorization.split(" ");
+        const cliente_id = request.user_id;
 
         const {
             problema,
@@ -35,7 +59,7 @@ module.exports = {
             resolvido_por,
         } = request.body;
 
-        let cliente = await Cliente.findByPk( token );
+        let cliente = await Cliente.findByPk( cliente_id );
 
         if(!cliente){
             return response.status( 404 ).send( { erro : "Cliente não encontrado." } );

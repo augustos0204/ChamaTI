@@ -68,7 +68,7 @@ module.exports = {
             );
 
             if (prestador_servicos) {
-                return response.status(400).send({ erro: "Cliente já cadastrado." })
+                return response.status(400).send({ erro: "Email já cadastrado." })
             }
 
             const senhaCripto = await bcrypt.hash(senha, 10);
