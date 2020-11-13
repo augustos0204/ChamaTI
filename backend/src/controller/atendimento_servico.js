@@ -24,7 +24,11 @@ module.exports = {
     },
 
     async searchEmAtendimento( request, response ){
-        console.log("=== Search em atendimento ===");
+        const user_access = request.user_access;
+
+        if( user_access !== "prestador_servicos" ){
+            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        }
 
         const prestador_servicos_id = request.user_id;
 
@@ -71,6 +75,12 @@ module.exports = {
     },
 
     async store(request, response){
+        const user_access = request.user_access;
+
+        if( user_access !== "prestador_servicos" ){
+            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        }
+
         const prestador_servicos_id = request.user_id;
 
         const {
@@ -175,6 +185,12 @@ module.exports = {
     },
 
     async finalizarAtendimentoPrestadorServico( request, response ){
+        const user_access = request.user_access;
+
+        if( user_access !== "prestador_servicos" ){
+            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        }
+
         const prestador_servicos_id = request.user_id;
 
         const {
@@ -328,61 +344,4 @@ module.exports = {
             servico
         });
     },
-
-    // async update( request, response ){
-    //     // const { id } = request.params;
-
-    //     // let sexo_cliente = await SexoCliente.findByPk( id, { raw : true } );
-
-    //     // // Verifica se o sexo não foi encontrado
-    //     // if( !sexo_cliente ){
-    //     //     return response.status( 404 ).send( { erro : "Sexo não encontrado." } )
-    //     // }
-
-    //     // const {
-    //     //     sexo
-    //     // } = request.body;
-
-    //     // let update = SexoCliente.update(
-    //     //     {
-    //     //         sexo
-    //     //     },
-    //     //     {
-    //     //         where: {
-    //     //             id : id
-    //     //         },
-    //     //     }
-    //     // );
-
-    //     // if(update){
-    //     //     response.send( "Atualização bem sucedida." );
-    //     // }
-    //     // else{
-    //     //     return response.status( 404 ).send( { erro : "Atualização mal sucedida, tente novamente." } )
-    //     // }
-    // },
-
-    // async delete( request, response ){
-        // const { id } = request.params;
-
-        // let sexo_cliente = await SexoCliente.findByPk( id, { raw : true } );
-
-        // // Verifica se o cliente não foi encontrado
-        // if( !sexo_cliente ){
-        //     return response.status( 404 ).send( { erro : "Sexo não encontrado." } )
-        // };
-
-        // let deleta = SexoCliente.destroy({
-        //     where: {
-        //         id
-        //     }
-        // });
-
-        // if(deleta){
-        //     return response.status( 404 ).send( { erro : "Cliente excluído com sucesso." } )
-        // }
-        // else {
-        //     return response.status( 404 ).send( { erro : "Falha na exclusão do cliente." } )
-        // }
-    // }
 }
