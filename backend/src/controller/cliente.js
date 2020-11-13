@@ -1,10 +1,5 @@
 const bcrypt = require("bcryptjs");
-
 const Cliente = require("../models/Cliente");
-
-// const { update } = require("../models/Cliente");
-// const jwt = require("jsonwebtoken");
-// const authConfig = require('../config/auth.json');
 
 module.exports = {
     // Listar todos os clientes
@@ -102,8 +97,6 @@ module.exports = {
             return response.status( 400 ).send( { erro : "Erro ao cadastrar o endereco. Tente novamente." } )
         }
 
-        // const token = jwt.sign({ alunoId : aluno.id }, authConfig.secret );
-
         return response.status(201).send({
             cliente: {
                 cliente_id: cliente.id_cliente,
@@ -167,8 +160,6 @@ module.exports = {
                 nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, sexo_cliente_id : sexo_id
             });
         }
-
-        // const token = jwt.sign({ alunoId : aluno.id }, authConfig.secret );
 
         // Apaga o campo senha da resposta para não mostrá-la a quem solicitou a busca
         delete cliente.senha;
