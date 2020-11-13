@@ -35,8 +35,20 @@ routes.post("/prestador_servicos", prestadorServicosController.store);
 // Rota de cadastro de sexo_cliente
 routes.post("/sexo_cliente", sexoClienteController.store);
 
+// Rotas de sexo_cliente
+routes.get("/sexos_clientes", sexoClienteController.list);
+routes.get("/sexo_cliente/:id", sexoClienteController.searchById);
+routes.post("/sexo_cliente/update/:id", sexoClienteController.update);
+routes.post("/sexo_cliente/delete/:id", sexoClienteController.delete);
+
 // Rota de cadastro de sexo_prestador_servicos
 routes.post("/sexo_prestador_servicos", sexoPrestadorServicosController.store);
+
+// Rotas de sexo_prestador_servicos
+routes.get("/sexos_prestadores_servicos", sexoPrestadorServicosController.list);
+routes.get("/sexo_prestador_servicos/:id", sexoPrestadorServicosController.searchById);
+routes.post("/sexo_prestador_servicos/update/:id", sexoPrestadorServicosController.update);
+routes.post("/sexo_prestador_servicos/delete/:id", sexoPrestadorServicosController.delete);
 
 // Rotas de autenticação sessão
 routes.post("/sessao/cliente", sessaoController.clienteAuthenticate);
@@ -75,17 +87,5 @@ routes.post("/cliente/servico", servicoController.store);
 routes.get("/cliente/servicos", servicoController.listByClient);
 routes.get("/servico/:id", servicoController.searchById);
 // routes.post("/servico/update/:id", servicoController.update);
-
-// Rotas de sexo_cliente
-routes.get("/sexos_clientes", sexoClienteController.list);
-routes.get("/sexo_cliente/:id", sexoClienteController.searchById);
-routes.post("/sexo_cliente/update/:id", sexoClienteController.update);
-routes.post("/sexo_cliente/delete/:id", sexoClienteController.delete);
-
-// Rotas de sexo_prestador_servicos
-routes.get("/sexos_prestadores_servicos", sexoPrestadorServicosController.list);
-routes.get("/sexo_prestador_servicos/:id", sexoPrestadorServicosController.searchById);
-routes.post("/sexo_prestador_servicos/update/:id", sexoPrestadorServicosController.update);
-routes.post("/sexo_prestador_servicos/delete/:id", sexoPrestadorServicosController.delete);
 
 module.exports = routes;
