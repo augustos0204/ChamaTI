@@ -2,10 +2,6 @@ import React from 'react';
 
 import { EvilIcons, AntDesign, MaterialIcons } from '@expo/vector-icons';
 
-import api from '../../services/api';
-
-console.log(api);
-
 import { 
     Bold,
     BotaoMinha, BotaoTodos, BotaoLike, BotaoChat,
