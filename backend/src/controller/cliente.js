@@ -66,14 +66,22 @@ module.exports = {
         const senhaCripto = await bcrypt.hash(senha, 10);
 
         if( foto ){
-            cliente = await Cliente.create({
-                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, foto, sexo_cliente_id : sexo_id
-            });
+            try {
+                cliente = await Cliente.create({
+                    nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, foto, sexo_cliente_id : sexo_id
+                });
+            } catch (error) {
+                return response.status( 400 ).send( { erro : `Erro ao cadastrar o cliente. Tente novamente. Erro: ${error}` } )
+            }
         }
         else {
-            cliente = await Cliente.create({
-                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, sexo_cliente_id : sexo_id
-            });
+            try {
+                cliente = await Cliente.create({
+                    nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, sexo_cliente_id : sexo_id
+                });
+            } catch (error) {
+                return response.status( 400 ).send( { erro : `Erro ao cadastrar o cliente. Tente novamente. Erro: ${error}` } )
+            }
         }
 
         let endereco_cliente;
