@@ -3,7 +3,25 @@ const Cliente = require("../models/Cliente");
 
 module.exports = {
     async list( request, response ) {
+        console.log("Entrou");
+        
         const servicos = await Servico.findAll();
+
+        response.send( servicos );
+    },
+
+    async listByAtendimento( request, response  ){
+        const user_access = request.user_access;
+
+        if( user_access !== "prestador_servicos" ){
+            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        }
+
+        const servicos = await Servico.findAll({
+            where: {
+                em_atendimento: false
+            }
+        });
 
         response.send( servicos );
     },
@@ -20,10 +38,32 @@ module.exports = {
         response.send( servico );
     },
 
-    async store(request, response){
-        let authorization = request.headers.authorization;
+    async listByClient( request, response ){
+        const user_access = request.user_access;
 
-        const [ Bearer, token ] = authorization.split(" ");
+        if( user_access !== "cliente" ){
+            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        }
+
+        const cliente_id = request.user_id;
+
+        let servicos = await Servico.findAll({
+            where: {
+                ClienteId : cliente_id
+            }
+        })
+
+        return response.send(servicos);
+    },
+
+    async store(request, response){
+        const user_access = request.user_access;
+
+        if( user_access !== "cliente" ){
+            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        }
+
+        const cliente_id = request.user_id;
 
         const {
             problema,
@@ -35,7 +75,7 @@ module.exports = {
             resolvido_por,
         } = request.body;
 
-        let cliente = await Cliente.findByPk( token );
+        let cliente = await Cliente.findByPk( cliente_id );
 
         if(!cliente){
             return response.status( 404 ).send( { erro : "Cliente não encontrado." } );
@@ -59,61 +99,4 @@ module.exports = {
             servico
         });
     },
-
-    // async update( request, response ){
-    //     // const { id } = request.params;
-
-    //     // let sexo_cliente = await SexoCliente.findByPk( id, { raw : true } );
-
-    //     // // Verifica se o sexo não foi encontrado
-    //     // if( !sexo_cliente ){
-    //     //     return response.status( 404 ).send( { erro : "Sexo não encontrado." } )
-    //     // }
-
-    //     // const {
-    //     //     sexo
-    //     // } = request.body;
-
-    //     // let update = SexoCliente.update(
-    //     //     {
-    //     //         sexo
-    //     //     },
-    //     //     {
-    //     //         where: {
-    //     //             id : id
-    //     //         },
-    //     //     }
-    //     // );
-
-    //     // if(update){
-    //     //     response.send( "Atualização bem sucedida." );
-    //     // }
-    //     // else{
-    //     //     return response.status( 404 ).send( { erro : "Atualização mal sucedida, tente novamente." } )
-    //     // }
-    // },
-
-    async delete( request, response ){
-        // const { id } = request.params;
-
-        // let sexo_cliente = await SexoCliente.findByPk( id, { raw : true } );
-
-        // // Verifica se o cliente não foi encontrado
-        // if( !sexo_cliente ){
-        //     return response.status( 404 ).send( { erro : "Sexo não encontrado." } )
-        // };
-
-        // let deleta = SexoCliente.destroy({
-        //     where: {
-        //         id
-        //     }
-        // });
-
-        // if(deleta){
-        //     return response.status( 404 ).send( { erro : "Cliente excluído com sucesso." } )
-        // }
-        // else {
-        //     return response.status( 404 ).send( { erro : "Falha na exclusão do cliente." } )
-        // }
-    }
 }

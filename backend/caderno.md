@@ -378,5 +378,351 @@ module.exports = conexao;
 Controller:
 >
 ```javascript
+const bcrypt = require("bcryptjs");
+const Cliente = require("../models/Cliente");
 
+module.exports = {
+    // Listar todos os clientes
+    async list( request, response ) {
+        const clientes = await Cliente.findAll();
+
+        return response.send( clientes );
+    },
+
+    // Buscar clientes pelo ID
+    async searchById( request, response ){
+        const { id } = request.params;
+
+        let cliente = await Cliente.findByPk( id, { raw : true } );
+
+        // Verifica se o cliente não foi encontrado
+        if( !cliente ){
+            return response.status( 404 ).send( { erro : "Cliente não encontrado." } )
+        }
+
+        // Apaga o campo senha da resposta para não mostrá-la a quem solicitou a busca
+        delete cliente.senha;
+
+        // Retorna o cliente encontrado
+        return response.send( cliente );
+    },
+
+    // Inserções
+    async store(request, response){
+        const {
+            sexo_id,
+
+            cep,
+            logradouro,
+            bairro,
+            cidade,
+            estado,
+            numero,
+            complemento,
+
+            nome,
+            email,
+            senha,
+            data_nascimento,
+            cpf,
+            telefone,
+            foto
+        } = request.body;
+
+        // Verificar se o cliente já existe
+        //      select * from clientes where rg = ? or email = ? or cpf = ?
+        let cliente = await Cliente.findOne(
+            {
+                 where: {
+                    email : email
+                 }
+            }
+        );
+
+        if ( cliente ) { 
+            return response.status( 400 ).send( { erro : "Cliente já cadastrado." } )
+        }
+
+        const senhaCripto = await bcrypt.hash(senha, 10);
+
+        if( foto ){
+            cliente = await Cliente.create({
+                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, foto, sexo_cliente_id : sexo_id
+            });
+        }
+        else {
+            cliente = await Cliente.create({
+                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, sexo_cliente_id : sexo_id
+            });
+        }
+
+        let endereco_cliente;
+
+        if(cliente){
+            endereco_cliente = await cliente.createEnderecoCliente({
+                cep,
+                logradouro,
+                bairro,
+                cidade,
+                estado,
+                numero,
+                complemento,
+            });
+        }
+        else {
+            return response.status( 400 ).send( { erro : "Erro ao cadastrar o cliente. Tente novamente." } )
+        }
+
+        if( !endereco_cliente ){
+            return response.status( 400 ).send( { erro : "Erro ao cadastrar o endereco. Tente novamente." } )
+        }
+
+        return response.status(201).send({
+            cliente: {
+                cliente_id: cliente.id_cliente,
+                nome: cliente.nome,
+                cpf: cliente.cpf,
+                endereco: {
+                    logradouro : endereco_cliente.logradouro,
+                    bairro : endereco_cliente.bairro,
+                    cidade : endereco_cliente.cidade,
+                    estado : endereco_cliente.estado,
+                    numero : endereco_cliente.numero,
+                    complemento : endereco_cliente.complemento,
+                }
+            },
+            // token
+        });
+    },
+
+    //Terminar de implementar
+    async update( request, response ){
+        const { id } = request.params;
+
+        let cliente = await Cliente.findByPk( id, { raw : true } );
+
+        // Verifica se o cliente não foi encontrado
+        if( !cliente ){
+            return response.status( 404 ).send( { erro : "Cliente não encontrado." } )
+        }
+
+        const {
+            sexo_id,
+
+            cep,
+            logradouro,
+            bairro,
+            cidade,
+            estado,
+            numero,
+            complemento,
+
+            nome,
+            email,
+            senha,
+            data_nascimento,
+            cpf,
+            telefone,
+            foto
+        } = request.body;
+
+        const senhaCripto = await bcrypt.hash(senha, 10);
+
+        let cliente_update;
+
+        if( foto ){
+            cliente_update = cliente.update({
+                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, foto, sexo_cliente_id : sexo_id
+            });
+        }
+        else {
+            cliente_update = cliente.update.update({
+                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, sexo_cliente_id : sexo_id
+            });
+        }
+
+        // Apaga o campo senha da resposta para não mostrá-la a quem solicitou a busca
+        delete cliente.senha;
+
+        let endereco_cliente_update;
+
+        if(cliente_update){
+            endereco_cliente_update = await cliente.updateEnderecoCliente({
+                cep,
+                logradouro,
+                bairro,
+                cidade,
+                estado,
+                numero,
+                complemento,
+            });
+        }
+        else{
+            return response.status( 404 ).send( { erro : "Atualização mal sucedida, tente novamente." } )
+        }
+
+        if(endereco_cliente_update){
+            return response.status(201).send({
+                cliente_update, endereco_cliente_update
+                // token
+            });
+        }
+    },
+
+    //Terminar de implementar
+    async delete( request, response ){
+        const { id } = request.params;
+
+        let cliente = await Cliente.findByPk( id, { raw : true } );
+
+        // Verifica se o cliente não foi encontrado
+        if( !cliente ){
+            return response.status( 404 ).send( { erro : "Cliente não encontrado." } )
+        }
+
+        let deleta = cliente.destroy;
+
+        if(deleta){
+            return response.status( 404 ).send( { erro : "Cliente excluído com sucesso." } )
+        }
+        else {
+            return response.status( 404 ).send( { erro : "Falha na exclusão do cliente." } )
+        }
+    }
+}
+```
+
+E para efetivamente usar estas rotas é necessário cadastrá-las no arquivo "routes.js" (trecho do arquivo routes com funções de outras entidades faltando):
+>
+```javascript
+// Esse arquivo tem como responsabilidade cadastrar as rotas da aplicação
+
+const express = require("express");
+
+// const multer = require("multer");
+
+// const Multer = multer({
+//     storage: multer.memoryStorage(),
+//     limits: 1024 * 1024,
+
+// })
+
+// Criando o roteirizador
+const routes = express.Router();
+
+const autorizacaoMid = require("./middlewares/autorizacao");
+// const uploadImage = require("./services/firebase");
+
+const clienteController = require("./controller/cliente");
+const sessaoController = require("./controller/sessao");
+const sexoClienteController = require("./controller/sexo_cliente");
+
+// Rotas públicas
+
+// Rota de cadastro de cliente
+routes.post("/cliente", clienteController.store);
+
+// Rota de cadastro de sexo_cliente
+routes.post("/sexo_cliente", sexoClienteController.store);
+
+// Rotas de autenticação sessão
+routes.post("/sessao/cliente", sessaoController.clienteAuthenticate);
+
+// Middleware de proteção das rotas
+routes.use(autorizacaoMid);
+
+// Rotas privadas
+
+// Rotas de cliente
+routes.get("/clientes", clienteController.list);
+routes.get("/cliente/:id", clienteController.searchById);
+
+// Rotas de sexo_cliente
+routes.get("/sexos_clientes", sexoClienteController.list);
+routes.get("/sexo_cliente/:id", sexoClienteController.searchById);
+routes.post("/sexo_cliente/update/:id", sexoClienteController.update);
+routes.post("/sexo_cliente/delete/:id", sexoClienteController.delete);
+
+module.exports = routes;
+```
+
+No código acima há, também, rotas de sessão que foram desenvolvidas num outro arquivo que utiliza das ferramentas "jwt" e "bcrypt" que, respectivamente, faz o "login" e gera um token e encripta e pode ser usado para comparar uma string com a string que foi encriptada por ele:
+>
+```javascript
+const Cliente = require("../models/Cliente");
+const PrestadorServicos = require("../models/PrestadorServicos");
+
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const authConfig = require('../config/auth.json');
+
+module.exports = {
+    async clienteAuthenticate ( request, response ) {
+        const { email, senha } = request.body;
+
+        // Busca um cliente com o email informado
+        const cliente = await Cliente.findOne({
+            where: {
+                email,
+            }
+        });
+
+        // Verifica se o cliente existe e a senha corresponde a senha informada
+        if( !cliente || !( await bcrypt.compare( senha, cliente.senha ) ) ){
+            return response.status(403).send({erro : "Email e/ou senha incorretos."});
+        }
+
+        // Gera um token que valida a autenticação do cliente
+        const token = jwt.sign({ user_id: cliente.id, user_name: cliente.nome, user_access: "cliente" }, authConfig.secret);
+
+        return response.status(201).send({
+            cliente: {
+                id: cliente.id,
+                nome: cliente.nome,
+            },
+            token
+        });
+    },
+
+    async prestadorServicoAuthenticate ( request, response ) {
+        const { email, senha } = request.body;
+
+        // Busca um cliente com o email informado
+        const prestador_servicos = await PrestadorServicos.findOne({
+            where: {
+                email,
+            }
+        });
+
+        // Verifica se o prestador serviço existe e a senha corresponde a senha informada
+        if( !prestador_servicos || !( await bcrypt.compare( senha, prestador_servicos.senha ) ) ){
+            return response.status(403).send({erro : "Email e/ou senha incorretos."});
+        }
+
+        // Gera um token que valida a autenticação do prestador serviço
+        const token = jwt.sign({ user_id: prestador_servicos.id, user_name: prestador_servicos.nome, user_access: "prestador_servicos" }, authConfig.secret);
+
+        return response.status(201).send({
+            prestador_servicos: {
+                id: prestador_servicos.id,
+                nome: prestador_servicos.nome,
+            },
+            token
+        });
+    },
+
+    // Implementar um autenticador genérico
+    async userAutenticate () {
+
+    }
+}
+```
+
+E este arquivo, por sua vez, necessita de um outro, o "auth.json" que apenas contém a palavra chave encriptografada:
+
+>
+```json
+{
+    "secret": "4b3c0d65bd58c188a12bdf0664803ba6"
+}
 ```
