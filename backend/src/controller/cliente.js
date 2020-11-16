@@ -60,7 +60,31 @@ module.exports = {
         );
 
         if ( cliente ) { 
-            return response.status( 400 ).send( { erro : "Cliente já cadastrado." } )
+            return response.status( 400 ).send( { erro : "Email já cadastrado." } );
+        }
+        
+        cliente = Cliente.findOne(
+            {
+                 where: {
+                    cpf : cpf
+                 }
+            }
+        )
+        
+        if ( cliente ) {
+            return response.status( 400 ).send( { erro : "CPF já cadastrado." } );
+        }
+
+        cliente = Cliente.findOne(
+            {
+                 where: {
+                    telefone : telefone
+                 }
+            }
+        )
+        
+        if ( cliente ) {
+            return response.status( 400 ).send( { erro : "Telefone já cadastrado." } );
         }
 
         const senhaCripto = await bcrypt.hash(senha, 10);
@@ -71,7 +95,7 @@ module.exports = {
                     nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, foto, sexo_cliente_id : sexo_id
                 });
             } catch (error) {
-                return response.status( 400 ).send( { erro : `Erro ao cadastrar o cliente. Tente novamente. Erro: ${error}` } )
+                return response.status( 400 ).send( { erro : `Erro ao cadastrar o cliente. Tente novamente. Erro: ${error}` } );
             }
         }
         else {
@@ -80,7 +104,7 @@ module.exports = {
                     nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, sexo_cliente_id : sexo_id
                 });
             } catch (error) {
-                return response.status( 400 ).send( { erro : `Erro ao cadastrar o cliente. Tente novamente. Erro: ${error}` } )
+                return response.status( 400 ).send( { erro : `Erro ao cadastrar o cliente. Tente novamente. Erro: ${error}` } );
             }
         }
 
@@ -160,12 +184,12 @@ module.exports = {
 
         if( foto ){
             cliente_update = cliente.update({
-                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, foto, sexo_cliente_id : sexo_id
+                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, foto, sexo_cliente_id : sexo_id,
             });
         }
         else {
             cliente_update = cliente.update.update({
-                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, sexo_cliente_id : sexo_id
+                nome, email, senha: senhaCripto, data_nascimento, cpf, telefone, sexo_cliente_id : sexo_id,
             });
         }
 
