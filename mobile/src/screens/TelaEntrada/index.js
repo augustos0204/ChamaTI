@@ -24,9 +24,9 @@ import {
 
 
 export default function Entrada({navigation}) {
-    const { email, setEmail } = useState("");
+    const [ email, setEmail ] = useState("");
 
-    const { senha, setSenha } = useState("");
+    const [ senha, setSenha ] = useState("");
 
     const emailHandler = ( value ) => {
         setEmail( value );
@@ -62,7 +62,7 @@ export default function Entrada({navigation}) {
                 <ContainerInput>
                     <Usuario>
                         <AntDesign name="user" size={24} color="black" />
-                        <TextInput placeholder="Digite seu email" onChange={emailHandler}></TextInput>
+                        <TextInput placeholder="Digite seu email" onChange={ ( valor ) => emailHandler( valor )}></TextInput>
                     </Usuario>
 
                     <Senha>
