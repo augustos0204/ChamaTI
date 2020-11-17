@@ -63,7 +63,7 @@ module.exports = {
             return response.status( 400 ).send( { erro : "Email já cadastrado." } );
         }
         
-        let cliente_cpf = Cliente.findOne(
+        let cliente_cpf = await Cliente.findOne(
             {
                  where: {
                     cpf : cpf
@@ -71,11 +71,13 @@ module.exports = {
             }
         )
         
+        console.log(cliente_cpf);
+        
         if ( cliente_cpf ) {
             return response.status( 400 ).send( { erro : "CPF já cadastrado." } );
         }
 
-        let cliente_telefone = Cliente.findOne(
+        let cliente_telefone = await Cliente.findOne(
             {
                  where: {
                     telefone : telefone
