@@ -51,7 +51,7 @@ module.exports = {
 
         // Verificar se o cliente já existe
         //      select * from clientes where rg = ? or email = ? or cpf = ?
-        let cliente = await Cliente.findOne(
+        let cliente_email = await Cliente.findOne(
             {
                  where: {
                     email : email
@@ -59,11 +59,11 @@ module.exports = {
             }
         );
 
-        if ( cliente ) { 
+        if ( cliente_email ) { 
             return response.status( 400 ).send( { erro : "Email já cadastrado." } );
         }
         
-        cliente = Cliente.findOne(
+        let cliente_cpf = Cliente.findOne(
             {
                  where: {
                     cpf : cpf
@@ -71,11 +71,11 @@ module.exports = {
             }
         )
         
-        if ( cliente ) {
+        if ( cliente_cpf ) {
             return response.status( 400 ).send( { erro : "CPF já cadastrado." } );
         }
 
-        cliente = Cliente.findOne(
+        let cliente_telefone = Cliente.findOne(
             {
                  where: {
                     telefone : telefone
@@ -83,11 +83,13 @@ module.exports = {
             }
         )
         
-        if ( cliente ) {
+        if ( cliente_telefone ) {
             return response.status( 400 ).send( { erro : "Telefone já cadastrado." } );
         }
 
         const senhaCripto = await bcrypt.hash(senha, 10);
+
+        let cliente;
 
         if( foto ){
             try {
