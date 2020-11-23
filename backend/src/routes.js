@@ -67,6 +67,7 @@ routes.get("/atendimento_servico/:id", atendimentoServicoController.searchById);
 
 // Rotas de cliente
 routes.get("/clientes", clienteController.list);
+routes.get("/cliente/servicos", servicoController.listByClient);
 routes.get("/cliente/:id", clienteController.searchById);
 routes.post("/cliente/servicos/finalizar_atendimento", atendimentoServicoController.finalizarAtendimentoCliente);
 routes.post("/cliente/servicos/cancelar_atendimento", atendimentoServicoController.cancelarAtendimentoCliente);
@@ -84,7 +85,6 @@ routes.get("/prestador_servicos/:id", prestadorServicosController.searchById);
 // Rotas de servico
 // Rota de cadastro de serviço
 routes.post("/cliente/servico", servicoController.store);
-routes.get("/cliente/servicos", servicoController.listByClient);
 routes.get("/servico/:id", servicoController.searchById);
 // routes.post("/servico/update/:id", servicoController.update);
 
