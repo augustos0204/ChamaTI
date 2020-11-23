@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const InfoLoja = styled.View`
     height: 200px;
     /* background: red; */
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     display: flex;
     flex-direction: row;
@@ -29,7 +29,7 @@ export const ContainerBotao = styled.View`
     align-items: center;
     /* justify-content: center; */
     flex-direction: column;
-    margin-top: 40px;
+    margin-top: 20px;
 `;
 
 export const BotaoEntrar = styled.TouchableOpacity` 
@@ -54,7 +54,7 @@ export const BotaoCadastrar = styled.TouchableOpacity`
 
 
 export const Footer = styled.View`
-    /* margin-top: 160px; */
+    margin-top: 10px;
     align-items: center;
 `;
 
@@ -67,20 +67,31 @@ export const ContainerInput = styled.View`
 
 export const Usuario = styled.View`
     width: 80%;
-    height: 30px;
+    height: 50px;
     /* background: #F87700; */
     display: flex;
     flex-direction: row;
+    align-items: center;
+    border: 1px solid transparent;
+    border-bottom-color: black;
 
 `;
 
 export const Senha = styled.View`
     width: 80%;
-    height: 30px;
+    height: 50px;
     /* background: #F87700; */
     display: flex;
+    align-items: center;
     flex-direction: row;
-    
+    margin-top: 25px;
+    border: 1px solid transparent;
+    border-bottom-color: black;
+`;
+
+export const Clique = styled.TouchableOpacity`
+    background: red;
+    color: #FFF;
 `;
 
 
