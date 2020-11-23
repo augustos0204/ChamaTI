@@ -39,7 +39,6 @@ module.exports = {
     },
 
     async listByClient( request, response ){
-        console.log("Entrou aqui.")
         const user_access = request.user_access;
 
         if( user_access !== "cliente" ){
