@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 
-import chamaTiLogo from "../../assets/chama.png";
-
-import Header from "../../components/menu/header";
+// import chamaTiLogo from "../../assets/chama.png";
 
 import {
     ContainerLogo, 
-    LogoChamaTI, 
-    LogoImage, 
+    LogoChamaTI,  
     ContainerFormLogin, 
     FormLogin, 
     ContainerTexts, 
@@ -19,7 +16,10 @@ import {
 } 
 from "./styles";
 
-import { api } from "../../services/api";
+import { 
+    api,
+    getAllSexoUser
+} from "../../services/api";
 
 import { buscarViaCep } from "../../services/viaCep";
 
@@ -67,11 +67,8 @@ const ContentFormLogin = (props) => {
     return (
         <container>
             <ContainerLogo>
-                <LogoChamaTI id="logoChamaTIName">
+                <LogoChamaTI id="logoChamaTIName" className="logoFont">
                     ChamaTI
-                    <LogoImage>
-                        <img src={chamaTiLogo} alt="Logo ChamaTI" title="Logo ChamaTI"/>
-                    </LogoImage>
                 </LogoChamaTI>
             </ContainerLogo>
             <ContainerFormLogin>
@@ -117,17 +114,13 @@ const ContentFormLogin = (props) => {
 
 const ContentFormRegistro = (props) => {
     const [usuarioRegistro, setUsuarioRegistro] = useState({
-        /*Dados Pessoais*/
         nome: "",
         email: "",
         senha: "",
         data_nascimento: "",
-        rg: "",
         cpf: "",
         telefone: "",
         sexo_id: "",
-
-        /*Localização*/
         cep: "",
         logradouro: "",
         bairro: "",
@@ -181,6 +174,21 @@ const ContentFormRegistro = (props) => {
             }
         }
 
+        const responseSexo = async () => {
+            const response = await getAllSexoUser();
+            await Array.prototype.forEach.call(response, data => {
+                console.log(data.sexo);
+            });
+        }
+
+        responseSexo();
+
+        const getterSexo = (e) => {
+            const elementValue = e.target.value;
+            usuarioRegistro.sexo_id = elementValue;
+            console.log(usuarioRegistro);
+        }
+
         const prencherCampos = (dados) => {
 
             const campoLogradouro = document.getElementById('logradouro');
@@ -202,39 +210,26 @@ const ContentFormRegistro = (props) => {
             usuarioRegistro.cep = dados.cep;
         }
 
-        const selectSexoValue = (e) => {
-            console.log("ae");
-        }
-
         return (
             <container>
                 <ContainerLogo>
-                    <LogoChamaTI id="logoChamaTIName">
+                    <LogoChamaTI id="logoChamaTIName" className="logoFont">
                         ChamaTI
-                    <LogoImage>
-                        <img src={chamaTiLogo} alt="Logo ChamaTI" title="Logo ChamaTI"/>
-                    </LogoImage>
-                </LogoChamaTI>
-            </ContainerLogo>
+                    </LogoChamaTI>
+                </ContainerLogo>
                 <FormLogin onSubmit={registrar}>
                     <ContainerFormularioRegistro>
-                        <ContainerTexts style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}>
+                        <ContainerTexts>
                             <input type="text" required placeholder="Nome:" id="nome" value={usuarioRegistro.nome} onChange={handlerInput}/>
                             <input type="email" required placeholder="Email:" id="email" value={usuarioRegistro.email} onChange={handlerInput}/>
                             <input type="password" required placeholder="Senha:" id="senha" value={usuarioRegistro.senha} onChange={handlerInput}/>
                             <input type="text" required placeholder="Data de Nascimento:" id="data_nascimento" value={usuarioRegistro.data_nascimento} onChange={handlerInput}/>
-                            <input type="text" required placeholder="RG:" id="rg" value={usuarioRegistro.rg} onChange={handlerInput}/>
                             <input type="text" required placeholder="CPF:" id="cpf" value={usuarioRegistro.cpf} onChange={handlerInput}/>
                             <input type="text" required placeholder="Telefone:" id="telefone" value={usuarioRegistro.telefone} onChange={handlerInput}/>
-                            Sexo:
-                            <select required onChange={selectSexoValue} id="sexo_id">
-                                <option value="1">Masculino</option>
-                                <option value="2">Feminino</option>
+                            <span style={{marginLeft: "10px"}}>Sexo:</span>
+                            <select required onChange={getterSexo} id="sexo_id" style={{marginLeft: "10px"}}>
+                                <option selected value="--">--</option>
+                                <option selected value="1">Masculino</option>
                             </select>
                         </ContainerTexts>
                         <ContainerTexts>
@@ -243,7 +238,7 @@ const ContentFormRegistro = (props) => {
                             <input type="text" required disabled placeholder="bairro:" id="bairro" value={usuarioRegistro.bairro}/>
                             <input type="text" required disabled placeholder="cidade:" id="localidade" value={usuarioRegistro.cidade}/>
                             <input type="text" required disabled placeholder="estado:" id="uf" value={usuarioRegistro.estado}/>
-                            <input type="text" required placeholder="numero:" id="numero" value={usuarioRegistro.numero} onChange={handlerInput}/>
+                            <input type="number" required placeholder="numero:" id="numero" min="0" value={usuarioRegistro.numero} onChange={handlerInput}/>
                             <input type="text" required placeholder="complemento:" id="complemento" value={usuarioRegistro.complemento} onChange={handlerInput}/>
                         </ContainerTexts>
                     </ContainerFormularioRegistro>
@@ -270,14 +265,18 @@ const Login = () => {
 
     return (
         <container>
-            <Header/>
             <container style={{
                 display: "block",
                 width: "1000px",
                 minHeight: "100px",
                 height: "auto",
-                margin: "0 auto",
                 paddingTop: "70px",
+                borderRadius: "20px",
+                overflow: "hidden",
+                border: "2px solid var(--color-gray)",
+                backgroundColor: "var(--color-white)",
+                boxShadow: "0px 0px 10px black",
+                margin: "10vh auto",
             }}>
                 <containerConteudoPage className="containerConteudoPage" style={{
                     paddingTop: "15px",

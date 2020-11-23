@@ -2,14 +2,24 @@ import React from "react";
 
 import Header from "../../components/menu/header";
 
-import {ContainerIntroductionServices, DetalhesButton, ContainerInfoPessoa, ContainerGeralPedido, DescricaoProblema, TituloProblema, ImagePessoaIcon, TextoInformativoPessoa, TextoInformativoStatus} from "./style";
+import { getAllServices } from "../../services/api";
+
+import {
+    ContainerIntroductionServices,
+    DetalhesButton, ContainerInfoPessoa,
+    ContainerGeralPedido, DescricaoProblema,
+    TituloProblema,
+    ImagePessoaIcon,
+    TextoInformativoPessoa,
+    TextoInformativoStatus
+} from "./style";
+
 import chamaTiLogo from "../../assets/chama.png";
-// import { api } from "../../services/api";
 
 const HomeServices = () => {
     return (
         <container>
-            <Header/>
+            <Header tela="Home"/>
             <container style={{
                 display: "block",
                 width: "1000px",

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 export const ContainerLogo = styled.div`
     width: 100%;
@@ -11,6 +11,11 @@ export const ContainerLogo = styled.div`
     padding: 5px;
 `;
 
+const fireIluminationLogo = keyframes`
+    0%{color: var(--color-primary);text-shadow: 0px 0px 10px var(--color-light);}
+    100%{text-shadow: none;color: black;}
+`;
+
 export const LogoChamaTI = styled.div`
     width: 100%;
     height: inherit;
@@ -19,17 +24,12 @@ export const LogoChamaTI = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 2.6em;
-    font-family: sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     cursor: default;
     user-select: none;
     transition: 0.5s;
-    
-    &:hover{
-        transition: 0.5s;
-        color: var(--color-primary);
-        text-shadow: 0px 0px 10px var(--color-light);
-    }
+    animation:${fireIluminationLogo} 1s infinite;
 `;
 
 export const LogoImage = styled.figure`
@@ -61,8 +61,8 @@ export const ContainerTexts = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     padding: 5px;
     margin-bottom: 20px;
     margin-left: auto;

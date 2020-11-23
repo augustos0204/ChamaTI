@@ -1,7 +1,9 @@
 import {createGlobalStyle} from "styled-components";
 
-export const GlobalStyles = createGlobalStyle`
+import {LobsterFontFace} from "./Fonts";
 
+export const GlobalStyles = createGlobalStyle`
+    ${LobsterFontFace};
 /* CSS GLOBAL */
 
     :root{
@@ -40,7 +42,7 @@ export const GlobalStyles = createGlobalStyle`
         height: 100%;
     }
 
-    input[type="text"], input[type="email"], input[type="password"]{
+    input[type="text"], input[type="email"], input[type="password"], input[type="number"]{
         width: 280px;
         height: 40px;
         border: none;
@@ -51,6 +53,15 @@ export const GlobalStyles = createGlobalStyle`
         margin-bottom: 10px;
         margin-left: auto;
         margin-right: auto;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        background-color: inherit;
+    }
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 
     select{
@@ -77,7 +88,7 @@ export const GlobalStyles = createGlobalStyle`
         width: 100%;
         min-height: 5px;
         height: auto;
-        display: block;
+        display: fixed;
     }
 
     header .container{
@@ -89,44 +100,9 @@ export const GlobalStyles = createGlobalStyle`
         width: 100%;
         height: 55px;
         display: block;
-        flex-direction: row;
         position: relative;
         background-color: var(--color-secondary);
-    }
-
-/* Menu */
-
-    .containerMenu{
-        width: 45px;
-        height: 45px;
-        float: left;
-        margin-top: 10px;
-        border-radius: 100%;
-        margin-left: 10px;
-        overflow: hidden;
-        display: block;
-    }
-
-    .containerMenu img{
-        background-color: var(--color-primary);
-        padding: 2px;
-        cursor: pointer;
-
-        ${'.containerMenuItens'}:hover &{
-            left: 0;
-            opacity: 1;
-        }
-    }
-
-    .containerMenuItens{
-        width: 200px;
-        min-height: 100px;
-        height: auto;
-        background-color: var(--color-sLight);
-        position: absolute;
-        left: -200px;
-        margin-top: 45px;
-        opacity: 0;
+        z-index: 999;
     }
 
 /* Nome da página */
@@ -142,6 +118,8 @@ export const GlobalStyles = createGlobalStyle`
         font-family: Arial, Helvetica, sans-serif;
         color: var(--color-primary);
         font-size: 1.5em;
+        user-select: none;
+        text-transform: uppercase;
     }
 
     .pageNameBarra{
@@ -160,6 +138,10 @@ export const GlobalStyles = createGlobalStyle`
         background-color: var(--color-white);
         line-height: 1.5;
         letter-spacing: 0.5px;
+    }
+
+    .logoFont{
+        font-family: 'lobster'
     }
 
 `;

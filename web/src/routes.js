@@ -17,16 +17,28 @@ const PrivateRoute = ({ children, location, ...rest}) => {
             }}
         />
     );
-
 };
+
+const InitialRoute = ({ children, location, ...rest}) => {
+    return !(isSignedIn()) ? (
+        <Route {...rest}>{children}</Route>
+    ) : (
+        <Redirect
+            to={{
+                pathname: "/home",
+                state: {from: location},
+            }}
+        />
+    );
+}
 
 function Routes() {
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path="/">
+                <InitialRoute exact path="/">
                     <Login/>
-                </Route>
+                </InitialRoute>
                 <PrivateRoute path="/home">
                     <Home/>
                 </PrivateRoute>

@@ -5,11 +5,12 @@ export const ContainerIntroductionServices = styled.div`
     min-height: 180px;
     height: auto;
     border-radius: 10px;
-    background-color: var(--color-gray);
-    box-shadow: 0px 0px 5px black;
+    background-color: var(--color-white);
+    box-shadow: 0px 0px 10px black;
     padding-left: 30px;
     padding-right: 30px;
     transition: 0.5s;
+    border: 2px solid var(--color-gray);
 
     /* &:hover{
         background-color: var(--color-light);
@@ -76,18 +77,17 @@ export const DescricaoProblema = styled.p`
 export const DetalhesButton = styled.button`
     width: 200px;
     height: 30px;
-    background-color: var(--color-white);
-    border: none;
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
     transition: 0.5s;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.1em;
-    color: black;
+    color: var(--color-primary);
     cursor: pointer;
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 20px;
 
     &:hover{
-        color: var(--color-primary);
-        border-bottom: 3px solid var(--color-primary);
-        transform: scale(1.1);
+        color: var(--color-white);
+        background-color: var(--color-primary);
     }
 `;
