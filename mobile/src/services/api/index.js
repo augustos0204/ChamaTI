@@ -4,13 +4,10 @@ export const api = axios.create({
     baseUrl: "http://192.168.0.18:3333/"
 });
 
-export async function login ( email, senha ) {
+export async function login ( params ) {
     try {
-        const response = await api.get('/sessao/cliente', {
-            params: {
-                email,
-                senha
-            }
+        const response = await api.post('/sessao/cliente', {
+            params
         });
         
         console.log(response);
