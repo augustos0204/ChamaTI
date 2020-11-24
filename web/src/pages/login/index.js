@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // import chamaTiLogo from "../../assets/chama.png";
 
@@ -112,6 +112,12 @@ const ContentFormLogin = (props) => {
     )
 }
 
+const SelectSexo = ( {post} ) => {
+    return (
+        <option selected value="1">Masculino</option>
+    )
+}
+
 const ContentFormRegistro = (props) => {
     const [usuarioRegistro, setUsuarioRegistro] = useState({
         nome: "",
@@ -129,6 +135,26 @@ const ContentFormRegistro = (props) => {
         numero: "",
         complemento: ""
     });
+
+    const [sexoData, setSexoData] = useState([]);
+
+
+    useEffect(() => {
+        const getSexos = async () => {
+            try {
+                const response = await getAllSexoUser();
+
+                await setSexoData(response);
+            } catch (error) {
+                if(error.response){
+                    window.alert(error.response.data.erro);
+                }
+            }
+            
+        }
+
+        getSexos();
+    }, []);
 
     const handlerInput = (e) => {
         setUsuarioRegistro({...usuarioRegistro, [e.target.id]: e.target.value});
@@ -174,14 +200,6 @@ const ContentFormRegistro = (props) => {
             }
         }
 
-        const responseSexo = async () => {
-            const response = await getAllSexoUser();
-            await Array.prototype.forEach.call(response, data => {
-                console.log(data.sexo);
-            });
-        }
-
-        responseSexo();
 
         const getterSexo = (e) => {
             const elementValue = e.target.value;
@@ -229,7 +247,7 @@ const ContentFormRegistro = (props) => {
                             <span style={{marginLeft: "10px"}}>Sexo:</span>
                             <select required onChange={getterSexo} id="sexo_id" style={{marginLeft: "10px"}}>
                                 <option selected value="--">--</option>
-                                <option selected value="1">Masculino</option>
+                                <SelectSexo/>
                             </select>
                         </ContainerTexts>
                         <ContainerTexts>
