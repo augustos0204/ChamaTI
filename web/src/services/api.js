@@ -4,7 +4,7 @@ export const api = axios.create({
     baseURL: "http://localhost:3333/"
 });
 
-export const getLogedUser = async (id) => {
+export const searchUser = async (id) => {
     const response = await api.get(`/cliente/${id}`);
     return response;
 }

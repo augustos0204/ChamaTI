@@ -4,7 +4,7 @@ import foto from "../../assets/menu.png";
 import perfilPadrao from "../../assets/perfilPadrão.jpg";
 import {signOut, getCliente} from "../../services/security";
 
-import { getLogedUser } from "../../services/api";
+import { searchUser } from "../../services/api";
 
 import {
     ContainerMenu,
@@ -24,7 +24,7 @@ import {
 const Header = ( props ) => {
     const idCliente = (getCliente().id);
     const logedUser = async (element) => {
-        const response = await (await getLogedUser(idCliente)).data;
+        const response = await (await searchUser(idCliente)).data;
         const nomePerfil = await document.getElementById("userLogedName");
         nomePerfil.innerHTML = await response.nome;
         if(response.foto != null){

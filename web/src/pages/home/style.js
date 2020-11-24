@@ -11,10 +11,7 @@ export const ContainerIntroductionServices = styled.div`
     padding-right: 30px;
     transition: 0.5s;
     border: 2px solid var(--color-gray);
-
-    /* &:hover{
-        background-color: var(--color-light);
-    } */
+    margin-bottom: 20px;
 `;
 
 export const ContainerInfoPessoa = styled.div`
