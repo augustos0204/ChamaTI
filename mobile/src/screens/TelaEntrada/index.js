@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Text, Button} from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 // import * as Font from 'expo-font';
@@ -8,7 +8,9 @@ import { AntDesign, EvilIcons } from '@expo/vector-icons';
 
 import logoloja from '../images/fire.png'; 
 
-import { api, login } from '../../services/api';
+import { login } from '../../services/api';
+
+const api = require('../../services/api');
 
 const axios = require('axios');
 
@@ -46,12 +48,42 @@ export default function Entrada({navigation}) {
                 email,
                 senha
             }
+            
+            console.log("Entrou na funcao");
 
-            const response = await axios.post('http://192.168.0.18:3333/sessao/cliente',
-                params
-            );
+            try {
+                let response = await api.loginCliente(params);                
+            } catch (error) {
+                console.log("Erro em cliente: " + error);
+            }
 
-            console.log(response.data);
+            if(response){
+                alert("Cliente logado.");
+            }
+            else{
+                try {
+                    response = await api.loginPrestadorServicos(params);                    
+                } catch (error) {
+                    console.log("Erro em prestador de serviços: " + error);
+                }
+
+                if(response){
+                    alert("Prestador de serviços logado.");
+                }
+                else{
+                    alert("Usuário ou senha inválidos.");
+                }
+            }
+
+            if ( response.status === 201 ){
+                console.log(response.data);
+            }
+            else if ( response.status === 403 ){
+                alert(response.data.erro);
+            }
+            else {
+                console.log( response );
+            }
         }
         else {
             alert("Informe os dados nos campos.");

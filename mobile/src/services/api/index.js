@@ -1,20 +1,17 @@
 const axios = require('axios');
 
 export const api = axios.create({
-    baseUrl: "http://192.168.0.18:3333/"
+    baseUrl: "http://10.0.0.2:3333/"
 });
 
-export async function login ( params ) {
-    try {
-        const response = await api.post('/sessao/cliente', {
-            params
-        });
-        
-        console.log(response);
+export function loginCliente ( params ) {
+    return api.post('/sessao/cliente', {
+        params
+    });
+}
 
-        return response
-    } catch (error) {
-        console.log(error);
-    }
-    
+export function loginPrestadorServicos ( params ) {
+    return api.post('/sessao/prestador_servicos', {
+        params
+    });
 }
