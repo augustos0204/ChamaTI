@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export default function Conta() {
+export default function Confirmacao() {
     return (
-        <Text>Tela de Conta</Text>
+        <Text>Tela de Confirmacao</Text>
     );
 }

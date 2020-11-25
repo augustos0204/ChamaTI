@@ -1,30 +1,21 @@
 import React from 'react';
-import { Button, Label } from './styles';
+import { Text } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 
-import { TouchableWithoutFeedback } from 'react-native';
+import { Button, Label} from './styles';
 
-export default function BotaoPedir({ focused }) {
-    return (
-
-        // <TouchableWithoutFeedback>
-            <Button
-                colors={
-                    focused
-                        ? ['#000', '#ccc']
-                        : ['#ffa500', '#e69e19']
-                }
-                start={[1, 0.8]}
-            >
-                <Entypo 
-                    name="tools" 
-                    size={25} 
-                    color={focused ? '#fff' : '#000'}/>
-
-                <Label focused={focused}>Pedir</Label>            
-            </Button>
-        // {/* </TouchableWithoutFeedback> */}
-
-   
+export default function BotaoPedir({focused}){
+    return(
+        <Button
+           colors={
+               focused
+               ? ['#FF7200', '#FF7200']
+               : ['#FF7200', '#FF7200']
+           }
+           start={[1, 0.2]}
+        >
+            <Entypo name="tools" size={24} color={focused ? '#FFF':'#000'} />
+            <Label focused={focused}>Pedir</Label>
+        </Button>
     );
 }

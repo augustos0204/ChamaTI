@@ -1,77 +1,162 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import {View, Text, SafeAreaView} from 'react-native';
+import React, {useRef, useState, useEffect} from 'react';
+import { View, Text, TouchableOpacity, SafeAreaView, TextInput, StyleSheet, ScrollView } from 'react-native';
+import { Modalize } from 'react-native-modalize';
 import { Camera } from 'expo-camera';
+import { MaterialIcons, FontAwesome5, MaterialCommunityIcons, Entypo, FontAwesome } from '@expo/vector-icons';
 
-import { MaterialIcons, FontAwesome5, Zocial, Entypo, MaterialCommunityIcons} from '@expo/vector-icons';
 
-import { 
-    BotãoCadastrar,
-    CaixaIcon, CaixaInput,
-    ContainerFoto, ContainerInfo, ContainerIcons, ContainerInput,
-} from './styles';
-import { TextInput } from 'react-native-gesture-handler';
+export default function Cadastro({navigation}) {
 
-const Stack = createStackNavigator();
+    // const [type, setType] = useState(Camera.Constants.Type.back);
 
-export default function Cadastro() {
+    // const [hasPermission, setHasPermission] = useState(null);
+
+    // useEffect(() => {
+    //     (async () => {
+    //         const {status} = await Camera.requestPermissionsAsync();
+    //         setHasPermission(status === 'granted');
+    //     })();
+    // }, []);
+
+    // if(hasPermission === null) {
+    //     return <View/>;
+    // }
+
+    // if(hasPermission === false) {
+    //     return <Text>Acesso negado</Text>;
+    // }
+
+    const modalizeRef = useRef(null);
+
+    function onOpen() {
+        modalizeRef.current?.open();
+    }
+
     return (
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-            <SafeAreaView>
-                    <ContainerFoto>
-                            <MaterialIcons name="photo-camera" size={60} color="black" />
-                    </ContainerFoto>
+        <SafeAreaView 
+            style={{alignItems: 'center', justifyContent: 'center', padding: 10}}>
 
-                    <ContainerInfo>
-                        <ContainerIcons>
-                            <CaixaIcon>
-                                <FontAwesome5 name="user-alt" size={24} color="black" />
-                            </CaixaIcon>
+            <ScrollView>
+                <View style={{ marginBottom: 40 ,width: 150, height: 150, borderRadius: 75, borderColor: '#000', borderWidth: 1, alignContent: 'center', justifyContent: 'center', alignSelf: 'center', alignContent: 'center', marginTop: 20}}>
+                    <MaterialIcons style={{alignSelf: 'center'}} name="photo-camera" size={50} color="black" />
+                </View>
 
-                            <CaixaIcon>
-                                <Zocial name="email" size={24} color="black" />
-                            </CaixaIcon>
+                <View style={styles.views}>
+                    <FontAwesome5 name="user-alt" size={24} color="black" />
+                    <TextInput style={styles.inputis} placeholder="Digite seu nome"></TextInput>
+                </View>
 
-                            <CaixaIcon>
-                                <Entypo name="location" size={24} color="black" />
-                            </CaixaIcon>
+                <View style={styles.views}>
+                    <MaterialCommunityIcons name="email-outline" size={24} color="black" />
+                    <TextInput style={styles.inputis} placeholder="Digite seu nome"></TextInput>
+                </View>
 
-                            <CaixaIcon>
-                                <MaterialCommunityIcons name="file-document" size={24} color="black" />
-                            </CaixaIcon>
+                <View style={styles.views}>
+                    <Entypo name="location" size={24} color="black" />
+                    <TextInput style={styles.inputis} placeholder="Digite seu nome"></TextInput>
+                </View>
 
-                            <CaixaIcon>
-                                <Entypo name="key" size={24} color="black" />
-                            </CaixaIcon>
-                            
-                        </ContainerIcons>
+                <View style={styles.views}>
+                    <MaterialCommunityIcons name="file-document-box-check-outline" size={24} color="black" />
+                    <TextInput style={styles.inputis} placeholder="Digite seu nome"></TextInput>
+                </View>
 
-                        <ContainerInput>
-                            <CaixaInput>
-                                <TextInput placeholder="Digite seu nome completo"/>
-                            </CaixaInput>
-                        
-                            <CaixaInput>
-                                <TextInput placeholder="Digite seu email"/>
-                            </CaixaInput>
-                            
-                            <CaixaInput>
-                                <TextInput placeholder="Digite seu CEP"/>
-                            </CaixaInput>
+                <View style={styles.views}>
+                    <FontAwesome name="lock" size={24} color="black" />
+                    <TextInput 
+                        autoCorrect={false}
+                        style={styles.inputis} placeholder="Digite seu nome"></TextInput>
+                </View>
 
-                            <CaixaInput>
-                                <TextInput placeholder="Digite seu CPF"/>
-                            </CaixaInput>
-                            
-                        </ContainerInput>
+                <View>
+                    <TouchableOpacity 
+                        onPress={() => navigation.navigate('TelaModalConfirma')}
+                        style={styles.botao}> 
+                        <Text style={{ alignSelf: 'center', fontSize: 20}}>Cadastrar</Text>
+                    </TouchableOpacity>
+                    {/* <TouchableOpacity
+                        onPress={onOpen}
+                    >
+                        <Text>Mostrar</Text>
+                    </TouchableOpacity>
 
-                    </ContainerInfo>
-
-                    <BotãoCadastrar>
-                        <Text style={{fontSize:20, color: "#FFF"}}>Cadastrar</Text>
-                    </BotãoCadastrar>
-            </SafeAreaView>
-        </View>
+                    <Modalize
+                        ref={modalizeRef}
+                        snapPoint={80}
+                    ></Modalize> */}
+                </View>
+            </ScrollView>
+         
+        </SafeAreaView>
     );
 }
+
+
+const styles = StyleSheet.create({
+    views: {
+        flexDirection: 'row',
+        marginBottom: 30,
+        alignSelf: 'flex-start',
+        justifyContent: 'center',
+        paddingLeft: 20,
+       
+        
+    },
+
+    inputis:{
+        width: '75%',
+        height: 30,
+        marginLeft: 30,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderBottomColor: '#000',
+        borderLeftColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderTopColor: 'transparent',
+        alignSelf: 'flex-start',
+        paddingTop: 1,
+      
+    },
+
+    botao: {
+        width: 150,
+        height: 30,
+        borderRadius: 10,
+        backgroundColor: '#F87700',
+        alignItems: 'center'
+      
+    }
+
+});
+
+
+
+   {/* <View>
+                <Camera
+                    style={{flex: 1}}
+                    type={type}
+                />
+            </View>
+
+            <TouchableOpacity>
+                <Text>Abrir modal</Text>
+            </TouchableOpacity>
+
+            <Modalize
+                ref={modalizeRef}
+                snapPoint={500}
+                modalHeight={500}
+            >
+                <View style={{
+                    flex: 1,
+                    height: 180,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+
+                }}>
+
+
+                </View>
+
+            </Modalize> */}
