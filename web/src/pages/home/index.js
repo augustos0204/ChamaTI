@@ -4,7 +4,7 @@ import Header from "../../components/menu/header";
 
 import perfilPadrao from "../../assets/perfilPadrão.jpg";
 
-import { getAllServices, searchUser } from "../../services/api";
+import { getClientLogedServices, searchUser } from "../../services/api";
 
 import {
     ContainerIntroductionServices,
@@ -32,11 +32,11 @@ const CardServices = ({ post }) => {
         }
     }
 
-    // let image = perfilPadrao;
+    let image = perfilPadrao;
 
-    // if (autor.foto != null){
-    //     image = autor.foto;
-    // }
+    if (autor.foto != null){
+        image = autor.foto;
+    }
 
     getAutorData();
 
@@ -44,7 +44,7 @@ const CardServices = ({ post }) => {
         <ContainerIntroductionServices>
             <ContainerInfoPessoa>
                 <ImagePessoaIcon>
-                    <img src={post.foto} alt="foto do perfil" title="foto do perfil"/>
+                    <img src={image} alt="foto do perfil" title="foto do perfil"/>
                 </ImagePessoaIcon>
                 <TextoInformativoPessoa>
                     {autor.nome} - São Paulo
@@ -94,7 +94,7 @@ const HomeServices = () => {
     useEffect(() => {
         const loadingServices = async() => {
             try {
-                const response = await (await getAllServices()).data;
+                const response = await (await getClientLogedServices()).data;
 
                 await setServices(response);
             } catch (error) {

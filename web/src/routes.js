@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 import Login from "./pages/login";
 import Home from "./pages/home";
+import MakeService from "./pages/createService"
 import {isSignedIn} from "./services/security"
 
 const PrivateRoute = ({ children, location, ...rest}) => {
@@ -41,6 +42,9 @@ function Routes() {
                 </InitialRoute>
                 <PrivateRoute path="/home">
                     <Home/>
+                </PrivateRoute>
+                <PrivateRoute path="/services/create">
+                    <MakeService/>
                 </PrivateRoute>
             </Switch>
         </BrowserRouter>

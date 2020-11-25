@@ -42,7 +42,7 @@ export const GlobalStyles = createGlobalStyle`
         height: 100%;
     }
 
-    input[type="text"], input[type="email"], input[type="password"], input[type="number"]{
+    .textLogin, .numberLogin{
         width: 280px;
         height: 40px;
         border: none;
@@ -58,8 +58,8 @@ export const GlobalStyles = createGlobalStyle`
         background-color: inherit;
     }
 
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
+    .numberLogin::-webkit-inner-spin-button,
+    .numberLogin::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
@@ -75,7 +75,7 @@ export const GlobalStyles = createGlobalStyle`
 
     .container{
         width: 1200px;
-        min-height: 100px;
+        min-height: 10px;
         height: auto;
         margin: 0 auto;
         display: block;
@@ -117,7 +117,7 @@ export const GlobalStyles = createGlobalStyle`
         justify-content: flex-end;
         font-family: Arial, Helvetica, sans-serif;
         color: var(--color-primary);
-        font-size: 1.5em;
+        font-size: 1.2em;
         user-select: none;
         text-transform: uppercase;
     }

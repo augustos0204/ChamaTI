@@ -18,3 +18,8 @@ export const getAllServices = async () => {
     const response = await (await api.get(`/servicos/`));
     return response;
 }
+
+export const getClientLogedServices = async () => {
+    const response = await api.get(`/cliente/servicos`);
+    return response;
+}

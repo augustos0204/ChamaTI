@@ -37,6 +37,10 @@ const Header = ( props ) => {
         
     }
 
+    const redirectRoute = (rota) => {
+        document.location.href = `http://localhost:3000/${rota}`;
+    }
+
     logedUser(document.getElementById('userLogedName'));
 
     const confirmaLogout = () => {
@@ -73,8 +77,11 @@ const Header = ( props ) => {
                                     Logout
                                 </LogoutButton>
                             </ContainerPerfil>
-                            <MenuItem>
-                                Teste
+                            <MenuItem onClick={() => {redirectRoute("home")}}>
+                                Home
+                            </MenuItem>
+                            <MenuItem onClick={() => {redirectRoute("services/create")}}>
+                                Criar Postagem
                             </MenuItem>
                             <SubMenuItem>
                                 SubMenu

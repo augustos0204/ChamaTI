@@ -50,6 +50,7 @@ export const TextoInformativoStatus = styled.div`
 export const ContainerGeralPedido = styled.div`
     width: 100%;
     min-height: 10px;
+    max-height: 70px;
     height: auto;
     border-bottom: 2px solid black;
     padding-bottom: 10px;
@@ -57,18 +58,27 @@ export const ContainerGeralPedido = styled.div`
 `;
 
 export const TituloProblema = styled.a`
+    width: 100%;
+    height: 1ch;
     font-size: 1.1em;
     color: black;
     font-family: Arial, Helvetica, sans-serif;
     padding-left: 10px;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export const DescricaoProblema = styled.p`
+    width: 100%;
+    height: 5ch;
     font-size: 1.0em;
     color: black;
     font-family: Arial, Helvetica, sans-serif;
     padding-left: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
 `;
 
 export const DetalhesButton = styled.button`
