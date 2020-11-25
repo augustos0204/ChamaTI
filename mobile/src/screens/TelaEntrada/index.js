@@ -47,42 +47,33 @@ export default function Entrada({navigation}) {
             let params = {
                 email,
                 senha
-            }
-            
-            console.log("Entrou na funcao");
+            }        
+
+            let response;
 
             try {
-                let response = await api.loginCliente(params);                
+                response = await api.loginCliente(params);
+                
+                // if ( response.status === 201 ){
+                if ( response ){
+                    alert("Cliente logado.");
+
+                    console.log(response.data);
+                }
             } catch (error) {
-                console.log("Erro em cliente: " + error);
-            }
+                console.log("Cliente bau au");
 
-            if(response){
-                alert("Cliente logado.");
-            }
-            else{
                 try {
-                    response = await api.loginPrestadorServicos(params);                    
-                } catch (error) {
-                    console.log("Erro em prestador de serviços: " + error);
-                }
+                    response = await api.loginPrestadorServicos(params);
 
-                if(response){
-                    alert("Prestador de serviços logado.");
-                }
-                else{
+                    if ( response.status === 201 ){
+                        alert("Prestador de serviços logado.");
+
+                        console.log(response.data);
+                    }
+                } catch (error) {
                     alert("Usuário ou senha inválidos.");
                 }
-            }
-
-            if ( response.status === 201 ){
-                console.log(response.data);
-            }
-            else if ( response.status === 403 ){
-                alert(response.data.erro);
-            }
-            else {
-                console.log( response );
             }
         }
         else {
