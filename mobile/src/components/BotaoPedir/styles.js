@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
 
 export const Button = styled(LinearGradient)`
     width: 60px;
@@ -7,10 +7,11 @@ export const Button = styled(LinearGradient)`
     border-radius: 30px;
     align-items: center;
     justify-content: center;
+    
 `;
 
 export const Label = styled.Text`
+    color: ${({focused}) => focused ? '#FFF' : '#000'};
     font-size: 12px;
-    color: ${({ focused }) => focused ? '#fff' : '#000'};
 
 `;

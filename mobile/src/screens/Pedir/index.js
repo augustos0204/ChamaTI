@@ -1,6 +1,9 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { View, Text } from 'react-native';
 
 export default function Pedir() {
-    return <Text>Pedir</Text>
+    // console.warn(navigation.navigate);
+    return (
+        <Text>Tela de Pedir</Text>
+    );
 }

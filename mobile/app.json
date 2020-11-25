@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ChamaTi2",
-    "slug": "ChamaTi2",
+    "name": "TesteNavegacao",
+    "slug": "TesteNavegacao",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,6 +18,12 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
