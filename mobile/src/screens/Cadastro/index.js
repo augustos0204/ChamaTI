@@ -4,12 +4,38 @@ import { Modalize } from 'react-native-modalize';
 import { Camera } from 'expo-camera';
 import { MaterialIcons, FontAwesome5, MaterialCommunityIcons, Entypo, FontAwesome } from '@expo/vector-icons';
 
+const api = require('../../services/api');
 
 export default function Cadastro({navigation}) {
+    const [ sexo_id, setSexoId ] = useState("");
+    const [ cep, setCep ] = useState("");
+    const [ logradouro, setLogradouro ] = useState("");
+    const [ bairro, setBairro ] = useState("");
+    const [ cidade, setCidade ] = useState("");
+    const [ estado, setEstado ] = useState("");
+    const [ numero, setNumero ] = useState("");
+    const [ complemento, setComplemento ] = useState("");
+    const [ nome, setNome ] = useState("");
+    const [ email, setEmail ] = useState("");
+    const [ senha, setSenha ] = useState("");
+    const [ data_nascimento, setDataNascimento ] = useState("");
+    const [ cpf, setCpf ] = useState("");
+    const [ telefone, setTelefone ] = useState("");
 
-    // const [type, setType] = useState(Camera.Constants.Type.back);
-
-    // const [hasPermission, setHasPermission] = useState(null);
+    const sexoHandler = ( value ) => {setSexoId( value );}
+    const cepHandler = ( value ) => {setCep( value );}
+    const logradouroHandler = ( value ) => {setLogradouro( value );}
+    const bairroHandler = ( value ) => {setBairro( value );}
+    const cidadeHandler = ( value ) => {setCidade( value );}
+    const estadoHandler = ( value ) => {setEstado( value );}
+    const numeroHandler = ( value ) => {setNumero( value );}
+    const complementoHandler = ( value ) => {setComplemento( value );}
+    const nomeHandler = ( value ) => {setNome( value );}
+    const emailHandler = ( value ) => {setEmail( value );}
+    const senhaHandler = ( value ) => {setSenha( value );}
+    const dataNascimentoHandler = ( value ) => {setDataNascimento( value );}
+    const cpfHandler = ( value ) => {setCpf( value );}
+    const telefoneHandler = ( value ) => {setTelefone( value );}
 
     // useEffect(() => {
     //     (async () => {
@@ -18,13 +44,84 @@ export default function Cadastro({navigation}) {
     //     })();
     // }, []);
 
-    // if(hasPermission === null) {
-    //     return <View/>;
-    // }
+    const signUp = async () => {
+        // if ( sexo_id && cep && logradouro && bairro && cidade && estado && numero && complemento && nome && email && senha && data_nascimento && cpf && telefone ){
+            // let params = {
+            //     sexo_id,
 
-    // if(hasPermission === false) {
-    //     return <Text>Acesso negado</Text>;
-    // }
+            //     cep,
+            //     logradouro,
+            //     bairro,
+            //     cidade,
+            //     estado,
+            //     numero,
+            //     complemento,
+
+            //     nome,
+            //     email,
+            //     senha,
+            //     data_nascimento,
+            //     cpf,
+            //     telefone
+            // }        
+
+            let params = {
+                sexo_id : "1",
+            
+                cep : "064-123",
+                logradouro : "Rua aí",
+                bairro : "Bairro aí",
+                cidade : "Cidade aí",
+                estado : "Estado aí",
+                numero : "123",
+                complemento : "Casa B",
+            
+                nome : "Testinho Silva",
+                email : "testinho@mail.com",
+                senha : "123",
+                data_nascimento : "2001-01-01",
+                cpf : "126.456.789-09",
+                telefone : "+55(11)92236-5678"
+            }
+
+            let response;
+
+            try {
+                console.log("Cliente: " + params.email + "\n" + params.senha);
+
+                response = await api.signUpCliente(params);
+                
+                // if ( response.status === 201 ){
+                if ( response ){
+                    alert("Cliente logado.");
+
+                    console.log(response.data);
+
+                    navigation.navigate('Home');
+                }
+            } catch (error) {
+                try {
+                    console.log("Prestador: " + params.email + "\n" + params.senha);
+
+                    response = await api.signUpPrestadorServicos(params);
+
+                    if ( response.status === 201 ){
+                        alert("Prestador de serviços logado.");
+
+                        console.log(response.data);
+
+                        navigation.navigate('Home');
+                    }
+                } catch (error) {
+                    console.log(error);
+                    alert("Usuário ou senha inválidos.");
+                }
+            }
+        // }
+        // else {
+        //     alert("Informe os dados nos campos.");
+        // }
+    }
 
     const modalizeRef = useRef(null);
 
@@ -70,7 +167,7 @@ export default function Cadastro({navigation}) {
 
                 <View>
                     <TouchableOpacity 
-                        onPress={() => navigation.navigate('TelaModalConfirma')}
+                        onPress={() => signUp()}
                         style={styles.botao}> 
                         <Text style={{ alignSelf: 'center', fontSize: 20}}>Cadastrar</Text>
                     </TouchableOpacity>

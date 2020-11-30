@@ -13,3 +13,11 @@ export function loginCliente ( params ) {
 export function loginPrestadorServicos ( params ) {
     return api.post('/sessao/prestador_servicos', params );
 }
+
+export function signUpCliente ( params ) {
+    return api.post('/cliente', params);
+}
+
+export function signUpPrestadorServicos ( params ) {
+    return api.post('/prestador_servicos', params);
+}
