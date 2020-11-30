@@ -2,7 +2,7 @@ import React, {useRef, useState, useEffect} from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView, TextInput, StyleSheet, ScrollView } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { Camera } from 'expo-camera';
-import { MaterialIcons, FontAwesome5, MaterialCommunityIcons, Entypo, FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome5, MaterialCommunityIcons, Entypo, FontAwesome, Foundation, Fontisto } from '@expo/vector-icons';
 
 const api = require('../../services/api');
 
@@ -145,27 +145,54 @@ export default function Cadastro({navigation}) {
 
                 <View style={styles.views}>
                     <MaterialCommunityIcons name="email-outline" size={24} color="black" />
-                    <TextInput style={styles.inputis} placeholder="Digite seu nome"></TextInput>
+                    <TextInput style={styles.inputis} placeholder="Digite seu email"></TextInput>
                 </View>
 
                 <View style={styles.views}>
                     <Entypo name="location" size={24} color="black" />
-                    <TextInput style={styles.inputis} placeholder="Digite seu nome"></TextInput>
+                    <TextInput 
+                        style={styles.inputis} 
+                        placeholder="Digite seu CEP"
+                        keyboardType={"numeric"}
+                        ></TextInput>
                 </View>
 
                 <View style={styles.views}>
                     <MaterialCommunityIcons name="file-document-box-check-outline" size={24} color="black" />
-                    <TextInput style={styles.inputis} placeholder="Digite seu nome"></TextInput>
+                    <TextInput 
+                        style={styles.inputis} 
+                        placeholder="Digite seu CPF"
+                        keyboardType={"numeric"}
+                        ></TextInput>
                 </View>
 
                 <View style={styles.views}>
-                    <FontAwesome name="lock" size={24} color="black" />
+                    <FontAwesome name="intersex" size={24} color="black" />
                     <TextInput 
                         autoCorrect={false}
-                        style={styles.inputis} placeholder="Digite seu nome"></TextInput>
+                        style={styles.inputis} placeholder="Sexo"></TextInput>
                 </View>
 
-                <View>
+                <View style={styles.views}>
+                    <Foundation name="telephone" size={24} color="black" />
+                    <TextInput 
+                        autoCorrect={false}
+                        style={styles.inputis} placeholder="Digite seu telefone"
+                        keyboardType={"numeric"}
+                        ></TextInput>
+                </View>
+
+                <View style={styles.views}>
+                    <Fontisto name="date" size={22} color="black" />
+                    <TextInput 
+                        autoCorrect={false}
+                        style={styles.inputis} 
+                        placeholder="Digite data de nascimento"
+                        keyboardType={"numeric"}
+                        ></TextInput>
+                </View>
+
+                <View style={{alignSelf: 'center', marginTop: 10, marginBottom: 30}}>
                     <TouchableOpacity 
                         onPress={() => signUp()}
                         style={styles.botao}> 

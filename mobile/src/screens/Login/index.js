@@ -87,6 +87,7 @@ export default function Login({navigation}) {
                     placeholder="Digite seu email"
                     style={styles.input}
                     onChangeText={ valor => emailHandler( valor )}
+                    keyboardType={"email-address"}
                 />
            </View>
 
@@ -95,6 +96,7 @@ export default function Login({navigation}) {
                <TextInput
                     placeholder="Digite sua senha"
                     autoCorrect={false}
+                    autoFocus={true}
                     secureTextEntry={true}
                     style={styles.input}
                     onChangeText={ valor => senhaHandler( valor )}
