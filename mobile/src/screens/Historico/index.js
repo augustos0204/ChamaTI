@@ -1,14 +1,14 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 import ContainerHistorico from '../../components/ContainerHistorico';
 
 export default function Historico() {
     return (
-        <View>
-            <View style={{flexDirection: 'row', justifyContent: 'space-around', marginTop: 20}}>
+        <ScrollView>
+            <View style={{flexDirection: 'row', justifyContent: 'space-around', 
+            marginTop: 20, marginBottom: 30}}>
                 <TouchableOpacity
-                    style={{}}
                 >
                     <Text>t6este</Text>
                 </TouchableOpacity>
@@ -18,6 +18,6 @@ export default function Historico() {
                 </TouchableOpacity>
             </View>
             <ContainerHistorico/>
-        </View>
+        </ScrollView>
     );
 }

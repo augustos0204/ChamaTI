@@ -27,6 +27,7 @@ export default function Login({navigation}) {
                <TextInput 
                     placeholder="Digite seu email"
                     style={styles.input}
+                    keyboardType={"email-address"}
                 />
            </View>
 
@@ -35,6 +36,7 @@ export default function Login({navigation}) {
                <TextInput
                     placeholder="Digite sua senha"
                     autoCorrect={false}
+                    autoFocus={true}
                     secureTextEntry={true}
                     style={styles.input}
                 />
