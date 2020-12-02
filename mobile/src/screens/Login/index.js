@@ -96,7 +96,7 @@ export default function Login({navigation}) {
                <TextInput
                     placeholder="Digite sua senha"
                     autoCorrect={false}
-                    autoFocus={true}
+                    // autoFocus={true}
                     secureTextEntry={true}
                     style={styles.input}
                     onChangeText={ valor => senhaHandler( valor )}

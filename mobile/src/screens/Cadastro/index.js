@@ -5,6 +5,7 @@ import { Camera } from 'expo-camera';
 import { MaterialIcons, FontAwesome5, MaterialCommunityIcons, Entypo, FontAwesome, Foundation, Fontisto } from '@expo/vector-icons';
 
 const api = require('../../services/api');
+const viacep = require('../../services/viacep');
 
 export default function Cadastro({navigation}) {
     const [ sexo_id, setSexoId ] = useState("");
@@ -44,6 +45,30 @@ export default function Cadastro({navigation}) {
     //     })();
     // }, []);
 
+    const preencherEndereco = async ( endereco ) => {
+        // cepHandler( value );
+        logradouroHandler( endereco.logradouro );
+        bairroHandler( endereco.bairro );
+        cidadeHandler( endereco.localidade );
+        estadoHandler( endereco.uf );
+        // numeroHandler( value );
+    }
+
+    const responseCep = async ( ) => {
+        // if (validaCep(e)){
+            console.log(cep);
+            try {
+                // const cep = await (e.target.value);
+                const response = await(await viacep.buscarViaCep(cep)).data;
+                await console.log(response);
+
+                await preencherEndereco(response);
+            } catch (error) {
+                alert('Não foi possível localizar seu CEP, por favor, digite novamente.');
+            }
+        // }
+    }
+
     const signUp = async () => {
         // if ( sexo_id && cep && logradouro && bairro && cidade && estado && numero && complemento && nome && email && senha && data_nascimento && cpf && telefone ){
             // let params = {
@@ -65,41 +90,51 @@ export default function Cadastro({navigation}) {
             //     telefone
             // }        
 
+            // Parâmetros temporários
             let params = {
-                sexo_id : "1",
+                sexo_id,
             
-                cep : "064-123",
-                logradouro : "Rua aí",
-                bairro : "Bairro aí",
-                cidade : "Cidade aí",
-                estado : "Estado aí",
+                cep,
+                logradouro,
+                bairro,
+                cidade,
+                estado,
                 numero : "123",
                 complemento : "Casa B",
             
-                nome : "Testinho Silva",
-                email : "testinho@mail.com",
+                nome,
+                email,
                 senha : "123",
-                data_nascimento : "2001-01-01",
-                cpf : "126.456.789-09",
-                telefone : "+55(11)92236-5678"
+                data_nascimento,
+                cpf,
+                telefone
             }
 
             let response;
+            let tipo_cadastro = "cliente";
 
-            try {
-                console.log("Cliente: " + params.email + "\n" + params.senha);
+            console.log(params);
 
-                response = await api.signUpCliente(params);
-                
-                // if ( response.status === 201 ){
-                if ( response ){
-                    alert("Cliente logado.");
-
-                    console.log(response.data);
-
-                    navigation.navigate('Home');
+            if( tipo_cadastro == "cliente" ){
+                try {
+                    console.log("Cliente: " + params.email + "\n" + params.senha);
+    
+                    response = await api.signUpCliente(params);
+                    
+                    // if ( response.status === 201 ){
+                    if ( response ){
+                        alert("Cliente logado.");
+    
+                        console.log(response.data);
+    
+                        navigation.navigate('Home');
+                    }
+                } catch (error) {
+                    console.log(error);
+                    alert("Informações inválidas.");
                 }
-            } catch (error) {
+            }
+            else if( tipo_cadastro == "prestador_servicos" ){
                 try {
                     console.log("Prestador: " + params.email + "\n" + params.senha);
 
@@ -114,9 +149,13 @@ export default function Cadastro({navigation}) {
                     }
                 } catch (error) {
                     console.log(error);
-                    alert("Usuário ou senha inválidos.");
+                    alert("Informações inválidas.");
                 }
             }
+            else{
+                alert("Tipo de cadastro desconhecido.");
+            }
+            
         // }
         // else {
         //     alert("Informe os dados nos campos.");
@@ -140,12 +179,20 @@ export default function Cadastro({navigation}) {
 
                 <View style={styles.views}>
                     <FontAwesome5 name="user-alt" size={24} color="black" />
-                    <TextInput style={styles.inputis} placeholder="Digite seu nome"></TextInput>
+                    <TextInput
+                        style={styles.inputis}
+                        placeholder="Digite seu nome"
+                        onChangeText={ ( text ) => nomeHandler( text ) }
+                    ></TextInput>
                 </View>
 
                 <View style={styles.views}>
                     <MaterialCommunityIcons name="email-outline" size={24} color="black" />
-                    <TextInput style={styles.inputis} placeholder="Digite seu email"></TextInput>
+                    <TextInput
+                        style={styles.inputis}
+                        placeholder="Digite seu email"
+                        onChangeText={ ( text ) => emailHandler( text ) }
+                    ></TextInput>
                 </View>
 
                 <View style={styles.views}>
@@ -154,6 +201,8 @@ export default function Cadastro({navigation}) {
                         style={styles.inputis} 
                         placeholder="Digite seu CEP"
                         keyboardType={"numeric"}
+                        onChangeText={ text => cepHandler( text ) }
+                        onBlur={ () => responseCep( )}
                         ></TextInput>
                 </View>
 
@@ -163,14 +212,17 @@ export default function Cadastro({navigation}) {
                         style={styles.inputis} 
                         placeholder="Digite seu CPF"
                         keyboardType={"numeric"}
-                        ></TextInput>
+                        onChangeText={ ( text ) => cpfHandler( text ) }
+                    ></TextInput>
                 </View>
 
                 <View style={styles.views}>
                     <FontAwesome name="intersex" size={24} color="black" />
                     <TextInput 
                         autoCorrect={false}
-                        style={styles.inputis} placeholder="Sexo"></TextInput>
+                        style={styles.inputis} placeholder="Sexo"
+                        onChangeText={ ( text ) => sexoHandler( text ) }
+                    ></TextInput>
                 </View>
 
                 <View style={styles.views}>
@@ -179,7 +231,8 @@ export default function Cadastro({navigation}) {
                         autoCorrect={false}
                         style={styles.inputis} placeholder="Digite seu telefone"
                         keyboardType={"numeric"}
-                        ></TextInput>
+                        onChangeText={ ( text ) => telefoneHandler( text ) }
+                    ></TextInput>
                 </View>
 
                 <View style={styles.views}>
@@ -189,7 +242,8 @@ export default function Cadastro({navigation}) {
                         style={styles.inputis} 
                         placeholder="Digite data de nascimento"
                         keyboardType={"numeric"}
-                        ></TextInput>
+                        onChangeText={ ( text ) => dataNascimentoHandler( text ) }
+                    ></TextInput>
                 </View>
 
                 <View style={{alignSelf: 'center', marginTop: 10, marginBottom: 30}}>
