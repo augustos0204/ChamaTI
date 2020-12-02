@@ -39,12 +39,10 @@ export const ContainerMenuItens = styled.div`
     transition: 0.5s;
     box-shadow: 0px 0px 10px black;
     border-bottom-right-radius: 10px;
-    filter: blur(5px);
 
     ${ContainerMenu}:hover & {
         left: 0;
         opacity: 1;
-        filter: none;
     }
 `;
 

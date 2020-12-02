@@ -13,10 +13,13 @@ import {
     TituloProblema,
     ImagePessoaIcon,
     TextoInformativoPessoa,
-    TextoInformativoStatus
+    TextoInformativoStatus,
+    ContainerConteudoPage
 } from "./style";
 
-// import chamaTiLogo from "../../assets/chama.png";
+const redirectDetalhes = (service) => {
+    document.location.href = `http://localhost:3000/services/detalhes?serviceId=${service}`;
+}
 
 const CardServices = ({ post }) => {
     const [autor, setAutor] = useState([]);
@@ -80,7 +83,7 @@ const CardServices = ({ post }) => {
                 justifyContent: "center",
                 border: "none",
             }}>
-                <DetalhesButton>
+                <DetalhesButton onClick={()=>{redirectDetalhes(post.id)}}>
                     Detalhes
                 </DetalhesButton>
             </ContainerGeralPedido>
@@ -88,7 +91,7 @@ const CardServices = ({ post }) => {
     )
 }
 
-const HomeServices = () => {
+const ListServices = () => {
     const [services, setServices] = useState([]);
 
     useEffect(() => {
@@ -99,7 +102,7 @@ const HomeServices = () => {
                 await setServices(response);
             } catch (error) {
                 if(error.response){
-                    console.log(error.response.data.erro);
+                    window.alert(error.response.data.erro);
                 }
             }
         }
@@ -108,22 +111,29 @@ const HomeServices = () => {
     }, []);
 
     return (
+        services.map((post) => (<CardServices post={post}/>))
+    );
+}
+
+const HomeServices = () => {
+
+    return (
         <container>
             <Header tela="Home"/>
             <container style={{
-                display: "block",
-                width: "1000px",
-                minHeight: "100px",
-                height: "auto",
-                margin: "0 auto",
-                paddingTop: "70px",
-                
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
             }}>
-                <containerConteudoPage className="containerConteudoPage" style={{
-                    backgroundColor: "transparent",
-                }}>
-                    {services.map((post) => (<CardServices post={post}/>))}
-                </containerConteudoPage>
+                <ContainerConteudoPage>
+                
+                    <container>
+                        <ListServices/>
+                    </container>
+
+                </ContainerConteudoPage>
             </container>
         </container>
     );

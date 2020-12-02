@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import InputMask from 'react-input-mask';
 
 // import chamaTiLogo from "../../assets/chama.png";
 
@@ -162,6 +163,13 @@ const ContentFormRegistro = (props) => {
         setUsuarioRegistro({...usuarioRegistro, [e.target.id]: e.target.value});
         console.log(usuarioRegistro);
     }
+    
+    const validaDataNascimento = () => {
+        const valuesData = usuarioRegistro.data_nascimento.split('/');
+        const dataPadraoAmericano = `${valuesData[2]}-${valuesData[1]}-${valuesData[0]}`;
+        usuarioRegistro.data_nascimento = dataPadraoAmericano;
+        console.log(dataPadraoAmericano);
+    }
 
     const registrar = async (e) => {
         e.preventDefault();
@@ -192,7 +200,6 @@ const ContentFormRegistro = (props) => {
                 try {
                     const cep = await (e.target.value);
                     const response = await(await buscarViaCep(cep)).data;
-                    await console.log(response);
     
                     await prencherCampos(response);
     
@@ -201,7 +208,6 @@ const ContentFormRegistro = (props) => {
                 }
             }
         }
-
 
         const getterSexo = (e) => {
             const elementValue = e.target.value;
@@ -243,22 +249,22 @@ const ContentFormRegistro = (props) => {
                             <input className="textLogin" type="text" required placeholder="Nome:" id="nome" value={usuarioRegistro.nome} onChange={handlerInput}/>
                             <input className="textLogin" type="email" required placeholder="Email:" id="email" value={usuarioRegistro.email} onChange={handlerInput}/>
                             <input className="textLogin" type="password" required placeholder="Senha:" id="senha" value={usuarioRegistro.senha} onChange={handlerInput}/>
-                            <input className="textLogin" type="text" required placeholder="Data de Nascimento:" id="data_nascimento" value={usuarioRegistro.data_nascimento} onChange={handlerInput}/>
-                            <input className="textLogin" type="text" required placeholder="CPF:" id="cpf" value={usuarioRegistro.cpf} onChange={handlerInput}/>
-                            <input className="textLogin" type="text" required placeholder="Telefone:" id="telefone" value={usuarioRegistro.telefone} onChange={handlerInput}/>
+                            <InputMask mask="99/99/9999" className="textLogin" type="text" required placeholder="Data de Nascimento:" id="data_nascimento" value={usuarioRegistro.data_nascimento} onChange={handlerInput} onBlur={validaDataNascimento}/>
+                            <InputMask mask="999.999.999-99" className="textLogin" type="text" required placeholder="CPF:" id="cpf" value={usuarioRegistro.cpf} onChange={handlerInput}/>
+                            <InputMask mask="+99(99)99999-9999" className="textLogin" type="text" required placeholder="Telefone:" id="telefone" value={usuarioRegistro.telefone} onChange={handlerInput}/>
                             <span style={{marginLeft: "10px"}}>Sexo:</span>
                             <select required onChange={getterSexo} id="sexo_id" style={{marginLeft: "10px"}}>
                                 {sexoData.map((post) => (<SelectSexo post={post}/>))}
                             </select>
                         </ContainerTexts>
                         <ContainerTexts>
-                            <input className="textLogin" type="text" required placeholder="cep:" id="cep" onBlur={responseCep}/>
-                            <input className="textLogin" type="text" required disabled placeholder="logradouro:" id="logradouro" value={usuarioRegistro.logradouro} onChange={handlerInput}/>
-                            <input className="textLogin" type="text" required disabled placeholder="bairro:" id="bairro" value={usuarioRegistro.bairro}/>
-                            <input className="textLogin" type="text" required disabled placeholder="cidade:" id="localidade" value={usuarioRegistro.cidade}/>
-                            <input className="textLogin" type="text" required disabled placeholder="estado:" id="uf" value={usuarioRegistro.estado}/>
-                            <input className="numberLogin" type="number" required placeholder="numero:" id="numero" min="0" value={usuarioRegistro.numero} onChange={handlerInput}/>
-                            <input className="textLogin" type="text" required placeholder="complemento:" id="complemento" value={usuarioRegistro.complemento} onChange={handlerInput}/>
+                            <InputMask mask="99999-999" className="textLogin" type="text" required placeholder="Cep:" id="cep" onBlur={responseCep}/>
+                            <input className="textLogin" type="text" required disabled placeholder="Logradouro:" id="logradouro" value={usuarioRegistro.logradouro} onChange={handlerInput}/>
+                            <input className="textLogin" type="text" required disabled placeholder="Bairro:" id="bairro" value={usuarioRegistro.bairro}/>
+                            <input className="textLogin" type="text" required disabled placeholder="Cidade:" id="localidade" value={usuarioRegistro.cidade}/>
+                            <input className="textLogin" type="text" required disabled placeholder="Estado:" id="uf" value={usuarioRegistro.estado}/>
+                            <input className="numberLogin" type="number" required placeholder="Numero:" id="numero" min="0" value={usuarioRegistro.numero} onChange={handlerInput}/>
+                            <input className="textLogin" type="text" required placeholder="Complemento:" id="complemento" value={usuarioRegistro.complemento} onChange={handlerInput}/>
                         </ContainerTexts>
                     </ContainerFormularioRegistro>
                     <ContainerButtons style={{

@@ -1,7 +1,19 @@
 import styled from 'styled-components';
 
+export const ContainerConteudoPage = styled.div `
+    width: 1200px;
+    height: 85%;
+    display: block;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    position: absolute;
+    margin-top: 70px;
+    z-index: 1;
+    overflow: auto;
+`;
+
 export const ContainerIntroductionServices = styled.div`
-    width: 100%;
+    width: 1000px;
     min-height: 180px;
     height: auto;
     border-radius: 10px;
@@ -11,7 +23,10 @@ export const ContainerIntroductionServices = styled.div`
     padding-right: 30px;
     transition: 0.5s;
     border: 2px solid var(--color-gray);
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
 `;
 
 export const ContainerInfoPessoa = styled.div`
@@ -97,4 +112,10 @@ export const DetalhesButton = styled.button`
         color: var(--color-white);
         background-color: var(--color-primary);
     }
+`;
+
+export const ContainerDetalhes = styled.div`
+    width: 100px;
+    height: 100px;
+    background-color: red;
 `;

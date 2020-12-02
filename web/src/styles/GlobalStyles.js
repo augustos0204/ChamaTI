@@ -25,6 +25,17 @@ export const GlobalStyles = createGlobalStyle`
         --color-gray: #c4c4c4;
     }
 
+    ::-webkit-scrollbar{
+        width: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb{
+        background: linear-gradient(45deg, var(--color-primary), var(--color-light));
+        border-radius: 5px;
+        box-shadow: 0 0 5px 1px #fe9901;
+
+    }
+
     *{
         margin: 0;
         padding: 0;
@@ -89,6 +100,7 @@ export const GlobalStyles = createGlobalStyle`
         min-height: 5px;
         height: auto;
         display: fixed;
+        z-index: 999;
     }
 
     header .container{
