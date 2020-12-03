@@ -25,7 +25,7 @@ export const TextCampo = styled.div`
     font-size: 1.5em;
     color: var(--color-sDark);
     font-family: Arial, Helvetica, sans-serif;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--color-primary);
     border-bottom-right-radius: 10px;
     font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 15px;

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import {useHistory} from "react-router-dom";
+
 import Header from "../../components/menu/header";
 
 import perfilPadrao from "../../assets/perfilPadrão.jpg";
@@ -17,12 +19,14 @@ import {
     ContainerConteudoPage
 } from "./style";
 
-const redirectDetalhes = (service) => {
-    document.location.href = `http://localhost:3000/services/detalhes?serviceId=${service}`;
-}
-
 const CardServices = ({ post }) => {
+    const History = useHistory();
     const [autor, setAutor] = useState([]);
+
+    const redirectDetalhes = (service) => {
+        return History.push(`/services/detalhes?serviceId=${service}`);
+    }
+
     const getAutorData = async () => {
         try {
             const response = await (await searchUser(post.ClienteId)).data;

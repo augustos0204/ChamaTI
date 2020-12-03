@@ -99,15 +99,80 @@ export const DescricaoProblema = styled.div`
     height: 250px;
     font-size: 1.1em;
     text-align: justify;
-    overflow-y: auto;
+    overflow-y: scroll;
     padding: 10px;
     border-bottom: 2px solid black;
     border-radius: 5px;
     margin-bottom: 10px;
 `;
 
+export const StatusService = styled.div`
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid black;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
+`;
+
 export const ClientInformation = styled.div`
     width: 100%;
-    height: 200px;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid black;
+`;
+
+export const UserContainer = styled.div`
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    transition: 0.5s;
+
+    &:hover{
+        color: var(--color-primary);
+        text-decoration: underline;
+    }
+`;
+
+export const PhotoSide = styled.figure`
+    width: 70px;
+    height: 70px;
     background-color: crimson;
+`;
+
+export const InfoSide = styled.div`
+    width: 313px;
+    height: 100%;
+`;
+export const UserType = styled.div`
+    width: 100%;
+    height: 25px;
+    color: white;
+    font-size: 1.1em;
+    background-color: var(--color-primary);
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+`;
+
+export const UserName = styled.div`
+    width: 100%;
+    height: 45px;
+    background: linear-gradient(to bottom, #bfbfbf 10%, #ffffff 100%);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
 `;

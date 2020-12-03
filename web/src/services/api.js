@@ -1,25 +1,25 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "http://localhost:3333/"
+    baseURL: "http://192.168.100.80:3333/"
 });
 
-export const searchUser = async (id) => {
-    const response = await api.get(`/cliente/${id}`);
-    return response;
+export const searchUser = (id) => {
+    return api.get(`/cliente/${id}`);
 }
 
 export const getAllSexoUser = async () => {
-    const response = await (await api.get(`/sexos_clientes/`)).data;
-    return response;
+    return (await api.get(`/sexos_clientes/`)).data;
 }
 
-export const getAllServices = async () => {
-    const response = await (await api.get(`/servicos/`));
-    return response;
+export const getAllServices = () => {
+    return api.get(`/servicos/`);
 }
 
-export const getClientLogedServices = async () => {
-    const response = await api.get(`/cliente/servicos`);
-    return response;
+export const searchServiceById = (id) => {
+    return api.get(`/servico/${id}`);  
+}
+
+export const getClientLogedServices =  () => {
+    return api.get(`/cliente/servicos`);
 }

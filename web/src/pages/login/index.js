@@ -179,6 +179,7 @@ const ContentFormRegistro = (props) => {
 
             if(response.status === 201){
                 window.alert("Registrado com Sucesso!");
+                document.location.reload();
             }
 
         } catch (error) {
@@ -191,21 +192,16 @@ const ContentFormRegistro = (props) => {
             }
         }
     }
-        const validaCep = (element) => {
-            return true;
-        }
 
         const responseCep = async (e) => {
-            if (validaCep(e)){
-                try {
-                    const cep = await (e.target.value);
-                    const response = await(await buscarViaCep(cep)).data;
-    
-                    await prencherCampos(response);
-    
-                } catch (error) {
-                    window.alert('Não foi possível localizar seu CEP, por favor, digite manualmente:');
-                }
+            try {
+                const cep = await (e.target.value);
+                const response = await(await buscarViaCep(cep)).data;
+
+                await prencherCampos(response);
+
+            } catch (error) {
+                window.alert('Não foi possível localizar seu CEP, por favor, digite manualmente:');
             }
         }
 

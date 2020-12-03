@@ -1,5 +1,5 @@
 import React from "react";
-
+import {useHistory} from "react-router-dom";
 import foto from "../../assets/menu.png";
 import perfilPadrao from "../../assets/perfilPadrão.jpg";
 import {signOut, getCliente} from "../../services/security";
@@ -22,6 +22,8 @@ import {
 } from "./styles";
 
 const Header = ( props ) => {
+    const History = useHistory();
+
     const idCliente = (getCliente().id);
     const logedUser = async (element) => {
         const response = await (await searchUser(idCliente)).data;
@@ -38,7 +40,7 @@ const Header = ( props ) => {
     }
 
     const redirectRoute = (rota) => {
-        document.location.href = `http://localhost:3000/${rota}`;
+        return History.push(`/${rota}`);
     }
 
     logedUser(document.getElementById('userLogedName'));
