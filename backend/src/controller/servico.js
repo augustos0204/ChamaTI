@@ -124,6 +124,6 @@ module.exports = {
             return response.status( 404 ).send( { erro : "Cliente não encontrado." } );
         }
 
-        // cliente.deleteServico();
+        return response.send( cliente.deleteServico() );
     }
 }
