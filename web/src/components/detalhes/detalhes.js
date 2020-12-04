@@ -29,7 +29,19 @@ const Detalhes = () => {
         return History.push("/home");
     }
 
-    const [serviceData, setServiceData] = useState(null);
+    const [serviceData, setServiceData] = useState({
+        id: 1,
+        problema: "none",
+        descricao: "Não há descrição",
+        data_hora_abertura: "2020-12-04T17:03:33.000Z",
+        data_hora_encerramento: null,
+        em_aberto: 1,
+        em_atendimento: 0,
+        resolvido_por: null,
+        CreatedAt: "2020-12-04T14:03:33.000Z",
+        updatedAt: "2020-12-04T14:03:33.000Z",
+        ClienteId: null
+    });
    
     const getServiceData = async() => {
         try {
@@ -44,7 +56,7 @@ const Detalhes = () => {
 
     useEffect(() => {
         getServiceData();
-    }, []);
+    });
 
     return (
         <container>
@@ -62,7 +74,7 @@ const Detalhes = () => {
                 </ContainerDataService>
             </ContainerCabecalho>
             <TitleService id="tituloProblema">
-                Não sei
+                {serviceData.problema}
             </TitleService>
             <DescricaoProblema>
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.

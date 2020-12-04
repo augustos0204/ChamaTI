@@ -1,7 +1,9 @@
 import axios from "axios";
 
+//192.168.100.80
+
 export const api = axios.create({
-    baseURL: "http://192.168.100.80:3333/"
+    baseURL: "http://localhost:3333/"
 });
 
 export const searchUser = (id) => {

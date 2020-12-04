@@ -115,12 +115,6 @@ const ContentFormLogin = (props) => {
     )
 }
 
-const SelectSexo = ( {post} ) => {
-    return (
-    <option selected value={post.id}>{post.sexo}</option>
-    )
-}
-
 const ContentFormRegistro = (props) => {
     const [usuarioRegistro, setUsuarioRegistro] = useState({
         nome: "",
@@ -138,6 +132,12 @@ const ContentFormRegistro = (props) => {
         numero: "",
         complemento: ""
     });
+
+    const SelectSexo = ( {post} ) => {
+        return (
+        <option selected value={post.id}>{post.sexo}</option>
+        )
+    }
 
     const [sexoData, setSexoData] = useState([]);
 
