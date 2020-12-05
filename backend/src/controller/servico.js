@@ -99,4 +99,31 @@ module.exports = {
             servico
         });
     },
+
+    // Terminar implementação
+    async cancelarServico( request, response ){
+        const user_access = request.user_access;
+
+        if( user_access !== "cliente" ){
+            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        }
+        
+        const { id } = request.params;
+
+        const cliente_id = request.user_id;
+                
+        let servico = await Servico.findByPk( id, { raw : true } );
+
+        if( !servico ){
+            return response.status( 404 ).send( { erro : "Endereço não encontrado." } )
+        }
+
+        let cliente = await Cliente.findByPk( cliente_id );
+
+        if(!cliente){
+            return response.status( 404 ).send( { erro : "Cliente não encontrado." } );
+        }
+
+        return response.send( cliente.deleteServico() );
+    }
 }

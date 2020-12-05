@@ -24,7 +24,7 @@ const sexoClienteController = require("./controller/sexo_cliente");
 const sexoPrestadorServicosController = require("./controller/sexo_prestador_servicos");
 const servicoController = require("./controller/servico");
 
-// Rotas públicas
+// ------------------------------- Rotas públicas ------------------------------------
 
 // Rota de cadastro de cliente
 routes.post("/cliente", clienteController.store);
@@ -57,7 +57,7 @@ routes.post("/sessao/prestador_servicos", sessaoController.prestadorServicoAuthe
 // Middleware de proteção das rotas
 routes.use(autorizacaoMid);
 
-// Rotas privadas
+// -------------------------------- Rotas privadas ------------------------------
 
 // Rotas de atendimento servico
 // Rota de cadastro de atendimento de serviço
@@ -71,6 +71,7 @@ routes.get("/cliente/servicos", servicoController.listByClient);
 routes.get("/cliente/:id", clienteController.searchById);
 routes.post("/cliente/servicos/finalizar_atendimento", atendimentoServicoController.finalizarAtendimentoCliente);
 routes.post("/cliente/servicos/cancelar_atendimento", atendimentoServicoController.cancelarAtendimentoCliente);
+routes.get("/cliente/servicos/cancelar/:id", servicoController.cancelarServico);
 // routes.post("/cliente/update/:id", clienteController.update);
 
 // Rotas de prestador de serviços
