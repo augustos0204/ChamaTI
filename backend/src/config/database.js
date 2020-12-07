@@ -11,27 +11,15 @@ const password = 'bcd127';
 // underscored - Coloca os nomes de tabelas e atributos em snake_case
 
 module.exports =  { 
-
-    url: process.env.DATABASE_URL ||  
-  
-  `postgres://postgres:bcd127@${host}:5432/${database}`, 
-  
+    url: process.env.DATABASE_URL || `postgres://postgres:bcd127@${host}:5432/${database}`, 
     config: { 
-  
       dialect: dialeto, 
-  
       logging: console.log, 
-  
       define: { 
-  
         timestamp: true, 
-  
         underscored: true, 
-  
       }, 
-  
     }, 
-  
   }; 
 
 // module.exports = {
