@@ -1,6 +1,6 @@
 const app = require('./app.js');
 
-const porta = 3333;
+const porta = process.env.PORT || 3333; 
 
 // Sobe a aplicação em um servidor(conteiner)
 app.listen(porta, () => {
