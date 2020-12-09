@@ -7,7 +7,8 @@ import Header from "../../components/menu/header";
 import Detalhes from "../../components/detalhes/detalhes";
 
 const DetalhesServices = () => {
-
+    const serviceId = (new URL(window.location.href)).searchParams.get("serviceId");
+    console.log(serviceId);
     return (
         <container>
             <Header tela="Detalhes"/>
@@ -19,7 +20,7 @@ const DetalhesServices = () => {
                 alignItems: "center",
             }}>
                 <ContainerConteudoPage>
-                    <Detalhes/>
+                    <Detalhes serviceId={serviceId}/>
                 </ContainerConteudoPage>
             </container>
         </container>

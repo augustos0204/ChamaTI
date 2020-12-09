@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import foto from "../../assets/menu.png";
 import perfilPadrao from "../../assets/perfilPadrão.jpg";
@@ -23,27 +23,33 @@ import {
 
 const Header = ( props ) => {
     const History = useHistory();
+    let fotoPerfil = perfilPadrao;
+    const [userSigned, setUserSigned] = useState({
+        SexoClienteId: null,
+        cpf: "000.000.000-00",
+        createdAt: "0000-00-00 00:00",
+        data_nascimento: "0000-00-00",
+        email: "undefined",
+        foto: null,
+        id: null,
+        nome: "undefined",
+        sexo_cliente_id: null,
+        telefone: "+00(00)00000-0000",
+        updatedAt: "0000-00-00 00:00"
+    });
 
-    const idCliente = (getCliente().id);
-    const logedUser = async (element) => {
-        const response = await (await searchUser(idCliente)).data;
-        const nomePerfil = await document.getElementById("userLogedName");
-        nomePerfil.innerHTML = await response.nome;
-        if(response.foto != null){
-            const ImagemPerfil = await document.getElementById("userLogadImage");
-            ImagemPerfil.src = response.foto;
-        }
-        else{
-            ImagemPerfil.src = perfilPadrao;
-        }
-        
+    const loadingUserData = async() => {
+        const response = await searchUser(getCliente().id);
+        setUserSigned(response.data);
     }
+
+    useEffect(() => {
+        loadingUserData();
+    }, []);
 
     const redirectRoute = (rota) => {
         return History.push(`/${rota}`);
     }
-
-    logedUser(document.getElementById('userLogedName'));
 
     const confirmaLogout = () => {
         if (window.confirm('Tem certeza que deseja deslogar?')){
@@ -70,10 +76,10 @@ const Header = ( props ) => {
                                     <FigureCaption>
                                         Ver Perfil
                                     </FigureCaption>
-                                    <ImagemPerfil src={perfilPadrao} id="userLogadImage" alt="Imagem-Perfil" title="imagem-perfil"/>
+                                    <ImagemPerfil src={fotoPerfil} id="userLogadImage" alt="Imagem-Perfil" title="imagem-perfil"/>
                                 </FigurePerfil>
-                                <NomePerfil id="userLogedName">
-                                    Nome Sobrenome
+                                <NomePerfil>
+                                    {userSigned.nome}
                                 </NomePerfil>
                                 <LogoutButton onClick={confirmaLogout}>
                                     Logout

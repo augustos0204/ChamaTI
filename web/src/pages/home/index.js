@@ -27,31 +27,11 @@ const CardServices = ({ post }) => {
         return History.push(`/services/detalhes?serviceId=${service}`);
     }
 
-    const getAutorData = async () => {
-        try {
-            const response = await (await searchUser(post.ClienteId)).data;
-
-            setAutor(response);
-        } catch (error) {
-            if(error.response){
-                console.log(error.response.data.erro);
-            }
-        }
-    }
-
-    let image = perfilPadrao;
-
-    if (autor.foto != null){
-        image = autor.foto;
-    }
-
-    getAutorData();
-
     return (
         <ContainerIntroductionServices>
             <ContainerInfoPessoa>
                 <ImagePessoaIcon>
-                    <img src={image} alt="foto do perfil" title="foto do perfil"/>
+                    <img src={perfilPadrao} alt="foto do perfil" title="foto do perfil"/>
                 </ImagePessoaIcon>
                 <TextoInformativoPessoa>
                     {autor.nome} - São Paulo

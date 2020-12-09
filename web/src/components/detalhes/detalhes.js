@@ -23,40 +23,19 @@ import photoProfile from "../../assets/perfilPadrão.jpg";
 
 import {searchServiceById} from "../../services/api";
 
-const Detalhes = () => {
+const TableService = ({post}) => {
     const History = useHistory();
     const redirectHome = () => {
         return History.push("/home");
     }
+    
+    const formataData = () => {
+        const data = post.data_hora_abertura;
 
-    const [serviceData, setServiceData] = useState({
-        id: 1,
-        problema: "none",
-        descricao: "Não há descrição",
-        data_hora_abertura: "2020-12-04T17:03:33.000Z",
-        data_hora_encerramento: null,
-        em_aberto: 1,
-        em_atendimento: 0,
-        resolvido_por: null,
-        CreatedAt: "2020-12-04T14:03:33.000Z",
-        updatedAt: "2020-12-04T14:03:33.000Z",
-        ClienteId: null
-    });
-   
-    const getServiceData = async() => {
-        try {
-            const response = (await searchServiceById(2)).data;
-            setServiceData(response);
-        } catch (error) {
-            if(error.response){
-                window.alert(error.response.data.erro);
-            }
-        }
+        console.log(data);
     }
 
-    useEffect(() => {
-        getServiceData();
-    });
+    formataData();
 
     return (
         <container>
@@ -74,10 +53,10 @@ const Detalhes = () => {
                 </ContainerDataService>
             </ContainerCabecalho>
             <TitleService id="tituloProblema">
-                {serviceData.problema}
+                {post.problema}
             </TitleService>
             <DescricaoProblema>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                {post.descricao}
             </DescricaoProblema>
             <StatusService>
                 Status: Em Aberto.
@@ -111,6 +90,41 @@ const Detalhes = () => {
                 </UserContainer>
             </ClientInformation>
         </container>
+    );
+}
+
+const Detalhes = (props) => {
+    const [serviceData, setServiceData] = useState({
+        id: 1,
+        problema: "none",
+        descricao: "Não há descrição",
+        data_hora_abertura: "0000-00-00 00:00",
+        data_hora_encerramento: null,
+        em_aberto: 1,
+        em_atendimento: 0,
+        resolvido_por: null,
+        CreatedAt: "0000-00-00 00:00",
+        updatedAt: "0000-00-00 00:00",
+        ClienteId: null
+    });
+   
+    const getServiceData = async() => {
+        try {
+            const response = (await searchServiceById(props.serviceId)).data;
+            setServiceData(response);
+        } catch (error) {
+            if(error.response){
+                window.alert(error.response.data.erro);
+            }
+        }
+    }
+
+    useEffect(() => {
+        getServiceData();
+    });
+
+    return (
+        <TableService post={serviceData}/>
     );
 }
 
