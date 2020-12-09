@@ -1,77 +1,102 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator, HeaderBackground, HeaderTitle } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Modalize } from 'react-native-modalize';
+import { AsyncStorage, View, KeyboardAvoidingView, Image, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-import TelaLogin from './src/screens/Login';
-import TelaPreCadastro from './src/screens/PreCadastro';
-import TelaCadastro from './src/screens/Cadastro';
-import TelaConfirmacao from './src/screens/Confirmacao';
-import TelaHome from './src/screens/Home';
-import TelaHistorico from './src/screens/Historico';
-import TelaModalConfirma from './src/components/ModalConfirma';
+export default function Login() {
 
-const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+  const conectar = () => {
 
-
-export default function App() {
-
+  }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="TelaLogin">
-        <Stack.Screen 
-          name="Bem-vindo" 
-          component={TelaLogin}
-          options={{
-            headerStyle: {
-              // backgroundColor: 'red',
-            },
-            headerTitleAlign: 'center',
-            headerTintColor: '#F87700'
-          }}
+    <KeyboardAvoidingView style={styles.background}>
+      <View style={styles.containerLogo}>
+        <Image
+          style={styles.imagem}
+          resizeMode= 'center'
+          source={require('./src/Image/fire.png')}
         />
 
-        <Stack.Screen 
-          name="TelaPreCadastro" 
-          component={TelaPreCadastro}
-          options={{
-            title: 'É bem rápido',
-            headerTitleAlign: 'center'
-          }}
-        />
+      </View>
 
-        <Stack.Screen 
-          name="TelaCadastro" 
-          component={TelaCadastro}
-          options={{
-            title: 'Criar Conta',
-            headerTitleAlign: 'center'
-          }}
-        />
+        <View style={styles.container}>
 
-        <Stack.Screen 
-          name="TelaModalConfirma" 
-          component={TelaModalConfirma}
-          options={{
-            title: 'Modal',
-            headerTitleAlign: 'center'
-          }}
-        />
-
-        <Stack.Screen 
-          name="Home" 
-          component={TelaHome}
-          options={{
-            title: 'Home',
-            headerTitleAlign: 'center'
-          }}
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            autoCorrect={false}
+            onChangeText={()=> {}}
           />
-      </Stack.Navigator>
-    </NavigationContainer>
+
+        <TextInput
+            style={styles.input}
+            placeholder="Senha"
+            autoCorrect={false}
+            onChangeText={()=> {}}
+          />
+        
+
+        <TouchableOpacity style={styles.btnSubmit}>
+          <Text style={styles.btnSubmitText}>Entrar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.btnSubmit}>
+          <Text style={styles.btnSubmitText}>Criar Conta</Text>
+        </TouchableOpacity>
+
+      </View>
+    </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    
+    // backgroundColor: '#181818',
+  }, 
+  containerLogo: {
+    flex: 1,
+    justifyContent:'center',
+    // backgroundColor: '#181818',
+  },
+
+  imagem: {
+    width: 150,
+    height: 150,
+
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '90%',
+    // height: '80%',
+  }, 
+  
+  input: {
+    backgroundColor: '#FFF',
+    width: '90%',
+    marginBottom: 15,
+    color: '#F87700',
+    fontSize: 17,
+    borderRadius: 7,
+    padding: 10,
+  }, 
+  
+  btnSubmit: {
+    backgroundColor: '#F87700',
+    width: '90%',
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 7,
+    marginBottom: 5,
+  },
+
+  btnSubmitText: {
+    fontSize: 18,
+  }
+});
 
