@@ -17,15 +17,16 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
     "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0",
     "supertest": "^6.0.1"
   },
   "scripts": {
     "start": "node src/server.js",
     "build": "react-scripts build",
+    "eject": "react-scripts eject",
     "pretest": "cross-env NODE_ENV=test npx sequelize db:migrate",
     "test": "cross-env NODE_ENV=test jest",
     "posttest": "cross-env NODE_ENV=test npx sequelize db:migrate:undo:all",
-    "eject": "react-scripts eject",
     "dev": "nodemon src/server.js"
   },
   "devDependencies": {
