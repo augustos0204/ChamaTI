@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 
 const dialeto = 'mysql';
 const host = 'localhost';
-const database = 'db_chama_ti';
+const database = process.env.NODE_ENV === "test" ? 'db_chama_ti_test' : 'db_chama_ti';
 const username = 'root';
 const password = 'bcd127';
 
