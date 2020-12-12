@@ -14,7 +14,8 @@ const SexoCliente = require("../models/SexoCliente");
 const SexoPrestadorServicos = require("../models/SexoPrestadorServicos");
 
 // Criamo a conexão com os dados da configuração
-const conexao = new Sequelize(dbConfig);
+// const conexao = new Sequelize(dbConfig);
+const conexao = new Sequelize(dbConfig.url, dbConfig.config); 
 
 // Inicializando as models
 Cliente.init(conexao);

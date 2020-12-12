@@ -1,10 +1,6 @@
 {
   "name": "backend",
   "version": "0.1.0",
-  "engines": {
-    "node": "14.x"
-  },
-  "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -32,24 +28,8 @@
     "eject": "react-scripts eject",
     "dev": "nodemon src/server.js"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@types/sequelize": "^4.28.9",
-    "nodemon": "^2.0.4",
-    "sequelize-cli": "^6.2.0"
+    "nodemon": "^2.0.4"
   }
 }

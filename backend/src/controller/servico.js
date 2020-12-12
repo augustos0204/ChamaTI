@@ -2,19 +2,19 @@ const Servico = require("../models/Servico");
 const Cliente = require("../models/Cliente");
 
 module.exports = {
-    async list( request, response ) {
+    async list(request, response) {
         console.log("Entrou");
-        
+
         const servicos = await Servico.findAll();
 
-        response.send( servicos );
+        response.send(servicos);
     },
 
-    async listByAtendimento( request, response  ){
+    async listByAtendimento(request, response) {
         const user_access = request.user_access;
 
-        if( user_access !== "prestador_servicos" ){
-            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        if (user_access !== "prestador_servicos") {
+            return response.status(403).send({ erro: "Acesso negado." });
         }
 
         const servicos = await Servico.findAll({
@@ -23,44 +23,44 @@ module.exports = {
             }
         });
 
-        response.send( servicos );
+        response.send(servicos);
     },
 
-    async searchById( request, response ){
+    async searchById(request, response) {
         const { id } = request.params;
 
-        let servico = await Servico.findByPk( id, { raw : true } );
+        let servico = await Servico.findByPk(id, { raw: true });
 
-        if( !servico ){
-            return response.status( 404 ).send( { erro : "Endereço não encontrado." } )
+        if (!servico) {
+            return response.status(404).send({ erro: "Endereço não encontrado." })
         }
 
-        response.send( servico );
+        response.send(servico);
     },
 
-    async listByClient( request, response ){
+    async listByClient(request, response) {
         const user_access = request.user_access;
 
-        if( user_access !== "cliente" ){
-            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        if (user_access !== "cliente") {
+            return response.status(403).send({ erro: "Acesso negado." });
         }
 
         const cliente_id = request.user_id;
 
         let servicos = await Servico.findAll({
             where: {
-                ClienteId : cliente_id
+                ClienteId: cliente_id
             }
         })
 
         return response.send(servicos);
     },
 
-    async store(request, response){
+    async store(request, response) {
         const user_access = request.user_access;
 
-        if( user_access !== "cliente" ){
-            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        if (user_access !== "cliente") {
+            return response.status(403).send({ erro: "Acesso negado." });
         }
 
         const cliente_id = request.user_id;
@@ -75,10 +75,10 @@ module.exports = {
             resolvido_por,
         } = request.body;
 
-        let cliente = await Cliente.findByPk( cliente_id );
+        let cliente = await Cliente.findByPk(cliente_id);
 
-        if(!cliente){
-            return response.status( 404 ).send( { erro : "Cliente não encontrado." } );
+        if (!cliente) {
+            return response.status(404).send({ erro: "Cliente não encontrado." });
         }
 
         let servico = await cliente.createServico({
@@ -91,8 +91,8 @@ module.exports = {
             resolvido_por,
         })
 
-        if( !servico ){
-            return response.status( 404 ).send( { erro : "Cadastro mal sucedido." } );
+        if (!servico) {
+            return response.status(404).send({ erro: "Cadastro mal sucedido." });
         }
 
         return response.status(201).send({
@@ -101,29 +101,32 @@ module.exports = {
     },
 
     // Terminar implementação
-    async cancelarServico( request, response ){
+    async cancelarServico(request, response) {
         const user_access = request.user_access;
 
-        if( user_access !== "cliente" ){
-            return response.status( 403 ).send( { erro : "Acesso negado." } );
+        if (user_access !== "cliente") {
+            return response.status(403).send({ erro: "Acesso negado." });
         }
-        
+
         const { id } = request.params;
 
         const cliente_id = request.user_id;
-                
-        let servico = await Servico.findByPk( id, { raw : true } );
 
-        if( !servico ){
-            return response.status( 404 ).send( { erro : "Endereço não encontrado." } )
+        let servico = await Servico.findByPk(id, { raw: true });
+
+        if (!servico) {
+            return response.status(404).send({ erro: "Serviço não encontrado." })
         }
 
-        let cliente = await Cliente.findByPk( cliente_id );
+        let cliente = await Cliente.findByPk(cliente_id);
 
-        if(!cliente){
-            return response.status( 404 ).send( { erro : "Cliente não encontrado." } );
+        if (!cliente) {
+            return response.status(404).send({ erro: "Cliente não encontrado." });
         }
 
-        return response.send( cliente.deleteServico() );
+        await servico.destroy();
+
+        // return response.send(cliente.deleteServico());
+        return response.status(204).send("Serviço deletado.");
     }
 }
