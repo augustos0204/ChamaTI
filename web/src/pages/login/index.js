@@ -22,10 +22,15 @@ import {
     getAllSexoUser
 } from "../../services/api";
 
-import { buscarViaCep } from "../../services/viaCep";
+import { 
+    buscarViaCep,
+    buscarPostmon
+ } from "../../services/viaCep";
 
 import { useHistory } from "react-router-dom";
 import { signIn } from "../../services/security";
+
+import {SpinnerLoading} from "../../components/loading/loadingEffects";
 
 const ContentFormLogin = (props) => {
     const history = useHistory();
@@ -116,11 +121,20 @@ const ContentFormLogin = (props) => {
 }
 
 const ContentFormRegistro = (props) => {
+    const dataCep = {
+        bairro: "",
+        cep: "",
+        cidade: "",
+        rua: "",
+        estado: ""
+    };
+    
     const [usuarioRegistro, setUsuarioRegistro] = useState({
         nome: "",
         email: "",
         senha: "",
         data_nascimento: "",
+        data_nascimento_br: "",
         cpf: "",
         telefone: "",
         sexo_id: "",
@@ -140,14 +154,15 @@ const ContentFormRegistro = (props) => {
     }
 
     const [sexoData, setSexoData] = useState([]);
+    const [loadingStatus, setLoadingStatus] = useState(true);
 
 
     useEffect(() => {
         const getSexos = async () => {
             try {
                 const response = await getAllSexoUser();
-
                 await setSexoData(response);
+                setLoadingStatus(false);
             } catch (error) {
                 if(error.response){
                     window.alert(error.response.data.erro);
@@ -165,10 +180,9 @@ const ContentFormRegistro = (props) => {
     }
     
     const validaDataNascimento = () => {
-        const valuesData = usuarioRegistro.data_nascimento.split('/');
+        const valuesData = usuarioRegistro.data_nascimento_br.split('/');
         const dataPadraoAmericano = `${valuesData[2]}-${valuesData[1]}-${valuesData[0]}`;
         usuarioRegistro.data_nascimento = dataPadraoAmericano;
-        console.log(dataPadraoAmericano);
     }
 
     const registrar = async (e) => {
@@ -193,16 +207,62 @@ const ContentFormRegistro = (props) => {
         }
     }
 
-        const responseCep = async (e) => {
-            try {
-                const cep = await (e.target.value);
-                const response = await(await buscarViaCep(cep)).data;
+        const ResponseCep = async (e) => {
 
-                await prencherCampos(response);
+            const cep = await (e.target.value);
+
+            try {
+
+                const response = await (await buscarViaCep(cep)).data;
+                console.log("viacep!!!")
+                await prencherCampos(response, "viacep");
 
             } catch (error) {
-                window.alert('Não foi possível localizar seu CEP, por favor, digite manualmente:');
+                try {
+                    const response = await (await buscarPostmon(cep)).data;
+                    console.log("VIA: Postmon!!! \n ERROR VIACEP: " + error);
+                    await prencherCampos(response, "postmon");
+                } catch (error2) {
+                    window.alert('Não foi possível localizar seu CEP, por favor, digite manualmente:');
+                    console.log(`VIACEP ERROR: ${error} \n POSTMON ERROR: ${error2}`);
+                } 
             }
+        }
+
+        const prencherCampos = (dados, from) => {
+
+            if (from === "viacep"){
+                dataCep.bairro = dados.bairro;
+                dataCep.cep = dados.cep;
+                dataCep.cidade = dados.localidade;
+                dataCep.estado = dados.uf;
+                dataCep.rua = dados.logradouro;
+
+            } else if (from === "postmon"){
+                dataCep.bairro = dados.bairro;
+                dataCep.cep = dados.cep;
+                dataCep.cidade = dados.cidade;
+                dataCep.estado = dados.estado_info.nome;
+                dataCep.rua = dados.logradouro;
+            }
+
+            const campoLogradouro = document.getElementById('logradouro');
+            const campoBairro = document.getElementById('bairro');
+            const campoLocalidade = document.getElementById('localidade');
+            const campoEstado = document.getElementById('uf');
+            const campoCep = document.getElementById('cep');
+
+            campoLogradouro.value = dataCep.rua;
+            campoBairro.value = dataCep.bairro;
+            campoLocalidade.value = dataCep.cidade;
+            campoEstado.value = dataCep.estado;
+            campoCep.value = dataCep.cep;
+
+            usuarioRegistro.logradouro = dataCep.rua;
+            usuarioRegistro.bairro = dataCep.bairro;
+            usuarioRegistro.cidade = dataCep.cidade;
+            usuarioRegistro.estado = dataCep.estado;
+            usuarioRegistro.cep = dataCep.cep;
         }
 
         const getterSexo = (e) => {
@@ -211,28 +271,10 @@ const ContentFormRegistro = (props) => {
             console.log(usuarioRegistro);
         }
 
-        const prencherCampos = (dados) => {
-
-            const campoLogradouro = document.getElementById('logradouro');
-            const campoBairro = document.getElementById('bairro');
-            const campoLocalidade = document.getElementById('localidade');
-            const campoEstado = document.getElementById('uf');
-            const campoCep = document.getElementById('cep');
-
-            campoLogradouro.value = dados.logradouro;
-            campoBairro.value = dados.bairro;
-            campoLocalidade.value = dados.localidade;
-            campoEstado.value = dados.uf;
-            campoCep.value = dados.cep;
-
-            usuarioRegistro.logradouro = dados.logradouro;
-            usuarioRegistro.bairro = dados.bairro;
-            usuarioRegistro.cidade = dados.localidade;
-            usuarioRegistro.estado = dados.uf;
-            usuarioRegistro.cep = dados.cep;
-        }
-
         return (
+
+            loadingStatus===true ? <SpinnerLoading/> : 
+
             <container>
                 <ContainerLogo>
                     <LogoChamaTI id="logoChamaTIName" className="logoFont">
@@ -245,7 +287,7 @@ const ContentFormRegistro = (props) => {
                             <input className="textLogin" type="text" required placeholder="Nome:" id="nome" value={usuarioRegistro.nome} onChange={handlerInput}/>
                             <input className="textLogin" type="email" required placeholder="Email:" id="email" value={usuarioRegistro.email} onChange={handlerInput}/>
                             <input className="textLogin" type="password" required placeholder="Senha:" id="senha" value={usuarioRegistro.senha} onChange={handlerInput}/>
-                            <InputMask mask="99/99/9999" className="textLogin" type="text" required placeholder="Data de Nascimento:" id="data_nascimento" value={usuarioRegistro.data_nascimento} onChange={handlerInput} onBlur={validaDataNascimento}/>
+                            <InputMask mask="99/99/9999" className="textLogin" type="text" required placeholder="Data de Nascimento:" id="data_nascimento_br" value={usuarioRegistro.data_nascimento_br} onChange={handlerInput} onBlur={validaDataNascimento}/>
                             <InputMask mask="999.999.999-99" className="textLogin" type="text" required placeholder="CPF:" id="cpf" value={usuarioRegistro.cpf} onChange={handlerInput}/>
                             <InputMask mask="+99(99)99999-9999" className="textLogin" type="text" required placeholder="Telefone:" id="telefone" value={usuarioRegistro.telefone} onChange={handlerInput}/>
                             <span style={{marginLeft: "10px"}}>Sexo:</span>
@@ -254,7 +296,7 @@ const ContentFormRegistro = (props) => {
                             </select>
                         </ContainerTexts>
                         <ContainerTexts>
-                            <InputMask mask="99999-999" className="textLogin" type="text" required placeholder="Cep:" id="cep" onBlur={responseCep}/>
+                            <InputMask mask="99999-999" className="textLogin" type="text" required placeholder="Cep:" id="cep" onBlur={ResponseCep}/>
                             <input className="textLogin" type="text" required disabled placeholder="Logradouro:" id="logradouro" value={usuarioRegistro.logradouro} onChange={handlerInput}/>
                             <input className="textLogin" type="text" required disabled placeholder="Bairro:" id="bairro" value={usuarioRegistro.bairro}/>
                             <input className="textLogin" type="text" required disabled placeholder="Cidade:" id="localidade" value={usuarioRegistro.cidade}/>

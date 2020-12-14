@@ -1,4 +1,10 @@
-import React, {useEffect, useState} from "react";
+//#region Importacoes
+import 
+    React,
+    {
+        useEffect,
+        useState
+    } from "react";
 import {useHistory} from "react-router-dom";
 import {
     ButtonVoltar,
@@ -21,22 +27,62 @@ import ClockImage from "../../assets/clock.png"
 
 import photoProfile from "../../assets/perfilPadrão.jpg";
 
-import {searchServiceById} from "../../services/api";
+import {searchServiceById, searchUser} from "../../services/api";
+
+import {LoadingFire} from "../loading/loadingEffects";
+
+//#endregion
 
 const TableService = ({post}) => {
+    const [userCliente, setUserCliente] = useState({
+        nome: "Cliente",
+    });
+    const [userPrestador, setUserPrestador] = useState({
+        nome: "Prestador",
+    })
+
+    const GetClientService = () => {
+
+        const getClientData = async () => {
+            const responseClient = (await searchUser(post.ClienteId)).data;
+            setUserCliente(responseClient);
+
+            if (post.resolvido_por != null){
+                const responsePrestador = (await searchUser(post.ClienteId)).data;
+                setUserPrestador(responsePrestador);
+            }
+            else{
+                setUserPrestador({nome: "ninguém"});
+            }
+        }
+
+        useEffect(() => {
+            getClientData();
+        }, [post]);
+        if (document.getElementById("userClient")){
+            document.getElementById("userClient").innerHTML = userCliente.nome;
+        }
+        if (document.getElementById("userPrestador")){
+            document.getElementById("userPrestador").innerHTML = userPrestador.nome;
+        }
+    }
+
+    console.log(searchServiceById(2));
+
+    console.log(post);
     const History = useHistory();
     const redirectHome = () => {
         return History.push("/home");
     }
     
     const formataData = () => {
-        const data = post.data_hora_abertura;
-
-        console.log(data);
+        const data = new Date(post.data_hora_abertura).toLocaleString();
+        if (document.getElementById('data') != null){
+            document.getElementById('data').innerHTML = data;
+        }
     }
-
     formataData();
-
+    GetClientService(post.ClienteId);
     return (
         <container>
             <ContainerCabecalho>
@@ -47,7 +93,7 @@ const TableService = ({post}) => {
                     <ContainerIconeRelogio>
                         <img src={ClockImage} alt="Relógio de um relógio" title="Relógio de um relógio"/>
                     </ContainerIconeRelogio>
-                    <ContainerTextData>
+                    <ContainerTextData id="data">
                         2020-10-05 00:00
                     </ContainerTextData>
                 </ContainerDataService>
@@ -70,9 +116,7 @@ const TableService = ({post}) => {
                         <UserType>
                             Cliente
                         </UserType>
-                        <UserName>
-                            Mauricio de souza
-                        </UserName>
+                        <UserName id="userClient"/>
                     </InfoSide>
                 </UserContainer>
                 <UserContainer>
@@ -83,9 +127,7 @@ const TableService = ({post}) => {
                         <UserType>
                             Prestador
                         </UserType>
-                        <UserName>
-                            Mauricio de souza
-                        </UserName>
+                        <UserName id="userPrestador"/>
                     </InfoSide>
                 </UserContainer>
             </ClientInformation>
@@ -107,11 +149,14 @@ const Detalhes = (props) => {
         updatedAt: "0000-00-00 00:00",
         ClienteId: null
     });
+
+    const [loadingStatus, setLoadingStatus] = useState(true);
    
     const getServiceData = async() => {
         try {
             const response = (await searchServiceById(props.serviceId)).data;
             setServiceData(response);
+            setLoadingStatus(false);
         } catch (error) {
             if(error.response){
                 window.alert(error.response.data.erro);
@@ -121,10 +166,10 @@ const Detalhes = (props) => {
 
     useEffect(() => {
         getServiceData();
-    });
+    }, []);
 
     return (
-        <TableService post={serviceData}/>
+        loadingStatus===true ? <LoadingFire/> : <TableService post={serviceData}/>
     );
 }
 

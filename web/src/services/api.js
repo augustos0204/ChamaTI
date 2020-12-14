@@ -1,9 +1,7 @@
 import axios from "axios";
 
-//192.168.100.80
-
 export const api = axios.create({
-    baseURL: "http://localhost:3333/"
+    baseURL: "https://chamati.herokuapp.com/"
 });
 
 export const searchUser = (id) => {

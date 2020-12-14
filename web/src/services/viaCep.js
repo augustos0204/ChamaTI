@@ -1,8 +1,14 @@
 import axios from "axios";
 
-const api = axios.create({
+const viacep = axios.create({
   baseURL: "http://viacep.com.br/ws/",
 });
 
-export const buscarViaCep = (cep) => api.get(`${cep}/json`);
+const postmon = axios.create({
+  baseURL: "https://api.postmon.com.br/v1/cep/",
+});
+
+export const buscarViaCep = (cep) => viacep.get(`${cep}/json`);
+
+export const buscarPostmon = (cep) => postmon.get(`${cep}`);
 

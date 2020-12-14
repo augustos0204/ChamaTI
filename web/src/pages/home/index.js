@@ -19,9 +19,23 @@ import {
     ContainerConteudoPage
 } from "./style";
 
+import {SpinnerLoading} from "../../components/loading/loadingEffects";
+
+const SearchAutorCard = (id) => {
+    const [autor, setAutor] = useState([]);
+    const user = async () => {
+        const response = await searchUser(id);
+        setAutor(response.data);
+    }
+    useEffect(() => {
+        user();
+    }, []);
+
+    return autor.nome;
+}
+
 const CardServices = ({ post }) => {
     const History = useHistory();
-    const [autor, setAutor] = useState([]);
 
     const redirectDetalhes = (service) => {
         return History.push(`/services/detalhes?serviceId=${service}`);
@@ -34,7 +48,7 @@ const CardServices = ({ post }) => {
                     <img src={perfilPadrao} alt="foto do perfil" title="foto do perfil"/>
                 </ImagePessoaIcon>
                 <TextoInformativoPessoa>
-                    {autor.nome} - São Paulo
+                    {SearchAutorCard(post.ClienteId)} - São Paulo
                 </TextoInformativoPessoa>
                 <TextoInformativoStatus>
                     Serviço em aberto
@@ -77,13 +91,14 @@ const CardServices = ({ post }) => {
 
 const ListServices = () => {
     const [services, setServices] = useState([]);
+    const [loadingStatus, setLoadingStatus] = useState(true);
 
     useEffect(() => {
         const loadingServices = async() => {
             try {
                 const response = await (await getClientLogedServices()).data;
-
                 await setServices(response);
+                setLoadingStatus(false);
             } catch (error) {
                 if(error.response){
                     window.alert(error.response.data.erro);
@@ -95,7 +110,7 @@ const ListServices = () => {
     }, []);
 
     return (
-        services.map((post) => (<CardServices post={post}/>))
+        loadingStatus===true?<SpinnerLoading/>:services.map((post) => (<CardServices post={post}/>))
     );
 }
 
