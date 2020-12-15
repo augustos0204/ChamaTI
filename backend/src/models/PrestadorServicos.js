@@ -29,12 +29,12 @@ class PrestadorServicos extends Model {
         this.hasOne(models.EnderecoPrestadorServicos, {
             foreignKey: "prestador_servicos_id"
         });
-        this.belongsToMany(models.Servico,
-            { through: models.AtendimentoServico, foreignKey: "prestador_servicos_id" },
-        );
         // this.belongsToMany(models.Servico,
-        //     { through: "tbl_atendimento_servico" }
+        //     { through: models.AtendimentoServico, foreignKey: "prestador_servicos_id" },
         // );
+        this.belongsToMany(models.Servico,
+            { through: "tbl_atendimento_servico", foreignKey: "prestador_servicos_id" }
+        );
         this.hasMany(models.Mensagem);
     }
 }
