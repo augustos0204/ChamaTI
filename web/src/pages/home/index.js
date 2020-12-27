@@ -27,6 +27,7 @@ const SearchAutorCard = (id) => {
         const response = await searchUser(id);
         setAutor(response.data);
     }
+    
     useEffect(() => {
         user();
     }, []);
@@ -48,7 +49,7 @@ const CardServices = ({ post }) => {
                     <img src={perfilPadrao} alt="foto do perfil" title="foto do perfil"/>
                 </ImagePessoaIcon>
                 <TextoInformativoPessoa>
-                    {SearchAutorCard(post.ClienteId)} - São Paulo
+                    {SearchAutorCard(post.ClienteId)}
                 </TextoInformativoPessoa>
                 <TextoInformativoStatus>
                     Serviço em aberto
@@ -96,8 +97,8 @@ const ListServices = () => {
     useEffect(() => {
         const loadingServices = async() => {
             try {
-                const response = await (await getClientLogedServices()).data;
-                await setServices(response);
+                const response = (await getClientLogedServices()).data;
+                setServices(response);
                 setLoadingStatus(false);
             } catch (error) {
                 if(error.response){

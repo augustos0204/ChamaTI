@@ -138,15 +138,15 @@ const TableService = ({post}) => {
 const Detalhes = (props) => {
     const [serviceData, setServiceData] = useState({
         id: 1,
-        problema: "none",
-        descricao: "Não há descrição",
-        data_hora_abertura: "0000-00-00 00:00",
+        problema: "",
+        descricao: "",
+        data_hora_abertura: "",
         data_hora_encerramento: null,
         em_aberto: 1,
         em_atendimento: 0,
         resolvido_por: null,
-        CreatedAt: "0000-00-00 00:00",
-        updatedAt: "0000-00-00 00:00",
+        CreatedAt: "",
+        updatedAt: "",
         ClienteId: null
     });
 

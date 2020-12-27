@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import InputMask from 'react-input-mask';
-
-// import chamaTiLogo from "../../assets/chama.png";
+import {AlertInfo} from "../../components/personalAlert";
 
 import {
     ContainerLogo, 
@@ -273,7 +272,7 @@ const ContentFormRegistro = (props) => {
 
         return (
 
-            loadingStatus===true ? <SpinnerLoading/> : 
+            loadingStatus===true ? <SpinnerLoading/> :
 
             <container>
                 <ContainerLogo>

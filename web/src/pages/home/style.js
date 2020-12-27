@@ -65,11 +65,11 @@ export const TextoInformativoStatus = styled.div`
 export const ContainerGeralPedido = styled.div`
     width: 100%;
     min-height: 10px;
-    max-height: 70px;
+    max-height: 80px;
     height: auto;
-    border-bottom: 2px solid black;
     padding-bottom: 10px;
     margin-bottom: 10px;
+    border-bottom: 2px solid black;
 `;
 
 export const TituloProblema = styled.a`
@@ -93,7 +93,6 @@ export const DescricaoProblema = styled.p`
     padding-left: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
-    
 `;
 
 export const DetalhesButton = styled.button`
